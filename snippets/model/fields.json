@@ -1,0 +1,146 @@
+{
+    "Field.blank": {
+        "prefix": ["blank","field"],
+        "body": [
+            "blank=${1|True,False|"
+        ],
+        "description": "If True, the field is allowed to be blank. Default is False."
+    },
+    "Field.null": {
+        "prefix": ["null","field"],
+        "body": [
+            "null=${1|True,False|"
+        ],
+        "description": "If True, Django will store empty values as NULL in the database. Default is False."
+    },
+    "Choices - Dict": {
+        "prefix": ["choices-dict","choices","field"],
+        "body": [
+            "$1_CHOICES = {",
+            "\t${2:key}: ${3:value},",
+            "}"
+        ],
+        "description": "A mapping or iterable in the format described below to use as choices for this field."
+    },
+    "Choices - Sequence": {
+        "prefix": ["choices-sequence","choices","field"],
+        "body": [
+            "$1_CHOICES = [",
+            "\t(${2:key}, ${3:value}),",
+            "]"
+        ],
+        "description": "A mapping or iterable in the format described below to use as choices for this field."
+    },
+    "Field.choices": {
+        "prefix": ["choices-attribute","choices","field"],
+        "body": ["choices=${1}_CHOICES$0"],
+        "description": "db.models.choices"
+    },
+    "Choices - Option Group": {
+        "prefix": ["choices-group","choices","field"],
+        "body": [
+            "$1_CHOICES = [",
+            "\t(",
+            "\t\t\"$2\", (",
+            "\t\t\t(\"${3:key}\", \"${4:value}\"),",
+            "\t\t)",
+            "\t)",
+            "\t(\"unknown\", \"unknown\")",
+            "]"
+        ],
+        "description": ""
+    },
+    "Field.db_column": {
+        "prefix": ["db_column","field"],
+        "body": ["db_column=\"$1\""],
+        "description": "db.models.db_column"
+    },
+    "Field.db_comment": {
+        "prefix": ["db_comment","field"],
+        "body": ["db_comment=\"$1\""],
+        "description": "db.models.db_comment"
+    },
+    "Field.db_default": {
+        "prefix": ["db_default","field"],
+        "body": ["db_default=\"$1\""],
+        "description": "db.models.db_default"
+    },
+    "Field.db_index": {
+        "prefix": ["db_index","field"],
+        "body": ["db_index=\"$1\""],
+        "description": "db.models.db_index"
+    },
+    "Field.db_tablespace": {
+        "prefix": ["db_tablespace","field"],
+        "body": ["db_tablespace=\"$1\""],
+        "description": "db.models.db_tablespace"
+    },
+    "Field.default": {
+        "prefix": ["default","field"],
+        "body": ["default=$1"],
+        "description": "db.models.default"
+    },
+    "Field.editable": {
+        "prefix": ["editable","field"],
+        "body": [
+            "editable=${1|False,True|"
+        ],
+        "description": ""
+    },
+    "Field.error_messages": {
+        "prefix": ["error_messages","field"],
+        "body": [
+            "error_messages={\"${1|null,blank,invalid,invalid_choice,unique,unique_for_date|}\":\"$2\",}"
+        ],
+        "description": ""
+    },
+    "Field.help_text": {
+        "prefix": ["help_text","field"],
+        "body": [
+            "help_text=\"$1\""
+        ],
+        "description": ""
+    },
+    "Field.primary_key": {
+        "prefix": ["primary_key","field"],
+        "body": [
+            "primary_key=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "Field.unique_for_date": {
+        "prefix": ["unique_for_date","field"],
+        "body": [
+            "unique_for_date=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "Field.unique_for_month": {
+        "prefix": ["unique_for_month","field"],
+        "body": [
+            "unique_for_month=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "Field.unique_for_year": {
+        "prefix": ["unique_for_year","field"],
+        "body": [
+            "unique_for_year=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "Field.verbose_name": {
+        "prefix": ["verbose_name","field"],
+        "body": [
+            "verbose_name=\"${TM_CURRENT_LINE/(^\\w+)/${1:/capitalize}/}\""
+        ],
+        "description": ""
+    },
+    "Field.validators": {
+        "prefix": ["validators","field"],
+        "body": [
+            "validators=[$1]"
+        ],
+        "description": ""
+    }
+}
