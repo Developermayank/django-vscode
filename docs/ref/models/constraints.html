@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Constraints reference &#8212; Django 5.1.1.dev20240808115027 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Model _meta API" href="meta.html" />
+    <link rel="prev" title="Model index reference" href="indexes.html" />
+
+
+
+ 
+<script src="../../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../../index.html">Django 5.1.1.dev20240808115027 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../../index.html">Home</a>  |
+        <a title="Table of contents" href="../../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../../genindex.html">Index</a>  |
+        <a title="Module index" href="../../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="indexes.html" title="Model index reference">previous</a>
+     |
+    <a href="../index.html" title="API Reference" accesskey="U">up</a>
+   |
+    <a href="meta.html" title="Model &lt;code class=&#34;docutils literal notranslate&#34;&gt;&lt;span class=&#34;pre&#34;&gt;_meta&lt;/span&gt;&lt;/code&gt; API">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="ref-models-constraints">
+            
+  <div class="section" id="s-module-django.db.models.constraints">
+<span id="s-constraints-reference"></span><span id="module-django.db.models.constraints"></span><span id="constraints-reference"></span><h1>Constraints reference<a class="headerlink" href="#module-django.db.models.constraints" title="Permalink to this headline">¶</a></h1>
+<p>The classes defined in this module create database constraints. They are added
+in the model <a class="reference internal" href="options.html#django.db.models.Options.constraints" title="django.db.models.Options.constraints"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Meta.constraints</span></code></a>
+option.</p>
+<div class="admonition-referencing-built-in-constraints admonition">
+<p class="first admonition-title">Referencing built-in constraints</p>
+<p class="last">Constraints are defined in <code class="docutils literal notranslate"><span class="pre">django.db.models.constraints</span></code>, but for
+convenience they’re imported into <a class="reference internal" href="../../topics/db/models.html#module-django.db.models" title="django.db.models"><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.db.models</span></code></a>. The standard
+convention is to use <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">django.db</span> <span class="pre">import</span> <span class="pre">models</span></code> and refer to the
+constraints as <code class="docutils literal notranslate"><span class="pre">models.&lt;Foo&gt;Constraint</span></code>.</p>
+</div>
+<div class="admonition-constraints-in-abstract-base-classes admonition">
+<p class="first admonition-title">Constraints in abstract base classes</p>
+<p class="last">You must always specify a unique name for the constraint. As such, you
+cannot normally specify a constraint on an abstract base class, since the
+<a class="reference internal" href="options.html#django.db.models.Options.constraints" title="django.db.models.Options.constraints"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Meta.constraints</span></code></a> option is
+inherited by subclasses, with exactly the same values for the attributes
+(including <code class="docutils literal notranslate"><span class="pre">name</span></code>) each time. To work around name collisions, part of the
+name may contain <code class="docutils literal notranslate"><span class="pre">'%(app_label)s'</span></code> and <code class="docutils literal notranslate"><span class="pre">'%(class)s'</span></code>, which are
+replaced, respectively, by the lowercased app label and class name of the
+concrete model. For example <code class="docutils literal notranslate"><span class="pre">CheckConstraint(condition=Q(age__gte=18),</span>
+<span class="pre">name='%(app_label)s_%(class)s_is_adult')</span></code>.</p>
+</div>
+<div class="admonition-validation-of-constraints admonition">
+<p class="first admonition-title">Validation of Constraints</p>
+<p class="last">Constraints are checked during the <a class="reference internal" href="instances.html#validating-objects"><span class="std std-ref">model validation</span></a>.</p>
+</div>
+<div class="section" id="s-baseconstraint">
+<span id="baseconstraint"></span><h2><code class="docutils literal notranslate"><span class="pre">BaseConstraint</span></code><a class="headerlink" href="#baseconstraint" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.db.models.BaseConstraint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">BaseConstraint</span></code>(<em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span></em>, <em><span class="n"><span class="pre">violation_error_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">violation_error_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/db/models/constraints.py#L21"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.db.models.BaseConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all constraints. Subclasses must implement
+<code class="docutils literal notranslate"><span class="pre">constraint_sql()</span></code>, <code class="docutils literal notranslate"><span class="pre">create_sql()</span></code>, <code class="docutils literal notranslate"><span class="pre">remove_sql()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">validate()</span></code> methods.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 5.0: </span>Support for passing positional arguments is deprecated.</p>
+</div>
+</dd></dl>
+
+<p>All constraints have the following parameters in common:</p>
+<div class="section" id="s-name">
+<span id="name"></span><h3><code class="docutils literal notranslate"><span class="pre">name</span></code><a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.BaseConstraint.name">
+<code class="sig-prename descclassname"><span class="pre">BaseConstraint.</span></code><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#django.db.models.BaseConstraint.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The name of the constraint. You must always specify a unique name for the
+constraint.</p>
+</div>
+<div class="section" id="s-violation-error-code">
+<span id="violation-error-code"></span><h3><code class="docutils literal notranslate"><span class="pre">violation_error_code</span></code><a class="headerlink" href="#violation-error-code" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<span class="title">New in Django 5.0.</span> </div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.BaseConstraint.violation_error_code">
+<code class="sig-prename descclassname"><span class="pre">BaseConstraint.</span></code><code class="sig-name descname"><span class="pre">violation_error_code</span></code><a class="headerlink" href="#django.db.models.BaseConstraint.violation_error_code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The error code used when <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code> is raised during
+<a class="reference internal" href="instances.html#validating-objects"><span class="std std-ref">model validation</span></a>. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</div>
+<div class="section" id="s-violation-error-message">
+<span id="violation-error-message"></span><h3><code class="docutils literal notranslate"><span class="pre">violation_error_message</span></code><a class="headerlink" href="#violation-error-message" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.BaseConstraint.violation_error_message">
+<code class="sig-prename descclassname"><span class="pre">BaseConstraint.</span></code><code class="sig-name descname"><span class="pre">violation_error_message</span></code><a class="headerlink" href="#django.db.models.BaseConstraint.violation_error_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The error message used when <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code> is raised during
+<a class="reference internal" href="instances.html#validating-objects"><span class="std std-ref">model validation</span></a>. Defaults to
+<code class="docutils literal notranslate"><span class="pre">&quot;Constraint</span> <span class="pre">“%(name)s”</span> <span class="pre">is</span> <span class="pre">violated.&quot;</span></code>.</p>
+</div>
+<div class="section" id="s-validate">
+<span id="validate"></span><h3><code class="docutils literal notranslate"><span class="pre">validate()</span></code><a class="headerlink" href="#validate" title="Permalink to this headline">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.db.models.BaseConstraint.validate">
+<code class="sig-prename descclassname"><span class="pre">BaseConstraint.</span></code><code class="sig-name descname"><span class="pre">validate</span></code>(<em><span class="n"><span class="pre">model</span></span></em>, <em><span class="n"><span class="pre">instance</span></span></em>, <em><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">using</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DEFAULT_DB_ALIAS</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/db/models/constraints.py#L71"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.db.models.BaseConstraint.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Validates that the constraint, defined on <code class="docutils literal notranslate"><span class="pre">model</span></code>, is respected on the
+<code class="docutils literal notranslate"><span class="pre">instance</span></code>. This will do a query on the database to ensure that the
+constraint is respected. If fields in the <code class="docutils literal notranslate"><span class="pre">exclude</span></code> list are needed to
+validate the constraint, the constraint is ignored.</p>
+<p>Raise a <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code> if the constraint is violated.</p>
+<p>This method must be implemented by a subclass.</p>
+</div>
+</div>
+<div class="section" id="s-checkconstraint">
+<span id="checkconstraint"></span><h2><code class="docutils literal notranslate"><span class="pre">CheckConstraint</span></code><a class="headerlink" href="#checkconstraint" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.db.models.CheckConstraint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">CheckConstraint</span></code>(<em><span class="o"><span class="pre">*</span></span></em>, <em><span class="n"><span class="pre">condition</span></span></em>, <em><span class="n"><span class="pre">name</span></span></em>, <em><span class="n"><span class="pre">violation_error_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">violation_error_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/db/models/constraints.py#L136"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.db.models.CheckConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a check constraint in the database.</p>
+</dd></dl>
+
+<div class="section" id="s-condition">
+<span id="condition"></span><h3><code class="docutils literal notranslate"><span class="pre">condition</span></code><a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.CheckConstraint.condition">
+<code class="sig-prename descclassname"><span class="pre">CheckConstraint.</span></code><code class="sig-name descname"><span class="pre">condition</span></code><a class="headerlink" href="#django.db.models.CheckConstraint.condition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A <a class="reference internal" href="querysets.html#django.db.models.Q" title="django.db.models.Q"><code class="xref py py-class docutils literal notranslate"><span class="pre">Q</span></code></a> object or boolean <a class="reference internal" href="expressions.html#django.db.models.Expression" title="django.db.models.Expression"><code class="xref py py-class docutils literal notranslate"><span class="pre">Expression</span></code></a> that
+specifies the conditional check you want the constraint to enforce.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">CheckConstraint(condition=Q(age__gte=18),</span> <span class="pre">name='age_gte_18')</span></code>
+ensures the age field is never less than 18.</p>
+<div class="admonition-expression-order admonition">
+<p class="first admonition-title">Expression order</p>
+<p><code class="docutils literal notranslate"><span class="pre">Q</span></code> argument order is not necessarily preserved, however the order of
+<code class="docutils literal notranslate"><span class="pre">Q</span></code> expressions themselves are preserved. This may be important for
+databases that preserve check constraint expression order for performance
+reasons. For example, use the following format if order matters:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CheckConstraint</span><span class="p">(</span>
+    <span class="n">condition</span><span class="o">=</span><span class="n">Q</span><span class="p">(</span><span class="n">age__gte</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">Q</span><span class="p">(</span><span class="n">expensive_check</span><span class="o">=</span><span class="n">condition</span><span class="p">),</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;age_gte_18_and_others&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition-oracle-23c admonition">
+<p class="first admonition-title">Oracle &lt; 23c</p>
+<p>Checks with nullable fields on Oracle &lt; 23c must include a condition
+allowing for <code class="docutils literal notranslate"><span class="pre">NULL</span></code> values in order for <a class="reference internal" href="#django.db.models.BaseConstraint.validate" title="django.db.models.BaseConstraint.validate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">validate()</span></code></a>
+to behave the same as check constraints validation. For example, if <code class="docutils literal notranslate"><span class="pre">age</span></code>
+is a nullable field:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CheckConstraint</span><span class="p">(</span><span class="n">condition</span><span class="o">=</span><span class="n">Q</span><span class="p">(</span><span class="n">age__gte</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span> <span class="o">|</span> <span class="n">Q</span><span class="p">(</span><span class="n">age__isnull</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;age_gte_18&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 5.1: </span>The <code class="docutils literal notranslate"><span class="pre">check</span></code> attribute is deprecated in favor of <code class="docutils literal notranslate"><span class="pre">condition</span></code>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="s-uniqueconstraint">
+<span id="uniqueconstraint"></span><h2><code class="docutils literal notranslate"><span class="pre">UniqueConstraint</span></code><a class="headerlink" href="#uniqueconstraint" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">UniqueConstraint</span></code>(<em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">expressions</span></span></em>, <em><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">condition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">deferrable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">include</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">opclasses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em><span class="n"><span class="pre">nulls_distinct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">violation_error_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em><span class="n"><span class="pre">violation_error_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>)<a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/db/models/constraints.py#L296"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.db.models.UniqueConstraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a unique constraint in the database.</p>
+</dd></dl>
+
+<div class="section" id="s-expressions">
+<span id="expressions"></span><h3><code class="docutils literal notranslate"><span class="pre">expressions</span></code><a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.expressions">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">expressions</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.expressions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Positional argument <code class="docutils literal notranslate"><span class="pre">*expressions</span></code> allows creating functional unique
+constraints on expressions and database functions.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UniqueConstraint</span><span class="p">(</span><span class="n">Lower</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">desc</span><span class="p">(),</span> <span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;unique_lower_name_category&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>creates a unique constraint on the lowercased value of the <code class="docutils literal notranslate"><span class="pre">name</span></code> field in
+descending order and the <code class="docutils literal notranslate"><span class="pre">category</span></code> field in the default ascending order.</p>
+<p>Functional unique constraints have the same database restrictions as
+<a class="reference internal" href="indexes.html#django.db.models.Index.expressions" title="django.db.models.Index.expressions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Index.expressions</span></code></a>.</p>
+</div>
+<div class="section" id="s-fields">
+<span id="fields"></span><h3><code class="docutils literal notranslate"><span class="pre">fields</span></code><a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.fields">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">fields</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A list of field names that specifies the unique set of columns you want the
+constraint to enforce.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">UniqueConstraint(fields=['room',</span> <span class="pre">'date'],</span>
+<span class="pre">name='unique_booking')</span></code> ensures each room can only be booked once for each
+date.</p>
+</div>
+<div class="section" id="s-id1">
+<span id="id1"></span><h3><code class="docutils literal notranslate"><span class="pre">condition</span></code><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.condition">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">condition</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.condition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A <a class="reference internal" href="querysets.html#django.db.models.Q" title="django.db.models.Q"><code class="xref py py-class docutils literal notranslate"><span class="pre">Q</span></code></a> object that specifies the condition you want the constraint to
+enforce.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UniqueConstraint</span><span class="p">(</span><span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">],</span> <span class="n">condition</span><span class="o">=</span><span class="n">Q</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">&quot;DRAFT&quot;</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;unique_draft_user&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>ensures that each user only has one draft.</p>
+<p>These conditions have the same database restrictions as
+<a class="reference internal" href="indexes.html#django.db.models.Index.condition" title="django.db.models.Index.condition"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Index.condition</span></code></a>.</p>
+</div>
+<div class="section" id="s-deferrable">
+<span id="deferrable"></span><h3><code class="docutils literal notranslate"><span class="pre">deferrable</span></code><a class="headerlink" href="#deferrable" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.deferrable">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">deferrable</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.deferrable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Set this parameter to create a deferrable unique constraint. Accepted values
+are <code class="docutils literal notranslate"><span class="pre">Deferrable.DEFERRED</span></code> or <code class="docutils literal notranslate"><span class="pre">Deferrable.IMMEDIATE</span></code>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Deferrable</span><span class="p">,</span> <span class="n">UniqueConstraint</span>
+
+<span class="n">UniqueConstraint</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;unique_order&quot;</span><span class="p">,</span>
+    <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;order&quot;</span><span class="p">],</span>
+    <span class="n">deferrable</span><span class="o">=</span><span class="n">Deferrable</span><span class="o">.</span><span class="n">DEFERRED</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>By default constraints are not deferred. A deferred constraint will not be
+enforced until the end of the transaction. An immediate constraint will be
+enforced immediately after every command.</p>
+<div class="admonition-mysql-mariadb-and-sqlite admonition">
+<p class="first admonition-title">MySQL, MariaDB, and SQLite.</p>
+<p class="last">Deferrable unique constraints are ignored on MySQL, MariaDB, and SQLite as
+neither supports them.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Deferred unique constraints may lead to a <a class="reference external" href="https://www.postgresql.org/docs/current/sql-createtable.html#id-1.9.3.85.9.4">performance penalty</a>.</p>
+</div>
+</div>
+<div class="section" id="s-include">
+<span id="include"></span><h3><code class="docutils literal notranslate"><span class="pre">include</span></code><a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.include">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">include</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.include" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A list or tuple of the names of the fields to be included in the covering
+unique index as non-key columns. This allows index-only scans to be used for
+queries that select only included fields (<a class="reference internal" href="#django.db.models.UniqueConstraint.include" title="django.db.models.UniqueConstraint.include"><code class="xref py py-attr docutils literal notranslate"><span class="pre">include</span></code></a>)
+and filter only by unique fields (<a class="reference internal" href="#django.db.models.UniqueConstraint.fields" title="django.db.models.UniqueConstraint.fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fields</span></code></a>).</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UniqueConstraint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;unique_booking&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;room&quot;</span><span class="p">,</span> <span class="s2">&quot;date&quot;</span><span class="p">],</span> <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;full_name&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>will allow filtering on <code class="docutils literal notranslate"><span class="pre">room</span></code> and <code class="docutils literal notranslate"><span class="pre">date</span></code>, also selecting <code class="docutils literal notranslate"><span class="pre">full_name</span></code>,
+while fetching data only from the index.</p>
+<p>Unique constraints with non-key columns are ignored for databases besides
+PostgreSQL.</p>
+<p>Non-key columns have the same database restrictions as <a class="reference internal" href="indexes.html#django.db.models.Index.include" title="django.db.models.Index.include"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Index.include</span></code></a>.</p>
+</div>
+<div class="section" id="s-opclasses">
+<span id="opclasses"></span><h3><code class="docutils literal notranslate"><span class="pre">opclasses</span></code><a class="headerlink" href="#opclasses" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.opclasses">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">opclasses</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.opclasses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The names of the <a class="reference external" href="https://www.postgresql.org/docs/current/indexes-opclass.html">PostgreSQL operator classes</a> to use for
+this unique index. If you require a custom operator class, you must provide one
+for each field in the index.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UniqueConstraint</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;unique_username&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;username&quot;</span><span class="p">],</span> <span class="n">opclasses</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;varchar_pattern_ops&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>creates a unique index on <code class="docutils literal notranslate"><span class="pre">username</span></code> using <code class="docutils literal notranslate"><span class="pre">varchar_pattern_ops</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">opclasses</span></code> are ignored for databases besides PostgreSQL.</p>
+</div>
+<div class="section" id="s-nulls-distinct">
+<span id="nulls-distinct"></span><h3><code class="docutils literal notranslate"><span class="pre">nulls_distinct</span></code><a class="headerlink" href="#nulls-distinct" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<span class="title">New in Django 5.0.</span> </div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.nulls_distinct">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">nulls_distinct</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.nulls_distinct" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Whether rows containing <code class="docutils literal notranslate"><span class="pre">NULL</span></code> values covered by the unique constraint should
+be considered distinct from each other. The default value is <code class="docutils literal notranslate"><span class="pre">None</span></code> which
+uses the database default which is <code class="docutils literal notranslate"><span class="pre">True</span></code> on most backends.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">UniqueConstraint</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ordering&quot;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ordering&quot;</span><span class="p">],</span> <span class="n">nulls_distinct</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>creates a unique constraint that only allows one row to store a <code class="docutils literal notranslate"><span class="pre">NULL</span></code> value
+in the <code class="docutils literal notranslate"><span class="pre">ordering</span></code> column.</p>
+<p>Unique constraints with <code class="docutils literal notranslate"><span class="pre">nulls_distinct</span></code> are ignored for databases besides
+PostgreSQL 15+.</p>
+</div>
+<div class="section" id="s-id2">
+<span id="id2"></span><h3><code class="docutils literal notranslate"><span class="pre">violation_error_code</span></code><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<span class="title">New in Django 5.0.</span> </div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.violation_error_code">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">violation_error_code</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.violation_error_code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The error code used when <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code> is raised during
+<a class="reference internal" href="instances.html#validating-objects"><span class="std std-ref">model validation</span></a>. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>This code is <em>not used</em> for <a class="reference internal" href="#django.db.models.UniqueConstraint" title="django.db.models.UniqueConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a>s with
+<a class="reference internal" href="#django.db.models.UniqueConstraint.fields" title="django.db.models.UniqueConstraint.fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fields</span></code></a> and without a
+<a class="reference internal" href="#django.db.models.UniqueConstraint.condition" title="django.db.models.UniqueConstraint.condition"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condition</span></code></a>. Such <a class="reference internal" href="#django.db.models.UniqueConstraint" title="django.db.models.UniqueConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a>s have the
+same error code as constraints defined with <a class="reference internal" href="fields.html#django.db.models.Field.unique" title="django.db.models.Field.unique"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Field.unique</span></code></a> or in
+<a class="reference internal" href="options.html#django.db.models.Options.constraints" title="django.db.models.Options.constraints"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Meta.unique_together</span></code></a>.</p>
+</div>
+<div class="section" id="s-id3">
+<span id="id3"></span><h3><code class="docutils literal notranslate"><span class="pre">violation_error_message</span></code><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.db.models.UniqueConstraint.violation_error_message">
+<code class="sig-prename descclassname"><span class="pre">UniqueConstraint.</span></code><code class="sig-name descname"><span class="pre">violation_error_message</span></code><a class="headerlink" href="#django.db.models.UniqueConstraint.violation_error_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The error message used when <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code> is raised during
+<a class="reference internal" href="instances.html#validating-objects"><span class="std std-ref">model validation</span></a>. Defaults to
+<a class="reference internal" href="#django.db.models.BaseConstraint.violation_error_message" title="django.db.models.BaseConstraint.violation_error_message"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseConstraint.violation_error_message</span></code></a>.</p>
+<p>This message is <em>not used</em> for <a class="reference internal" href="#django.db.models.UniqueConstraint" title="django.db.models.UniqueConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a>s with
+<a class="reference internal" href="#django.db.models.UniqueConstraint.fields" title="django.db.models.UniqueConstraint.fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fields</span></code></a> and without a
+<a class="reference internal" href="#django.db.models.UniqueConstraint.condition" title="django.db.models.UniqueConstraint.condition"><code class="xref py py-attr docutils literal notranslate"><span class="pre">condition</span></code></a>. Such <a class="reference internal" href="#django.db.models.UniqueConstraint" title="django.db.models.UniqueConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a>s show the
+same message as constraints defined with
+<a class="reference internal" href="fields.html#django.db.models.Field.unique" title="django.db.models.Field.unique"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Field.unique</span></code></a> or in
+<a class="reference internal" href="options.html#django.db.models.Options.constraints" title="django.db.models.Options.constraints"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Meta.unique_together</span></code></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Constraints reference</a><ul>
+<li><a class="reference internal" href="#baseconstraint"><code class="docutils literal notranslate"><span class="pre">BaseConstraint</span></code></a><ul>
+<li><a class="reference internal" href="#name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li><a class="reference internal" href="#violation-error-code"><code class="docutils literal notranslate"><span class="pre">violation_error_code</span></code></a></li>
+<li><a class="reference internal" href="#violation-error-message"><code class="docutils literal notranslate"><span class="pre">violation_error_message</span></code></a></li>
+<li><a class="reference internal" href="#validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#checkconstraint"><code class="docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a><ul>
+<li><a class="reference internal" href="#condition"><code class="docutils literal notranslate"><span class="pre">condition</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#uniqueconstraint"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a><ul>
+<li><a class="reference internal" href="#expressions"><code class="docutils literal notranslate"><span class="pre">expressions</span></code></a></li>
+<li><a class="reference internal" href="#fields"><code class="docutils literal notranslate"><span class="pre">fields</span></code></a></li>
+<li><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">condition</span></code></a></li>
+<li><a class="reference internal" href="#deferrable"><code class="docutils literal notranslate"><span class="pre">deferrable</span></code></a></li>
+<li><a class="reference internal" href="#include"><code class="docutils literal notranslate"><span class="pre">include</span></code></a></li>
+<li><a class="reference internal" href="#opclasses"><code class="docutils literal notranslate"><span class="pre">opclasses</span></code></a></li>
+<li><a class="reference internal" href="#nulls-distinct"><code class="docutils literal notranslate"><span class="pre">nulls_distinct</span></code></a></li>
+<li><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">violation_error_code</span></code></a></li>
+<li><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">violation_error_message</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="indexes.html"
+                          title="previous chapter">Model index reference</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="meta.html"
+                          title="next chapter">Model <code class="docutils literal notranslate"><span class="pre">_meta</span></code> API</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/ref/models/constraints.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Aug 08, 2024</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="indexes.html" title="Model index reference">previous</a>
+     |
+    <a href="../index.html" title="API Reference" accesskey="U">up</a>
+   |
+    <a href="meta.html" title="Model &lt;code class=&#34;docutils literal notranslate&#34;&gt;&lt;span class=&#34;pre&#34;&gt;_meta&lt;/span&gt;&lt;/code&gt; API">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

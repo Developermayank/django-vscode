@@ -1,0 +1,511 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generic editing views &#8212; Django 5.1.1.dev20240808115027 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Generic date views" href="generic-date-based.html" />
+    <link rel="prev" title="Generic display views" href="generic-display.html" />
+
+
+
+ 
+<script src="../../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../../index.html">Django 5.1.1.dev20240808115027 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../../index.html">Home</a>  |
+        <a title="Table of contents" href="../../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../../genindex.html">Index</a>  |
+        <a title="Module index" href="../../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="generic-display.html" title="Generic display views">previous</a>
+     |
+    <a href="../index.html" title="API Reference" accesskey="U">up</a>
+   |
+    <a href="generic-date-based.html" title="Generic date views">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="ref-class-based-views-generic-editing">
+            
+  <div class="section" id="s-generic-editing-views">
+<span id="generic-editing-views"></span><h1>Generic editing views<a class="headerlink" href="#generic-editing-views" title="Permalink to this headline">¶</a></h1>
+<p>The following views are described on this page and provide a foundation for
+editing content:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#django.views.generic.edit.FormView" title="django.views.generic.edit.FormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.FormView</span></code></a></li>
+<li><a class="reference internal" href="#django.views.generic.edit.CreateView" title="django.views.generic.edit.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.CreateView</span></code></a></li>
+<li><a class="reference internal" href="#django.views.generic.edit.UpdateView" title="django.views.generic.edit.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.UpdateView</span></code></a></li>
+<li><a class="reference internal" href="#django.views.generic.edit.DeleteView" title="django.views.generic.edit.DeleteView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.DeleteView</span></code></a></li>
+</ul>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference internal" href="../contrib/messages.html"><span class="doc">messages framework</span></a> contains
+<a class="reference internal" href="../contrib/messages.html#django.contrib.messages.views.SuccessMessageMixin" title="django.contrib.messages.views.SuccessMessageMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">SuccessMessageMixin</span></code></a>, which
+facilitates presenting messages about successful form submissions.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Some of the examples on this page assume that an <code class="docutils literal notranslate"><span class="pre">Author</span></code> model has been
+defined as follows in <code class="docutils literal notranslate"><span class="pre">myapp/models.py</span></code>:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+
+
+<span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_absolute_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s2">&quot;author-detail&quot;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pk&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-formview">
+<span id="formview"></span><h2><code class="docutils literal notranslate"><span class="pre">FormView</span></code><a class="headerlink" href="#formview" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.edit.FormView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.edit.</span></code><code class="sig-name descname"><span class="pre">FormView</span></code><a class="headerlink" href="#django.views.generic.edit.FormView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A view that displays a form. On error, redisplays the form with validation
+errors; on success, redirects to a new URL.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><a class="reference internal" href="mixins-simple.html#django.views.generic.base.TemplateResponseMixin" title="django.views.generic.base.TemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.TemplateResponseMixin</span></code></a></li>
+<li><a class="reference internal" href="#django.views.generic.edit.BaseFormView" title="django.views.generic.edit.BaseFormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.BaseFormView</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.FormMixin" title="django.views.generic.edit.FormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.FormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ProcessFormView" title="django.views.generic.edit.ProcessFormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ProcessFormView</span></code></a></li>
+<li><a class="reference internal" href="base.html#django.views.generic.base.View" title="django.views.generic.base.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></a></li>
+</ul>
+<p><strong>Example myapp/forms.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+
+<span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">()</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># send email using the self.cleaned_data dictionary</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/views.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myapp.forms</span> <span class="kn">import</span> <span class="n">ContactForm</span>
+<span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">FormView</span>
+
+
+<span class="k">class</span> <span class="nc">ContactFormView</span><span class="p">(</span><span class="n">FormView</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s2">&quot;contact.html&quot;</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ContactForm</span>
+    <span class="n">success_url</span> <span class="o">=</span> <span class="s2">&quot;/thanks/&quot;</span>
+
+    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="c1"># This method is called when valid form data has been POSTed.</span>
+        <span class="c1"># It should return an HttpResponse.</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">send_email</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/contact.html</strong>:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span><span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span>
+    <span class="cp">{{</span> <span class="nv">form.as_p</span> <span class="cp">}}</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Send message&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.edit.BaseFormView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.edit.</span></code><code class="sig-name descname"><span class="pre">BaseFormView</span></code><a class="headerlink" href="#django.views.generic.edit.BaseFormView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base view for displaying a form. It is not intended to be used directly,
+but rather as a parent class of the
+<a class="reference internal" href="#django.views.generic.edit.FormView" title="django.views.generic.edit.FormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.FormView</span></code></a> or other views displaying a
+form.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.FormMixin" title="django.views.generic.edit.FormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.FormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ProcessFormView" title="django.views.generic.edit.ProcessFormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ProcessFormView</span></code></a></li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="s-createview">
+<span id="createview"></span><h2><code class="docutils literal notranslate"><span class="pre">CreateView</span></code><a class="headerlink" href="#createview" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.edit.CreateView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.edit.</span></code><code class="sig-name descname"><span class="pre">CreateView</span></code><a class="headerlink" href="#django.views.generic.edit.CreateView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A view that displays a form for creating an object, redisplaying the form
+with validation errors (if there are any) and saving the object.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><a class="reference internal" href="mixins-single-object.html#django.views.generic.detail.SingleObjectTemplateResponseMixin" title="django.views.generic.detail.SingleObjectTemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectTemplateResponseMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-simple.html#django.views.generic.base.TemplateResponseMixin" title="django.views.generic.base.TemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.TemplateResponseMixin</span></code></a></li>
+<li><a class="reference internal" href="#django.views.generic.edit.BaseCreateView" title="django.views.generic.edit.BaseCreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.BaseCreateView</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ModelFormMixin" title="django.views.generic.edit.ModelFormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ModelFormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.FormMixin" title="django.views.generic.edit.FormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.FormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-single-object.html#django.views.generic.detail.SingleObjectMixin" title="django.views.generic.detail.SingleObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ProcessFormView" title="django.views.generic.edit.ProcessFormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ProcessFormView</span></code></a></li>
+<li><a class="reference internal" href="base.html#django.views.generic.base.View" title="django.views.generic.base.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></a></li>
+</ul>
+<p><strong>Attributes</strong></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.edit.CreateView.template_name_suffix">
+<code class="sig-name descname"><span class="pre">template_name_suffix</span></code><a class="headerlink" href="#django.views.generic.edit.CreateView.template_name_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">CreateView</span></code> page displayed to a <code class="docutils literal notranslate"><span class="pre">GET</span></code> request uses a
+<code class="docutils literal notranslate"><span class="pre">template_name_suffix</span></code> of <code class="docutils literal notranslate"><span class="pre">'_form'</span></code>. For
+example, changing this attribute to <code class="docutils literal notranslate"><span class="pre">'_create_form'</span></code> for a view
+creating objects for the example <code class="docutils literal notranslate"><span class="pre">Author</span></code> model would cause the
+default <code class="docutils literal notranslate"><span class="pre">template_name</span></code> to be <code class="docutils literal notranslate"><span class="pre">'myapp/author_create_form.html'</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.edit.CreateView.object">
+<code class="sig-name descname"><span class="pre">object</span></code><a class="headerlink" href="#django.views.generic.edit.CreateView.object" title="Permalink to this definition">¶</a></dt>
+<dd><p>When using <code class="docutils literal notranslate"><span class="pre">CreateView</span></code> you have access to <code class="docutils literal notranslate"><span class="pre">self.object</span></code>, which is
+the object being created. If the object hasn’t been created yet, the
+value will be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+<p><strong>Example myapp/views.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">CreateView</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Author</span>
+
+
+<span class="k">class</span> <span class="nc">AuthorCreateView</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Author</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/author_form.html</strong>:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span><span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span>
+    <span class="cp">{{</span> <span class="nv">form.as_p</span> <span class="cp">}}</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Save&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.edit.BaseCreateView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.edit.</span></code><code class="sig-name descname"><span class="pre">BaseCreateView</span></code><a class="headerlink" href="#django.views.generic.edit.BaseCreateView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base view for creating a new object instance. It is not intended to be
+used directly, but rather as a parent class of the
+<a class="reference internal" href="#django.views.generic.edit.CreateView" title="django.views.generic.edit.CreateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.CreateView</span></code></a>.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ModelFormMixin" title="django.views.generic.edit.ModelFormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ModelFormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ProcessFormView" title="django.views.generic.edit.ProcessFormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ProcessFormView</span></code></a></li>
+</ul>
+<p><strong>Methods</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.edit.BaseCreateView.get">
+<code class="sig-name descname"><span class="pre">get</span></code>(<em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.views.generic.edit.BaseCreateView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current object instance (<code class="docutils literal notranslate"><span class="pre">self.object</span></code>) to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.edit.BaseCreateView.post">
+<code class="sig-name descname"><span class="pre">post</span></code>(<em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.views.generic.edit.BaseCreateView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current object instance (<code class="docutils literal notranslate"><span class="pre">self.object</span></code>) to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="s-updateview">
+<span id="updateview"></span><h2><code class="docutils literal notranslate"><span class="pre">UpdateView</span></code><a class="headerlink" href="#updateview" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.edit.UpdateView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.edit.</span></code><code class="sig-name descname"><span class="pre">UpdateView</span></code><a class="headerlink" href="#django.views.generic.edit.UpdateView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A view that displays a form for editing an existing object, redisplaying
+the form with validation errors (if there are any) and saving changes to
+the object. This uses a form automatically generated from the object’s
+model class (unless a form class is manually specified).</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><a class="reference internal" href="mixins-single-object.html#django.views.generic.detail.SingleObjectTemplateResponseMixin" title="django.views.generic.detail.SingleObjectTemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectTemplateResponseMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-simple.html#django.views.generic.base.TemplateResponseMixin" title="django.views.generic.base.TemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.TemplateResponseMixin</span></code></a></li>
+<li><a class="reference internal" href="#django.views.generic.edit.BaseUpdateView" title="django.views.generic.edit.BaseUpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.BaseUpdateView</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ModelFormMixin" title="django.views.generic.edit.ModelFormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ModelFormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.FormMixin" title="django.views.generic.edit.FormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.FormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-single-object.html#django.views.generic.detail.SingleObjectMixin" title="django.views.generic.detail.SingleObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ProcessFormView" title="django.views.generic.edit.ProcessFormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ProcessFormView</span></code></a></li>
+<li><a class="reference internal" href="base.html#django.views.generic.base.View" title="django.views.generic.base.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></a></li>
+</ul>
+<p><strong>Attributes</strong></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.edit.UpdateView.template_name_suffix">
+<code class="sig-name descname"><span class="pre">template_name_suffix</span></code><a class="headerlink" href="#django.views.generic.edit.UpdateView.template_name_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">UpdateView</span></code> page displayed to a <code class="docutils literal notranslate"><span class="pre">GET</span></code> request uses a
+<code class="docutils literal notranslate"><span class="pre">template_name_suffix</span></code> of <code class="docutils literal notranslate"><span class="pre">'_form'</span></code>. For
+example, changing this attribute to <code class="docutils literal notranslate"><span class="pre">'_update_form'</span></code> for a view
+updating objects for the example <code class="docutils literal notranslate"><span class="pre">Author</span></code> model would cause the
+default <code class="docutils literal notranslate"><span class="pre">template_name</span></code> to be <code class="docutils literal notranslate"><span class="pre">'myapp/author_update_form.html'</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.edit.UpdateView.object">
+<code class="sig-name descname"><span class="pre">object</span></code><a class="headerlink" href="#django.views.generic.edit.UpdateView.object" title="Permalink to this definition">¶</a></dt>
+<dd><p>When using <code class="docutils literal notranslate"><span class="pre">UpdateView</span></code> you have access to <code class="docutils literal notranslate"><span class="pre">self.object</span></code>, which is
+the object being updated.</p>
+</dd></dl>
+
+<p><strong>Example myapp/views.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">UpdateView</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Author</span>
+
+
+<span class="k">class</span> <span class="nc">AuthorUpdateView</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Author</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+    <span class="n">template_name_suffix</span> <span class="o">=</span> <span class="s2">&quot;_update_form&quot;</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/author_update_form.html</strong>:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span><span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span>
+    <span class="cp">{{</span> <span class="nv">form.as_p</span> <span class="cp">}}</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Update&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.edit.BaseUpdateView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.edit.</span></code><code class="sig-name descname"><span class="pre">BaseUpdateView</span></code><a class="headerlink" href="#django.views.generic.edit.BaseUpdateView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base view for updating an existing object instance. It is not intended to
+be used directly, but rather as a parent class of the
+<a class="reference internal" href="#django.views.generic.edit.UpdateView" title="django.views.generic.edit.UpdateView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.UpdateView</span></code></a>.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ModelFormMixin" title="django.views.generic.edit.ModelFormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ModelFormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.ProcessFormView" title="django.views.generic.edit.ProcessFormView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.ProcessFormView</span></code></a></li>
+</ul>
+<p><strong>Methods</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.edit.BaseUpdateView.get">
+<code class="sig-name descname"><span class="pre">get</span></code>(<em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.views.generic.edit.BaseUpdateView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current object instance (<code class="docutils literal notranslate"><span class="pre">self.object</span></code>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.views.generic.edit.BaseUpdateView.post">
+<code class="sig-name descname"><span class="pre">post</span></code>(<em><span class="n"><span class="pre">request</span></span></em>, <em><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em>)<a class="headerlink" href="#django.views.generic.edit.BaseUpdateView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the current object instance (<code class="docutils literal notranslate"><span class="pre">self.object</span></code>).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="s-deleteview">
+<span id="deleteview"></span><h2><code class="docutils literal notranslate"><span class="pre">DeleteView</span></code><a class="headerlink" href="#deleteview" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.edit.DeleteView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.edit.</span></code><code class="sig-name descname"><span class="pre">DeleteView</span></code><a class="headerlink" href="#django.views.generic.edit.DeleteView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A view that displays a confirmation page and deletes an existing object.
+The given object will only be deleted if the request method is <code class="docutils literal notranslate"><span class="pre">POST</span></code>. If
+this view is fetched via <code class="docutils literal notranslate"><span class="pre">GET</span></code>, it will display a confirmation page that
+should contain a form that POSTs to the same URL.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><a class="reference internal" href="mixins-single-object.html#django.views.generic.detail.SingleObjectTemplateResponseMixin" title="django.views.generic.detail.SingleObjectTemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectTemplateResponseMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-simple.html#django.views.generic.base.TemplateResponseMixin" title="django.views.generic.base.TemplateResponseMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.TemplateResponseMixin</span></code></a></li>
+<li><a class="reference internal" href="#django.views.generic.edit.BaseDeleteView" title="django.views.generic.edit.BaseDeleteView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.BaseDeleteView</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.DeletionMixin" title="django.views.generic.edit.DeletionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.DeletionMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.FormMixin" title="django.views.generic.edit.FormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.FormMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-simple.html#django.views.generic.base.ContextMixin" title="django.views.generic.base.ContextMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.ContextMixin</span></code></a></li>
+<li><a class="reference internal" href="generic-display.html#django.views.generic.detail.BaseDetailView" title="django.views.generic.detail.BaseDetailView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.BaseDetailView</span></code></a></li>
+<li><a class="reference internal" href="mixins-single-object.html#django.views.generic.detail.SingleObjectMixin" title="django.views.generic.detail.SingleObjectMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.SingleObjectMixin</span></code></a></li>
+<li><a class="reference internal" href="base.html#django.views.generic.base.View" title="django.views.generic.base.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.base.View</span></code></a></li>
+</ul>
+<p><strong>Attributes</strong></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.edit.DeleteView.form_class">
+<code class="sig-name descname"><span class="pre">form_class</span></code><a class="headerlink" href="#django.views.generic.edit.DeleteView.form_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherited from <a class="reference internal" href="#django.views.generic.edit.BaseDeleteView" title="django.views.generic.edit.BaseDeleteView"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDeleteView</span></code></a>. The
+form class that will be used to confirm the request. By default
+<a class="reference internal" href="../forms/api.html#django.forms.Form" title="django.forms.Form"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.forms.Form</span></code></a>, resulting in an empty form that is always
+valid.</p>
+<p>By providing your own <code class="docutils literal notranslate"><span class="pre">Form</span></code> subclass, you can add additional
+requirements, such as a confirmation checkbox, for example.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.views.generic.edit.DeleteView.template_name_suffix">
+<code class="sig-name descname"><span class="pre">template_name_suffix</span></code><a class="headerlink" href="#django.views.generic.edit.DeleteView.template_name_suffix" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <code class="docutils literal notranslate"><span class="pre">DeleteView</span></code> page displayed to a <code class="docutils literal notranslate"><span class="pre">GET</span></code> request uses a
+<code class="docutils literal notranslate"><span class="pre">template_name_suffix</span></code> of <code class="docutils literal notranslate"><span class="pre">'_confirm_delete'</span></code>. For
+example, changing this attribute to <code class="docutils literal notranslate"><span class="pre">'_check_delete'</span></code> for a view
+deleting objects for the example <code class="docutils literal notranslate"><span class="pre">Author</span></code> model would cause the
+default <code class="docutils literal notranslate"><span class="pre">template_name</span></code> to be <code class="docutils literal notranslate"><span class="pre">'myapp/author_check_delete.html'</span></code>.</p>
+</dd></dl>
+
+<p><strong>Example myapp/views.py</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse_lazy</span>
+<span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">DeleteView</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Author</span>
+
+
+<span class="k">class</span> <span class="nc">AuthorDeleteView</span><span class="p">(</span><span class="n">DeleteView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Author</span>
+    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s2">&quot;author-list&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Example myapp/author_confirm_delete.html</strong>:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span><span class="cp">{%</span> <span class="k">csrf_token</span> <span class="cp">%}</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Are you sure you want to delete &quot;<span class="cp">{{</span> <span class="nv">object</span> <span class="cp">}}</span>&quot;?<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="cp">{{</span> <span class="nv">form</span> <span class="cp">}}</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Confirm&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.views.generic.edit.BaseDeleteView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-prename descclassname"><span class="pre">django.views.generic.edit.</span></code><code class="sig-name descname"><span class="pre">BaseDeleteView</span></code><a class="headerlink" href="#django.views.generic.edit.BaseDeleteView" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base view for deleting an object instance. It is not intended to be used
+directly, but rather as a parent class of the
+<a class="reference internal" href="#django.views.generic.edit.DeleteView" title="django.views.generic.edit.DeleteView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.DeleteView</span></code></a>.</p>
+<p><strong>Ancestors (MRO)</strong></p>
+<p>This view inherits methods and attributes from the following views:</p>
+<ul class="simple">
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.DeletionMixin" title="django.views.generic.edit.DeletionMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.DeletionMixin</span></code></a></li>
+<li><a class="reference internal" href="mixins-editing.html#django.views.generic.edit.FormMixin" title="django.views.generic.edit.FormMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.edit.FormMixin</span></code></a></li>
+<li><a class="reference internal" href="generic-display.html#django.views.generic.detail.BaseDetailView" title="django.views.generic.detail.BaseDetailView"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.views.generic.detail.BaseDetailView</span></code></a></li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Generic editing views</a><ul>
+<li><a class="reference internal" href="#formview"><code class="docutils literal notranslate"><span class="pre">FormView</span></code></a></li>
+<li><a class="reference internal" href="#createview"><code class="docutils literal notranslate"><span class="pre">CreateView</span></code></a></li>
+<li><a class="reference internal" href="#updateview"><code class="docutils literal notranslate"><span class="pre">UpdateView</span></code></a></li>
+<li><a class="reference internal" href="#deleteview"><code class="docutils literal notranslate"><span class="pre">DeleteView</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="generic-display.html"
+                          title="previous chapter">Generic display views</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="generic-date-based.html"
+                          title="next chapter">Generic date views</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/ref/class-based-views/generic-editing.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Aug 08, 2024</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="generic-display.html" title="Generic display views">previous</a>
+     |
+    <a href="../index.html" title="API Reference" accesskey="U">up</a>
+   |
+    <a href="generic-date-based.html" title="Generic date views">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

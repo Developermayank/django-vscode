@@ -1,0 +1,782 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Middleware &#8212; Django 5.1.1.dev20240808115027 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Migration Operations" href="migration-operations.html" />
+    <link rel="prev" title="Logging" href="logging.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.1.1.dev20240808115027 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="logging.html" title="Logging">previous</a>
+     |
+    <a href="index.html" title="API Reference" accesskey="U">up</a>
+   |
+    <a href="migration-operations.html" title="Migration Operations">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="ref-middleware">
+            
+  <div class="section" id="s-module-django.middleware">
+<span id="s-middleware"></span><span id="module-django.middleware"></span><span id="middleware"></span><h1>Middleware<a class="headerlink" href="#module-django.middleware" title="Permalink to this headline">¶</a></h1>
+<p>This document explains all middleware components that come with Django. For
+information on how to use them and how to write your own middleware, see
+the <a class="reference internal" href="../topics/http/middleware.html"><span class="doc">middleware usage guide</span></a>.</p>
+<div class="section" id="s-available-middleware">
+<span id="available-middleware"></span><h2>Available middleware<a class="headerlink" href="#available-middleware" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-module-django.middleware.cache">
+<span id="s-cache-middleware"></span><span id="module-django.middleware.cache"></span><span id="cache-middleware"></span><h3>Cache middleware<a class="headerlink" href="#module-django.middleware.cache" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.cache.UpdateCacheMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">UpdateCacheMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/cache.py#L61"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.cache.UpdateCacheMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.cache.FetchFromCacheMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">FetchFromCacheMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/cache.py#L133"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.cache.FetchFromCacheMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Enable the site-wide cache. If these are enabled, each Django-powered page will
+be cached for as long as the <a class="reference internal" href="settings.html#std-setting-CACHE_MIDDLEWARE_SECONDS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CACHE_MIDDLEWARE_SECONDS</span></code></a> setting
+defines. See the <a class="reference internal" href="../topics/cache.html"><span class="doc">cache documentation</span></a>.</p>
+</div>
+<div class="section" id="s-module-django.middleware.common">
+<span id="s-common-middleware"></span><span id="module-django.middleware.common"></span><span id="common-middleware"></span><h3>“Common” middleware<a class="headerlink" href="#module-django.middleware.common" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.common.CommonMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">CommonMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/common.py#L13"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.common.CommonMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Adds a few conveniences for perfectionists:</p>
+<ul>
+<li><p class="first">Forbids access to user agents in the <a class="reference internal" href="settings.html#std-setting-DISALLOWED_USER_AGENTS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DISALLOWED_USER_AGENTS</span></code></a>
+setting, which should be a list of compiled regular expression objects.</p>
+</li>
+<li><p class="first">Performs URL rewriting based on the <a class="reference internal" href="settings.html#std-setting-APPEND_SLASH"><code class="xref std std-setting docutils literal notranslate"><span class="pre">APPEND_SLASH</span></code></a> and
+<a class="reference internal" href="settings.html#std-setting-PREPEND_WWW"><code class="xref std std-setting docutils literal notranslate"><span class="pre">PREPEND_WWW</span></code></a> settings.</p>
+<p>If <a class="reference internal" href="settings.html#std-setting-APPEND_SLASH"><code class="xref std std-setting docutils literal notranslate"><span class="pre">APPEND_SLASH</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code> and the initial URL doesn’t end
+with a slash, and it is not found in the URLconf, then a new URL is
+formed by appending a slash at the end. If this new URL is found in the
+URLconf, then Django redirects the request to this new URL. Otherwise,
+the initial URL is processed as usual.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">foo.com/bar</span></code> will be redirected to <code class="docutils literal notranslate"><span class="pre">foo.com/bar/</span></code> if
+you don’t have a valid URL pattern for <code class="docutils literal notranslate"><span class="pre">foo.com/bar</span></code> but <em>do</em> have a
+valid pattern for <code class="docutils literal notranslate"><span class="pre">foo.com/bar/</span></code>.</p>
+<p>If <a class="reference internal" href="settings.html#std-setting-PREPEND_WWW"><code class="xref std std-setting docutils literal notranslate"><span class="pre">PREPEND_WWW</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, URLs that lack a leading “www.”
+will be redirected to the same URL with a leading “www.”</p>
+<p>Both of these options are meant to normalize URLs. The philosophy is that
+each URL should exist in one, and only one, place. Technically a URL
+<code class="docutils literal notranslate"><span class="pre">foo.com/bar</span></code> is distinct from <code class="docutils literal notranslate"><span class="pre">foo.com/bar/</span></code> – a search-engine
+indexer would treat them as separate URLs – so it’s best practice to
+normalize URLs.</p>
+<p>If necessary, individual views may be excluded from the <code class="docutils literal notranslate"><span class="pre">APPEND_SLASH</span></code>
+behavior using the <a class="reference internal" href="../topics/http/decorators.html#django.views.decorators.common.no_append_slash" title="django.views.decorators.common.no_append_slash"><code class="xref py py-func docutils literal notranslate"><span class="pre">no_append_slash()</span></code></a>
+decorator:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.decorators.common</span> <span class="kn">import</span> <span class="n">no_append_slash</span>
+
+
+<span class="nd">@no_append_slash</span>
+<span class="k">def</span> <span class="nf">sensitive_fbv</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;View to be excluded from APPEND_SLASH.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Sets the <code class="docutils literal notranslate"><span class="pre">Content-Length</span></code> header for non-streaming responses.</p>
+</li>
+</ul>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.middleware.common.CommonMiddleware.response_redirect_class">
+<code class="sig-prename descclassname"><span class="pre">CommonMiddleware.</span></code><code class="sig-name descname"><span class="pre">response_redirect_class</span></code><a class="headerlink" href="#django.middleware.common.CommonMiddleware.response_redirect_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Defaults to <a class="reference internal" href="request-response.html#django.http.HttpResponsePermanentRedirect" title="django.http.HttpResponsePermanentRedirect"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponsePermanentRedirect</span></code></a>. Subclass
+<code class="docutils literal notranslate"><span class="pre">CommonMiddleware</span></code> and override the attribute to customize the redirects
+issued by the middleware.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.common.BrokenLinkEmailsMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">BrokenLinkEmailsMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/common.py#L118"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.common.BrokenLinkEmailsMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<ul class="simple">
+<li>Sends broken link notification emails to <a class="reference internal" href="settings.html#std-setting-MANAGERS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MANAGERS</span></code></a> (see
+<a class="reference internal" href="../howto/error-reporting.html"><span class="doc">How to manage error reporting</span></a>).</li>
+</ul>
+</div>
+<div class="section" id="s-module-django.middleware.gzip">
+<span id="s-gzip-middleware"></span><span id="module-django.middleware.gzip"></span><span id="gzip-middleware"></span><h3>GZip middleware<a class="headerlink" href="#module-django.middleware.gzip" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.gzip.GZipMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">GZipMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/gzip.py#L9"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.gzip.GZipMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="django.middleware.gzip.GZipMiddleware.max_random_bytes">
+<code class="sig-name descname"><span class="pre">max_random_bytes</span></code><a class="headerlink" href="#django.middleware.gzip.GZipMiddleware.max_random_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defaults to 100. Subclass <code class="docutils literal notranslate"><span class="pre">GZipMiddleware</span></code> and override the attribute
+to change the maximum number of random bytes that is included with
+compressed responses.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Security researchers revealed that when compression techniques (including
+<code class="docutils literal notranslate"><span class="pre">GZipMiddleware</span></code>) are used on a website, the site may become exposed to a
+number of possible attacks.</p>
+<p>To mitigate attacks, Django implements a technique called <em>Heal The Breach
+(HTB)</em>. It adds up to 100 bytes (see
+<a class="reference internal" href="#django.middleware.gzip.GZipMiddleware.max_random_bytes" title="django.middleware.gzip.GZipMiddleware.max_random_bytes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">max_random_bytes</span></code></a>) of random bytes to each response
+to make the attacks less effective.</p>
+<p class="last">For more details, see the <a class="reference external" href="https://www.breachattack.com/resources/BREACH%20-%20SSL,%20gone%20in%2030%20seconds.pdf">BREACH paper (PDF)</a>, <a class="reference external" href="https://www.breachattack.com/">breachattack.com</a>, and
+the <a class="reference external" href="https://ieeexplore.ieee.org/document/9754554">Heal The Breach (HTB) paper</a>.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">django.middleware.gzip.GZipMiddleware</span></code> compresses content for browsers
+that understand GZip compression (all modern browsers).</p>
+<p>This middleware should be placed before any other middleware that need to
+read or write the response body so that compression happens afterward.</p>
+<p>It will NOT compress content if any of the following are true:</p>
+<ul class="simple">
+<li>The content body is less than 200 bytes long.</li>
+<li>The response has already set the <code class="docutils literal notranslate"><span class="pre">Content-Encoding</span></code> header.</li>
+<li>The request (the browser) hasn’t sent an <code class="docutils literal notranslate"><span class="pre">Accept-Encoding</span></code> header
+containing <code class="docutils literal notranslate"><span class="pre">gzip</span></code>.</li>
+</ul>
+<p>If the response has an <code class="docutils literal notranslate"><span class="pre">ETag</span></code> header, the ETag is made weak to comply with
+<span class="target" id="index-0"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc9110.html#section-8.8.1"><strong>RFC 9110#section-8.8.1</strong></a>.</p>
+<p>You can apply GZip compression to individual views using the
+<a class="reference internal" href="../topics/http/decorators.html#django.views.decorators.gzip.gzip_page" title="django.views.decorators.gzip.gzip_page"><code class="xref py py-func docutils literal notranslate"><span class="pre">gzip_page()</span></code></a> decorator.</p>
+</div>
+<div class="section" id="s-module-django.middleware.http">
+<span id="s-conditional-get-middleware"></span><span id="module-django.middleware.http"></span><span id="conditional-get-middleware"></span><h3>Conditional GET middleware<a class="headerlink" href="#module-django.middleware.http" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.http.ConditionalGetMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">ConditionalGetMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/http.py#L6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.http.ConditionalGetMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Handles conditional GET operations. If the response doesn’t have an <code class="docutils literal notranslate"><span class="pre">ETag</span></code>
+header, the middleware adds one if needed. If the response has an <code class="docutils literal notranslate"><span class="pre">ETag</span></code> or
+<code class="docutils literal notranslate"><span class="pre">Last-Modified</span></code> header, and the request has <code class="docutils literal notranslate"><span class="pre">If-None-Match</span></code> or
+<code class="docutils literal notranslate"><span class="pre">If-Modified-Since</span></code>, the response is replaced by an
+<a class="reference internal" href="request-response.html#django.http.HttpResponseNotModified" title="django.http.HttpResponseNotModified"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponseNotModified</span></code></a>.</p>
+</div>
+<div class="section" id="s-module-django.middleware.locale">
+<span id="s-locale-middleware"></span><span id="module-django.middleware.locale"></span><span id="locale-middleware"></span><h3>Locale middleware<a class="headerlink" href="#module-django.middleware.locale" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.locale.LocaleMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">LocaleMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/locale.py#L10"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.locale.LocaleMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Enables language selection based on data from the request. It customizes
+content for each user. See the <a class="reference internal" href="../topics/i18n/translation.html"><span class="doc">internationalization documentation</span></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.middleware.locale.LocaleMiddleware.response_redirect_class">
+<code class="sig-prename descclassname"><span class="pre">LocaleMiddleware.</span></code><code class="sig-name descname"><span class="pre">response_redirect_class</span></code><a class="headerlink" href="#django.middleware.locale.LocaleMiddleware.response_redirect_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Defaults to <a class="reference internal" href="request-response.html#django.http.HttpResponseRedirect" title="django.http.HttpResponseRedirect"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponseRedirect</span></code></a>. Subclass
+<code class="docutils literal notranslate"><span class="pre">LocaleMiddleware</span></code> and override the attribute to customize the redirects
+issued by the middleware.</p>
+</div>
+<div class="section" id="s-module-django.contrib.messages.middleware">
+<span id="s-message-middleware"></span><span id="module-django.contrib.messages.middleware"></span><span id="message-middleware"></span><h3>Message middleware<a class="headerlink" href="#module-django.contrib.messages.middleware" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.messages.middleware.MessageMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">MessageMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/contrib/messages/middleware.py#L6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.messages.middleware.MessageMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Enables cookie- and session-based message support. See the
+<a class="reference internal" href="contrib/messages.html"><span class="doc">messages documentation</span></a>.</p>
+</div>
+<div class="section" id="s-module-django.middleware.security">
+<span id="s-id1"></span><span id="s-security-middleware"></span><span id="module-django.middleware.security"></span><span id="id1"></span><span id="security-middleware"></span><h3>Security middleware<a class="headerlink" href="#module-django.middleware.security" title="Permalink to this headline">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If your deployment situation allows, it’s usually a good idea to have your
+front-end web server perform the functionality provided by the
+<code class="docutils literal notranslate"><span class="pre">SecurityMiddleware</span></code>. That way, if there are requests that aren’t served
+by Django (such as static media or user-uploaded files), they will have
+the same protections as requests to your Django application.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.security.SecurityMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">SecurityMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/security.py#L8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.security.SecurityMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">django.middleware.security.SecurityMiddleware</span></code> provides several security
+enhancements to the request/response cycle. Each one can be independently
+enabled or disabled with a setting.</p>
+<ul class="simple">
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_CONTENT_TYPE_NOSNIFF"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_CONTENT_TYPE_NOSNIFF</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_CROSS_ORIGIN_OPENER_POLICY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_CROSS_ORIGIN_OPENER_POLICY</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_HSTS_INCLUDE_SUBDOMAINS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_HSTS_INCLUDE_SUBDOMAINS</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_HSTS_PRELOAD"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_HSTS_PRELOAD</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_HSTS_SECONDS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_HSTS_SECONDS</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_REDIRECT_EXEMPT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_REDIRECT_EXEMPT</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_REFERRER_POLICY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_REFERRER_POLICY</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_SSL_HOST"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_SSL_HOST</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std-setting-SECURE_SSL_REDIRECT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_SSL_REDIRECT</span></code></a></li>
+</ul>
+<div class="section" id="s-http-strict-transport-security">
+<span id="s-id2"></span><span id="http-strict-transport-security"></span><span id="id2"></span><h4>HTTP Strict Transport Security<a class="headerlink" href="#http-strict-transport-security" title="Permalink to this headline">¶</a></h4>
+<p>For sites that should only be accessed over HTTPS, you can instruct modern
+browsers to refuse to connect to your domain name via an insecure connection
+(for a given period of time) by setting the <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security">“Strict-Transport-Security”
+header</a>. This reduces your exposure to some SSL-stripping man-in-the-middle
+(MITM) attacks.</p>
+<p><code class="docutils literal notranslate"><span class="pre">SecurityMiddleware</span></code> will set this header for you on all HTTPS responses if
+you set the <a class="reference internal" href="settings.html#std-setting-SECURE_HSTS_SECONDS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_HSTS_SECONDS</span></code></a> setting to a non-zero integer value.</p>
+<p>When enabling HSTS, it’s a good idea to first use a small value for testing,
+for example, <a class="reference internal" href="settings.html#std-setting-SECURE_HSTS_SECONDS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_HSTS_SECONDS</span> <span class="pre">=</span> <span class="pre">3600</span></code></a> for one
+hour. Each time a web browser sees the HSTS header from your site, it will
+refuse to communicate non-securely (using HTTP) with your domain for the given
+period of time. Once you confirm that all assets are served securely on your
+site (i.e. HSTS didn’t break anything), it’s a good idea to increase this value
+so that infrequent visitors will be protected (31536000 seconds, i.e. 1 year,
+is common).</p>
+<p>Additionally, if you set the <a class="reference internal" href="settings.html#std-setting-SECURE_HSTS_INCLUDE_SUBDOMAINS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_HSTS_INCLUDE_SUBDOMAINS</span></code></a> setting
+to <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">SecurityMiddleware</span></code> will add the <code class="docutils literal notranslate"><span class="pre">includeSubDomains</span></code> directive
+to the <code class="docutils literal notranslate"><span class="pre">Strict-Transport-Security</span></code> header. This is recommended (assuming all
+subdomains are served exclusively using HTTPS), otherwise your site may still
+be vulnerable via an insecure connection to a subdomain.</p>
+<p>If you wish to submit your site to the <a class="reference external" href="https://hstspreload.org/">browser preload list</a>, set the
+<a class="reference internal" href="settings.html#std-setting-SECURE_HSTS_PRELOAD"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_HSTS_PRELOAD</span></code></a> setting to <code class="docutils literal notranslate"><span class="pre">True</span></code>. That appends the
+<code class="docutils literal notranslate"><span class="pre">preload</span></code> directive to the <code class="docutils literal notranslate"><span class="pre">Strict-Transport-Security</span></code> header.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>The HSTS policy applies to your entire domain, not just the URL of the
+response that you set the header on. Therefore, you should only use it if
+your entire domain is served via HTTPS only.</p>
+<p class="last">Browsers properly respecting the HSTS header will refuse to allow users to
+bypass warnings and connect to a site with an expired, self-signed, or
+otherwise invalid SSL certificate. If you use HSTS, make sure your
+certificates are in good shape and stay that way!</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are deployed behind a load-balancer or reverse-proxy server, and the
+<code class="docutils literal notranslate"><span class="pre">Strict-Transport-Security</span></code> header is not being added to your responses,
+it may be because Django doesn’t realize that it’s on a secure connection;
+you may need to set the <a class="reference internal" href="settings.html#std-setting-SECURE_PROXY_SSL_HEADER"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_PROXY_SSL_HEADER</span></code></a> setting.</p>
+</div>
+</div>
+<div class="section" id="s-referrer-policy">
+<span id="s-id4"></span><span id="referrer-policy"></span><span id="id4"></span><h4>Referrer Policy<a class="headerlink" href="#referrer-policy" title="Permalink to this headline">¶</a></h4>
+<p>Browsers use <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer">the Referer header</a> as a way to send information to a site
+about how users got there. When a user clicks a link, the browser will send the
+full URL of the linking page as the referrer. While this can be useful for some
+purposes – like figuring out who’s linking to your site – it also can cause
+privacy concerns by informing one site that a user was visiting another site.</p>
+<p>Some browsers have the ability to accept hints about whether they should send
+the HTTP <code class="docutils literal notranslate"><span class="pre">Referer</span></code> header when a user clicks a link; this hint is provided
+via <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy">the Referrer-Policy header</a>. This header can suggest any of three
+behaviors to browsers:</p>
+<ul class="simple">
+<li>Full URL: send the entire URL in the <code class="docutils literal notranslate"><span class="pre">Referer</span></code> header. For example, if the
+user is visiting <code class="docutils literal notranslate"><span class="pre">https://example.com/page.html</span></code>, the <code class="docutils literal notranslate"><span class="pre">Referer</span></code> header
+would contain <code class="docutils literal notranslate"><span class="pre">&quot;https://example.com/page.html&quot;</span></code>.</li>
+<li>Origin only: send only the “origin” in the referrer. The origin consists of
+the scheme, host and (optionally) port number. For example, if the user is
+visiting <code class="docutils literal notranslate"><span class="pre">https://example.com/page.html</span></code>, the origin would be
+<code class="docutils literal notranslate"><span class="pre">https://example.com/</span></code>.</li>
+<li>No referrer: do not send a <code class="docutils literal notranslate"><span class="pre">Referer</span></code> header at all.</li>
+</ul>
+<p>There are two types of conditions this header can tell a browser to watch out
+for:</p>
+<ul class="simple">
+<li>Same-origin versus cross-origin: a link from <code class="docutils literal notranslate"><span class="pre">https://example.com/1.html</span></code>
+to <code class="docutils literal notranslate"><span class="pre">https://example.com/2.html</span></code> is same-origin. A link from
+<code class="docutils literal notranslate"><span class="pre">https://example.com/page.html</span></code> to <code class="docutils literal notranslate"><span class="pre">https://not.example.com/page.html</span></code> is
+cross-origin.</li>
+<li>Protocol downgrade: a downgrade occurs if the page containing the link is
+served via HTTPS, but the page being linked to is not served via HTTPS.</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When your site is served via HTTPS, <a class="reference internal" href="csrf.html#how-csrf-works"><span class="std std-ref">Django’s CSRF protection system</span></a> requires the <code class="docutils literal notranslate"><span class="pre">Referer</span></code> header to be present, so
+completely disabling the <code class="docutils literal notranslate"><span class="pre">Referer</span></code> header will interfere with CSRF
+protection. To gain most of the benefits of disabling <code class="docutils literal notranslate"><span class="pre">Referer</span></code> headers
+while also keeping CSRF protection, consider enabling only same-origin
+referrers.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">SecurityMiddleware</span></code> can set the <code class="docutils literal notranslate"><span class="pre">Referrer-Policy</span></code> header for you, based on
+the <a class="reference internal" href="settings.html#std-setting-SECURE_REFERRER_POLICY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_REFERRER_POLICY</span></code></a> setting (note spelling: browsers send a
+<code class="docutils literal notranslate"><span class="pre">Referer</span></code> header when a user clicks a link, but the header instructing a
+browser whether to do so is spelled <code class="docutils literal notranslate"><span class="pre">Referrer-Policy</span></code>). The valid values for
+this setting are:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">no-referrer</span></code></dt><dd>Instructs the browser to send no referrer for links clicked on this site.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">no-referrer-when-downgrade</span></code></dt><dd>Instructs the browser to send a full URL as the referrer, but only when no
+protocol downgrade occurs.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">origin</span></code></dt><dd>Instructs the browser to send only the origin, not the full URL, as the
+referrer.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">origin-when-cross-origin</span></code></dt><dd>Instructs the browser to send the full URL as the referrer for same-origin
+links, and only the origin for cross-origin links.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">same-origin</span></code></dt><dd>Instructs the browser to send a full URL, but only for same-origin links. No
+referrer will be sent for cross-origin links.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">strict-origin</span></code></dt><dd>Instructs the browser to send only the origin, not the full URL, and to send
+no referrer when a protocol downgrade occurs.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">strict-origin-when-cross-origin</span></code></dt><dd>Instructs the browser to send the full URL when the link is same-origin and
+no protocol downgrade occurs; send only the origin when the link is
+cross-origin and no protocol downgrade occurs; and no referrer when a
+protocol downgrade occurs.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsafe-url</span></code></dt><dd>Instructs the browser to always send the full URL as the referrer.</dd>
+</dl>
+<div class="admonition-unknown-policy-values admonition">
+<p class="first admonition-title">Unknown Policy Values</p>
+<p class="last">Where a policy value is <a class="reference external" href="https://w3c.github.io/webappsec-referrer-policy/#unknown-policy-values">unknown</a> by a user agent, it is possible to
+specify multiple policy values to provide a fallback. The last specified
+value that is understood takes precedence. To support this, an iterable or
+comma-separated string can be used with <a class="reference internal" href="settings.html#std-setting-SECURE_REFERRER_POLICY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_REFERRER_POLICY</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="s-cross-origin-opener-policy">
+<span id="s-id8"></span><span id="cross-origin-opener-policy"></span><span id="id8"></span><h4>Cross-Origin Opener Policy<a class="headerlink" href="#cross-origin-opener-policy" title="Permalink to this headline">¶</a></h4>
+<p>Some browsers have the ability to isolate top-level windows from other
+documents by putting them in a separate browsing context group based on the
+value of the <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cross-Origin-Opener-Policy">Cross-Origin Opener Policy</a> (COOP) header. If a document that
+is isolated in this way opens a cross-origin popup window, the popup’s
+<code class="docutils literal notranslate"><span class="pre">window.opener</span></code> property will be <code class="docutils literal notranslate"><span class="pre">null</span></code>. Isolating windows using COOP is a
+defense-in-depth protection against cross-origin attacks, especially those like
+Spectre which allowed exfiltration of data loaded into a shared browsing
+context.</p>
+<p><code class="docutils literal notranslate"><span class="pre">SecurityMiddleware</span></code> can set the <code class="docutils literal notranslate"><span class="pre">Cross-Origin-Opener-Policy</span></code> header for
+you, based on the <a class="reference internal" href="settings.html#std-setting-SECURE_CROSS_ORIGIN_OPENER_POLICY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_CROSS_ORIGIN_OPENER_POLICY</span></code></a> setting. The
+valid values for this setting are:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">same-origin</span></code></dt><dd>Isolates the browsing context exclusively to same-origin documents.
+Cross-origin documents are not loaded in the same browsing context. This
+is the default and most secure option.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">same-origin-allow-popups</span></code></dt><dd>Isolates the browsing context to same-origin documents or those which
+either don’t set COOP or which opt out of isolation by setting a COOP of
+<code class="docutils literal notranslate"><span class="pre">unsafe-none</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">unsafe-none</span></code></dt><dd>Allows the document to be added to its opener’s browsing context group
+unless the opener itself has a COOP of <code class="docutils literal notranslate"><span class="pre">same-origin</span></code> or
+<code class="docutils literal notranslate"><span class="pre">same-origin-allow-popups</span></code>.</dd>
+</dl>
+</div>
+<div class="section" id="s-x-content-type-options-nosniff">
+<span id="s-x-content-type-options"></span><span id="x-content-type-options-nosniff"></span><span id="x-content-type-options"></span><h4><code class="docutils literal notranslate"><span class="pre">X-Content-Type-Options:</span> <span class="pre">nosniff</span></code><a class="headerlink" href="#x-content-type-options-nosniff" title="Permalink to this headline">¶</a></h4>
+<p>Some browsers will try to guess the content types of the assets that they
+fetch, overriding the <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header. While this can help display
+sites with improperly configured servers, it can also pose a security
+risk.</p>
+<p>If your site serves user-uploaded files, a malicious user could upload a
+specially-crafted file that would be interpreted as HTML or JavaScript by
+the browser when you expected it to be something harmless.</p>
+<p>To prevent the browser from guessing the content type and force it to
+always use the type provided in the <code class="docutils literal notranslate"><span class="pre">Content-Type</span></code> header, you can pass
+the <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options">X-Content-Type-Options: nosniff</a> header.  <code class="docutils literal notranslate"><span class="pre">SecurityMiddleware</span></code> will
+do this for all responses if the <a class="reference internal" href="settings.html#std-setting-SECURE_CONTENT_TYPE_NOSNIFF"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_CONTENT_TYPE_NOSNIFF</span></code></a> setting
+is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>Note that in most deployment situations where Django isn’t involved in serving
+user-uploaded files, this setting won’t help you. For example, if your
+<a class="reference internal" href="settings.html#std-setting-MEDIA_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MEDIA_URL</span></code></a> is served directly by your front-end web server (nginx,
+Apache, etc.) then you’d want to set this header there. On the other hand, if
+you are using Django to do something like require authorization in order to
+download files and you cannot set the header using your web server, this
+setting will be useful.</p>
+</div>
+<div class="section" id="s-ssl-redirect">
+<span id="s-id11"></span><span id="ssl-redirect"></span><span id="id11"></span><h4>SSL Redirect<a class="headerlink" href="#ssl-redirect" title="Permalink to this headline">¶</a></h4>
+<p>If your site offers both HTTP and HTTPS connections, most users will end up
+with an unsecured connection by default. For best security, you should redirect
+all HTTP connections to HTTPS.</p>
+<p>If you set the <a class="reference internal" href="settings.html#std-setting-SECURE_SSL_REDIRECT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_SSL_REDIRECT</span></code></a> setting to True,
+<code class="docutils literal notranslate"><span class="pre">SecurityMiddleware</span></code> will permanently (HTTP 301) redirect all HTTP
+connections to HTTPS.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For performance reasons, it’s preferable to do these redirects outside of
+Django, in a front-end load balancer or reverse-proxy server such as
+<a class="reference external" href="https://nginx.org/">nginx</a>. <a class="reference internal" href="settings.html#std-setting-SECURE_SSL_REDIRECT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_SSL_REDIRECT</span></code></a> is intended for the deployment
+situations where this isn’t an option.</p>
+</div>
+<p>If the <a class="reference internal" href="settings.html#std-setting-SECURE_SSL_HOST"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_SSL_HOST</span></code></a> setting has a value, all redirects will be
+sent to that host instead of the originally-requested host.</p>
+<p>If there are a few pages on your site that should be available over HTTP, and
+not redirected to HTTPS, you can list regular expressions to match those URLs
+in the <a class="reference internal" href="settings.html#std-setting-SECURE_REDIRECT_EXEMPT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_REDIRECT_EXEMPT</span></code></a> setting.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are deployed behind a load-balancer or reverse-proxy server and
+Django can’t seem to tell when a request actually is already secure, you
+may need to set the <a class="reference internal" href="settings.html#std-setting-SECURE_PROXY_SSL_HEADER"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECURE_PROXY_SSL_HEADER</span></code></a> setting.</p>
+</div>
+</div>
+</div>
+<div class="section" id="s-module-django.contrib.sessions.middleware">
+<span id="s-session-middleware"></span><span id="module-django.contrib.sessions.middleware"></span><span id="session-middleware"></span><h3>Session middleware<a class="headerlink" href="#module-django.contrib.sessions.middleware" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.sessions.middleware.SessionMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">SessionMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/contrib/sessions/middleware.py#L12"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.sessions.middleware.SessionMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Enables session support. See the <a class="reference internal" href="../topics/http/sessions.html"><span class="doc">session documentation</span></a>.</p>
+</div>
+<div class="section" id="s-module-django.contrib.sites.middleware">
+<span id="s-site-middleware"></span><span id="module-django.contrib.sites.middleware"></span><span id="site-middleware"></span><h3>Site middleware<a class="headerlink" href="#module-django.contrib.sites.middleware" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.sites.middleware.CurrentSiteMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">CurrentSiteMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/contrib/sites/middleware.py#L6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.sites.middleware.CurrentSiteMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Adds the <code class="docutils literal notranslate"><span class="pre">site</span></code> attribute representing the current site to every incoming
+<code class="docutils literal notranslate"><span class="pre">HttpRequest</span></code> object. See the <a class="reference internal" href="contrib/sites.html#site-middleware"><span class="std std-ref">sites documentation</span></a>.</p>
+</div>
+<div class="section" id="s-module-django.contrib.auth.middleware">
+<span id="s-authentication-middleware"></span><span id="module-django.contrib.auth.middleware"></span><span id="authentication-middleware"></span><h3>Authentication middleware<a class="headerlink" href="#module-django.contrib.auth.middleware" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.auth.middleware.AuthenticationMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">AuthenticationMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/contrib/auth/middleware.py#L27"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.auth.middleware.AuthenticationMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Adds the <code class="docutils literal notranslate"><span class="pre">user</span></code> attribute, representing the currently-logged-in user, to
+every incoming <code class="docutils literal notranslate"><span class="pre">HttpRequest</span></code> object. See <a class="reference internal" href="../topics/auth/default.html#auth-web-requests"><span class="std std-ref">Authentication in web requests</span></a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.auth.middleware.LoginRequiredMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">LoginRequiredMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/contrib/auth/middleware.py#L41"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.auth.middleware.LoginRequiredMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="versionadded">
+<span class="title">New in Django 5.1.</span> </div>
+<p>Redirects all unauthenticated requests to a login page, except for views
+excluded with <a class="reference internal" href="../topics/auth/default.html#django.contrib.auth.decorators.login_not_required" title="django.contrib.auth.decorators.login_not_required"><code class="xref py py-func docutils literal notranslate"><span class="pre">login_not_required()</span></code></a>. The
+login page defaults to <a class="reference internal" href="settings.html#std-setting-LOGIN_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">settings.LOGIN_URL</span></code></a>, but can be
+customized.</p>
+<p>Enable this middleware by adding it to the <a class="reference internal" href="settings.html#std-setting-MIDDLEWARE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MIDDLEWARE</span></code></a> setting
+<strong>after</strong> <a class="reference internal" href="#django.contrib.auth.middleware.AuthenticationMiddleware" title="django.contrib.auth.middleware.AuthenticationMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">AuthenticationMiddleware</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MIDDLEWARE</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;...&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;django.contrib.auth.middleware.AuthenticationMiddleware&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;django.contrib.auth.middleware.LoginRequiredMiddleware&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;...&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Make a view public, allowing unauthenticated requests, with
+<a class="reference internal" href="../topics/auth/default.html#django.contrib.auth.decorators.login_not_required" title="django.contrib.auth.decorators.login_not_required"><code class="xref py py-func docutils literal notranslate"><span class="pre">login_not_required()</span></code></a>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_not_required</span>
+
+
+<span class="nd">@login_not_required</span>
+<span class="k">def</span> <span class="nf">contact_us</span><span class="p">(</span><span class="n">request</span><span class="p">):</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Customize the login URL or field name for authenticated views with the
+<a class="reference internal" href="../topics/auth/default.html#django.contrib.auth.decorators.login_required" title="django.contrib.auth.decorators.login_required"><code class="xref py py-func docutils literal notranslate"><span class="pre">login_required()</span></code></a> decorator to set
+<code class="docutils literal notranslate"><span class="pre">login_url</span></code> or <code class="docutils literal notranslate"><span class="pre">redirect_field_name</span></code> respectively. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+<span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
+<span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">View</span>
+
+
+<span class="nd">@login_required</span><span class="p">(</span><span class="n">login_url</span><span class="o">=</span><span class="s2">&quot;/books/login/&quot;</span><span class="p">,</span> <span class="n">redirect_field_name</span><span class="o">=</span><span class="s2">&quot;redirect_to&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">book_dashboard</span><span class="p">(</span><span class="n">request</span><span class="p">):</span> <span class="o">...</span>
+
+
+<span class="nd">@method_decorator</span><span class="p">(</span>
+    <span class="n">login_required</span><span class="p">(</span><span class="n">login_url</span><span class="o">=</span><span class="s2">&quot;/books/login/&quot;</span><span class="p">,</span> <span class="n">redirect_field_name</span><span class="o">=</span><span class="s2">&quot;redirect_to&quot;</span><span class="p">),</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;dispatch&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="k">class</span> <span class="nc">BookMetrics</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="admonition-ensure-that-your-login-view-does-not-require-a-login admonition">
+<p class="first admonition-title">Ensure that your login view does not require a login.</p>
+<p class="last">To prevent infinite redirects, ensure you have
+<a class="reference internal" href="../topics/auth/default.html#disable-login-required-middleware-for-views"><span class="std std-ref">enabled unauthenticated requests</span></a> to your login view.</p>
+</div>
+<p><strong>Methods and Attributes</strong></p>
+<p>Subclass the middleware and override these to customize behavior for
+unauthenticated requests.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="django.contrib.auth.middleware.redirect_field_name">
+<code class="sig-name descname"><span class="pre">redirect_field_name</span></code><a class="headerlink" href="#django.contrib.auth.middleware.redirect_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;next&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.auth.middleware.get_login_url">
+<code class="sig-name descname"><span class="pre">get_login_url</span></code>()<a class="headerlink" href="#django.contrib.auth.middleware.get_login_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the URL that unauthenticated requests will be redirected to. If
+defined, this returns the <code class="docutils literal notranslate"><span class="pre">login_url</span></code> set on the
+<a class="reference internal" href="../topics/auth/default.html#django.contrib.auth.decorators.login_required" title="django.contrib.auth.decorators.login_required"><code class="xref py py-func docutils literal notranslate"><span class="pre">login_required()</span></code></a> decorator. Defaults
+to <a class="reference internal" href="settings.html#std-setting-LOGIN_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">settings.LOGIN_URL</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="django.contrib.auth.middleware.get_redirect_field_name">
+<code class="sig-name descname"><span class="pre">get_redirect_field_name</span></code>()<a class="headerlink" href="#django.contrib.auth.middleware.get_redirect_field_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the query parameter that contains the URL the user
+should be redirected to after a successful login. If defined, this returns
+the <code class="docutils literal notranslate"><span class="pre">redirect_field_name</span></code> set on the
+<a class="reference internal" href="../topics/auth/default.html#django.contrib.auth.decorators.login_required" title="django.contrib.auth.decorators.login_required"><code class="xref py py-func docutils literal notranslate"><span class="pre">login_required()</span></code></a> decorator. Defaults
+to <a class="reference internal" href="#django.contrib.auth.middleware.redirect_field_name" title="django.contrib.auth.middleware.redirect_field_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">redirect_field_name</span></code></a>. If <code class="docutils literal notranslate"><span class="pre">None</span></code> is returned, a query parameter
+won’t be added.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.auth.middleware.RemoteUserMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">RemoteUserMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/contrib/auth/middleware.py#L91"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.auth.middleware.RemoteUserMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Middleware for utilizing web server provided authentication. See
+<a class="reference internal" href="../howto/auth-remote-user.html"><span class="doc">How to authenticate using REMOTE_USER</span></a> for usage details.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.contrib.auth.middleware.PersistentRemoteUserMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">PersistentRemoteUserMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/contrib/auth/middleware.py#L180"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.contrib.auth.middleware.PersistentRemoteUserMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Middleware for utilizing web server provided authentication when enabled only
+on the login page. See <a class="reference internal" href="../howto/auth-remote-user.html#persistent-remote-user-middleware-howto"><span class="std std-ref">Using REMOTE_USER on login pages only</span></a> for usage
+details.</p>
+</div>
+<div class="section" id="s-csrf-protection-middleware">
+<span id="csrf-protection-middleware"></span><h3>CSRF protection middleware<a class="headerlink" href="#csrf-protection-middleware" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.csrf.CsrfViewMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">CsrfViewMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/csrf.py#L165"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.csrf.CsrfViewMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Adds protection against Cross Site Request Forgeries by adding hidden form
+fields to POST forms and checking requests for the correct value. See the
+<a class="reference internal" href="csrf.html"><span class="doc">Cross Site Request Forgery protection documentation</span></a>.</p>
+</div>
+<div class="section" id="s-x-frame-options-middleware">
+<span id="x-frame-options-middleware"></span><h3><code class="docutils literal notranslate"><span class="pre">X-Frame-Options</span></code> middleware<a class="headerlink" href="#x-frame-options-middleware" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="django.middleware.clickjacking.XFrameOptionsMiddleware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><code class="sig-name descname"><span class="pre">XFrameOptionsMiddleware</span></code><a class="reference external" href="https://github.com/django/django/blob/stable/5.1.x/django/middleware/clickjacking.py#L12"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#django.middleware.clickjacking.XFrameOptionsMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Simple <a class="reference internal" href="clickjacking.html"><span class="doc">clickjacking protection via the X-Frame-Options header</span></a>.</p>
+</div>
+</div>
+<div class="section" id="s-middleware-ordering">
+<span id="s-id12"></span><span id="middleware-ordering"></span><span id="id12"></span><h2>Middleware ordering<a class="headerlink" href="#middleware-ordering" title="Permalink to this headline">¶</a></h2>
+<p>Here are some hints about the ordering of various Django middleware classes:</p>
+<ol class="arabic">
+<li><p class="first"><a class="reference internal" href="#django.middleware.security.SecurityMiddleware" title="django.middleware.security.SecurityMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">SecurityMiddleware</span></code></a></p>
+<p>It should go near the top of the list if you’re going to turn on the SSL
+redirect as that avoids running through a bunch of other unnecessary
+middleware.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.middleware.cache.UpdateCacheMiddleware" title="django.middleware.cache.UpdateCacheMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">UpdateCacheMiddleware</span></code></a></p>
+<p>Before those that modify the <code class="docutils literal notranslate"><span class="pre">Vary</span></code> header (<code class="docutils literal notranslate"><span class="pre">SessionMiddleware</span></code>,
+<code class="docutils literal notranslate"><span class="pre">GZipMiddleware</span></code>, <code class="docutils literal notranslate"><span class="pre">LocaleMiddleware</span></code>).</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.middleware.gzip.GZipMiddleware" title="django.middleware.gzip.GZipMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">GZipMiddleware</span></code></a></p>
+<p>Before any middleware that may change or use the response body.</p>
+<p>After <code class="docutils literal notranslate"><span class="pre">UpdateCacheMiddleware</span></code>: Modifies <code class="docutils literal notranslate"><span class="pre">Vary</span></code> header.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.contrib.sessions.middleware.SessionMiddleware" title="django.contrib.sessions.middleware.SessionMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">SessionMiddleware</span></code></a></p>
+<p>Before any middleware that may raise an exception to trigger an error
+view (such as <a class="reference internal" href="exceptions.html#django.core.exceptions.PermissionDenied" title="django.core.exceptions.PermissionDenied"><code class="xref py py-exc docutils literal notranslate"><span class="pre">PermissionDenied</span></code></a>) if you’re
+using <a class="reference internal" href="settings.html#std-setting-CSRF_USE_SESSIONS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CSRF_USE_SESSIONS</span></code></a>.</p>
+<p>After <code class="docutils literal notranslate"><span class="pre">UpdateCacheMiddleware</span></code>: Modifies <code class="docutils literal notranslate"><span class="pre">Vary</span></code> header.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.middleware.http.ConditionalGetMiddleware" title="django.middleware.http.ConditionalGetMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConditionalGetMiddleware</span></code></a></p>
+<p>Before any middleware that may change the response (it sets the <code class="docutils literal notranslate"><span class="pre">ETag</span></code>
+header).</p>
+<p>After <code class="docutils literal notranslate"><span class="pre">GZipMiddleware</span></code> so it won’t calculate an <code class="docutils literal notranslate"><span class="pre">ETag</span></code> header on gzipped
+contents.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.middleware.locale.LocaleMiddleware" title="django.middleware.locale.LocaleMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocaleMiddleware</span></code></a></p>
+<p>One of the topmost, after <code class="docutils literal notranslate"><span class="pre">SessionMiddleware</span></code> (uses session data) and
+<code class="docutils literal notranslate"><span class="pre">UpdateCacheMiddleware</span></code> (modifies <code class="docutils literal notranslate"><span class="pre">Vary</span></code> header).</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.middleware.common.CommonMiddleware" title="django.middleware.common.CommonMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">CommonMiddleware</span></code></a></p>
+<p>Before any middleware that may change the response (it sets the
+<code class="docutils literal notranslate"><span class="pre">Content-Length</span></code> header). A middleware that appears before
+<code class="docutils literal notranslate"><span class="pre">CommonMiddleware</span></code> and changes the response must reset <code class="docutils literal notranslate"><span class="pre">Content-Length</span></code>.</p>
+<p>Close to the top: it redirects when <a class="reference internal" href="settings.html#std-setting-APPEND_SLASH"><code class="xref std std-setting docutils literal notranslate"><span class="pre">APPEND_SLASH</span></code></a> or
+<a class="reference internal" href="settings.html#std-setting-PREPEND_WWW"><code class="xref std std-setting docutils literal notranslate"><span class="pre">PREPEND_WWW</span></code></a> are set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>After <code class="docutils literal notranslate"><span class="pre">SessionMiddleware</span></code> if you’re using <a class="reference internal" href="settings.html#std-setting-CSRF_USE_SESSIONS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CSRF_USE_SESSIONS</span></code></a>.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.middleware.csrf.CsrfViewMiddleware" title="django.middleware.csrf.CsrfViewMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsrfViewMiddleware</span></code></a></p>
+<p>Before any view middleware that assumes that CSRF attacks have been dealt
+with.</p>
+<p>Before <a class="reference internal" href="#django.contrib.auth.middleware.RemoteUserMiddleware" title="django.contrib.auth.middleware.RemoteUserMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteUserMiddleware</span></code></a>, or any
+other authentication middleware that may perform a login, and hence rotate
+the CSRF token, before calling down the middleware chain.</p>
+<p>After <code class="docutils literal notranslate"><span class="pre">SessionMiddleware</span></code> if you’re using <a class="reference internal" href="settings.html#std-setting-CSRF_USE_SESSIONS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CSRF_USE_SESSIONS</span></code></a>.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.contrib.auth.middleware.AuthenticationMiddleware" title="django.contrib.auth.middleware.AuthenticationMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">AuthenticationMiddleware</span></code></a></p>
+<p>After <code class="docutils literal notranslate"><span class="pre">SessionMiddleware</span></code>: uses session storage.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.contrib.auth.middleware.LoginRequiredMiddleware" title="django.contrib.auth.middleware.LoginRequiredMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMiddleware</span></code></a></p>
+<div class="versionadded">
+<span class="title">New in Django 5.1.</span> </div>
+<p>After <code class="docutils literal notranslate"><span class="pre">AuthenticationMiddleware</span></code>: uses user object.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.contrib.messages.middleware.MessageMiddleware" title="django.contrib.messages.middleware.MessageMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageMiddleware</span></code></a></p>
+<p>After <code class="docutils literal notranslate"><span class="pre">SessionMiddleware</span></code>: can use session-based storage.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="#django.middleware.cache.FetchFromCacheMiddleware" title="django.middleware.cache.FetchFromCacheMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchFromCacheMiddleware</span></code></a></p>
+<p>After any middleware that modifies the <code class="docutils literal notranslate"><span class="pre">Vary</span></code> header: that header is used
+to pick a value for the cache hash-key.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="contrib/flatpages.html#django.contrib.flatpages.middleware.FlatpageFallbackMiddleware" title="django.contrib.flatpages.middleware.FlatpageFallbackMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlatpageFallbackMiddleware</span></code></a></p>
+<p>Should be near the bottom as it’s a last-resort type of middleware.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="contrib/redirects.html#django.contrib.redirects.middleware.RedirectFallbackMiddleware" title="django.contrib.redirects.middleware.RedirectFallbackMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">RedirectFallbackMiddleware</span></code></a></p>
+<p>Should be near the bottom as it’s a last-resort type of middleware.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Middleware</a><ul>
+<li><a class="reference internal" href="#available-middleware">Available middleware</a><ul>
+<li><a class="reference internal" href="#module-django.middleware.cache">Cache middleware</a></li>
+<li><a class="reference internal" href="#module-django.middleware.common">“Common” middleware</a></li>
+<li><a class="reference internal" href="#module-django.middleware.gzip">GZip middleware</a></li>
+<li><a class="reference internal" href="#module-django.middleware.http">Conditional GET middleware</a></li>
+<li><a class="reference internal" href="#module-django.middleware.locale">Locale middleware</a></li>
+<li><a class="reference internal" href="#module-django.contrib.messages.middleware">Message middleware</a></li>
+<li><a class="reference internal" href="#module-django.middleware.security">Security middleware</a><ul>
+<li><a class="reference internal" href="#http-strict-transport-security">HTTP Strict Transport Security</a></li>
+<li><a class="reference internal" href="#referrer-policy">Referrer Policy</a></li>
+<li><a class="reference internal" href="#cross-origin-opener-policy">Cross-Origin Opener Policy</a></li>
+<li><a class="reference internal" href="#x-content-type-options-nosniff"><code class="docutils literal notranslate"><span class="pre">X-Content-Type-Options:</span> <span class="pre">nosniff</span></code></a></li>
+<li><a class="reference internal" href="#ssl-redirect">SSL Redirect</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-django.contrib.sessions.middleware">Session middleware</a></li>
+<li><a class="reference internal" href="#module-django.contrib.sites.middleware">Site middleware</a></li>
+<li><a class="reference internal" href="#module-django.contrib.auth.middleware">Authentication middleware</a></li>
+<li><a class="reference internal" href="#csrf-protection-middleware">CSRF protection middleware</a></li>
+<li><a class="reference internal" href="#x-frame-options-middleware"><code class="docutils literal notranslate"><span class="pre">X-Frame-Options</span></code> middleware</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#middleware-ordering">Middleware ordering</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="logging.html"
+                          title="previous chapter">Logging</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="migration-operations.html"
+                          title="next chapter">Migration Operations</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/ref/middleware.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Aug 08, 2024</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="logging.html" title="Logging">previous</a>
+     |
+    <a href="index.html" title="API Reference" accesskey="U">up</a>
+   |
+    <a href="migration-operations.html" title="Migration Operations">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>
