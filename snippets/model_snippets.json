@@ -1,14 +1,11 @@
 {
     "Simple Model: CLASS": {
         "prefix": [
-            "m-simple"
+            "m-model"
         ],
         "body": [
             "class ${1:ModelName}(models.Model):",
-            "\t\"\"\"",
-            "\tDocumentation for :model:'appname.$1'",
-            "\t\"\"\"",
-            "\t$5",
+            "\t$0",
             "\n\tclass Meta:",
             "\t\tverbose_name = \"${3:${1/(?!^)([A-Z])/ $0/g}}\"",
             "\t\tverbose_name_plural = \"${4:${1/(?!^)([A-Z])/ $0/g}s}\"\n",
@@ -20,14 +17,11 @@
     },
     "Abstract Model: CLASS": {
         "prefix": [
-            "m-Abstract"
+            "m-model-abstract"
         ],
         "body": [
             "class $1Abstract(models.Model):",
-            "\t\"\"\"",
-            "\tDocumentation for :model:'appname.$1Abstract'",
-            "\t\"\"\"",
-            "\t$3",
+            "\t$0",
             "\n\tclass Meta:",
             "\t\tabstract = True\n",
             ""
@@ -36,11 +30,11 @@
     },
     "Custom Model Manager: CLASS": {
         "prefix": [
-            "m-Manager"
+            "m-manager"
         ],
         "body": [
             "class $1Manager(models.Manager):",
-            "\t${2:pass}",
+            "\t${0:pass}",
             ""
         ],
         "description": ""
@@ -61,7 +55,7 @@
         ],
         "body": [
             "class $1QuerySet(models.QuerySet):",
-            "\t${2:pass}",
+            "\t${0:pass}",
             ""
         ],
         "description": ""
@@ -72,9 +66,9 @@
         ],
         "body": [
             "def save(self, *args, **kwargs):",
-            "\t${1:# do_something before save}",
+            "\t${0:# do something before save}",
             "\tsuper().save(*args, **kwargs)",
-            "\t${4:# do something after save}",
+            "\t# do something after save",
             ""
         ],
         "description": "Custom sync 'save' method for django models.Model"
@@ -85,9 +79,9 @@
         ],
         "body": [
             "def asave(self, *args, **kwargs):",
-            "\t${1:# do_something before save}",
+            "\t${0:# do something before save}",
             "\tsuper().asave(*args, **kwargs)",
-            "\t${4:# do something after save}",
+            "\t# do something after save",
             ""
         ],
         "description": "Custom async 'save' method for django.db.models.Model"
@@ -98,7 +92,7 @@
         ],
         "body": [
             "def __str__(self):",
-            "\t${1:pass}",
+            "\t${0:pass}",
             ""
         ],
         "description": "django.db.models.Model.__str__()"
@@ -115,220 +109,220 @@
         ],
         "description": "django.db.models.Model.get_absolute_url()"
     },
-    "abstract: META-OPT": {
+    "abstract: META": {
         "prefix": [
-            "mmo-abstract"
+            "meta-abstract"
         ],
         "body": [
             "abstract = ${1|True,False|}"
         ],
         "description": ""
     },
-    "app_label: META-OPT": {
+    "app_label: META": {
         "prefix": [
-            "mmo-app_label"
+            "meta-app_label"
         ],
         "body": [
             "app_label = \"$1\""
         ],
         "description": ""
     },
-    "base_manager_name: META-OPT": {
+    "base_manager_name: META": {
         "prefix": [
-            "mmo-base_manager_name"
+            "meta-base_manager_name"
         ],
         "body": [
             "base_manager_name = \"$1\""
         ],
         "description": ""
     },
-    "db_table: META-OPT": {
+    "db_table: META": {
         "prefix": [
-            "mmo-db_table"
+            "meta-db_table"
         ],
         "body": [
             "db_table = \"$1\""
         ],
         "description": ""
     },
-    "db_table_comment: META-OPT": {
+    "db_table_comment: META": {
         "prefix": [
-            "mmo-db_table_comment"
+            "meta-db_table_comment"
         ],
         "body": [
             "db_table_comment = \"$1\""
         ],
         "description": ""
     },
-    "db_tablespace: META-OPT": {
+    "db_tablespace: META": {
         "prefix": [
-            "mmo-db_tablespace"
+            "meta-db_tablespace"
         ],
         "body": [
             "db_tablespace = \"$1\""
         ],
         "description": ""
     },
-    "default_manager_name: META-OPT": {
+    "default_manager_name: META": {
         "prefix": [
-            "mmo-default_manager_name"
+            "meta-default_manager_name"
         ],
         "body": [
             "default_manager_name = \"$1\""
         ],
         "description": ""
     },
-    "default_related_name: META-OPT": {
+    "default_related_name: META": {
         "prefix": [
-            "mmo-default_related_name"
+            "meta-default_related_name"
         ],
         "body": [
             "default_related_name = \"$1\""
         ],
         "description": ""
     },
-    "get_latest_by: META-OPT": {
+    "get_latest_by: META": {
         "prefix": [
-            "mmo-get_latest_by"
+            "meta-get_latest_by"
         ],
         "body": [
-            "get_latest_by = [\"$1\", $2]"
+            "get_latest_by = [\"$1\", ]"
         ],
         "description": ""
     },
-    "managed: META-OPT": {
+    "managed: META": {
         "prefix": [
-            "mmo-managed"
+            "meta-managed"
         ],
         "body": [
             "managed = ${1|True,False|}"
         ],
         "description": ""
     },
-    "order_with_respect_to: META-OPT": {
+    "order_with_respect_to: META": {
         "prefix": [
-            "mmo-order_with_respect_to"
+            "meta-order_with_respect_to"
         ],
         "body": [
             "order_with_respect_to = \"$1\""
         ],
         "description": ""
     },
-    "ordering: META-OPT": {
+    "ordering: META": {
         "prefix": [
-            "mmo-ordering"
+            "meta-ordering"
         ],
         "body": [
-            "ordering = [\"$1\", $2]"
+            "ordering = [\"$1\", ]"
         ],
         "description": ""
     },
-    "permissions: META-OPT": {
+    "permissions: META": {
         "prefix": [
-            "mmo-permissions"
+            "meta-permissions"
         ],
         "body": [
-            "permissions = [(\"$1\", \"${1/[\\_]/ /g}\"), $2]"
+            "permissions = [(\"$1\", \"${1/[\\_]/ /g}\"), ]"
         ],
         "description": ""
     },
-    "default_permissions: META-OPT": {
+    "default_permissions: META": {
         "prefix": [
-            "mmo-default_permissions"
+            "meta-default_permissions"
         ],
         "body": [
             "default_permissions = [${1:'add', }${2:'change', }${3:'view', }${4:'delete', }$5]"
         ],
         "description": ""
     },
-    "proxy: META-OPT": {
+    "proxy: META": {
         "prefix": [
-            "mmo-proxy"
+            "meta-proxy"
         ],
         "body": [
             "proxy = ${1|True,False|}"
         ],
         "description": ""
     },
-    "required_db_features: META-OPT": {
+    "required_db_features: META": {
         "prefix": [
-            "mmo-required_db_features"
+            "meta-required_db_features"
         ],
         "body": [
             "required_db_features = [\"$1\", ]"
         ],
         "description": ""
     },
-    "required_db_vendor: META-OPT": {
+    "required_db_vendor: META": {
         "prefix": [
-            "mmo-required_db_vendor"
+            "meta-required_db_vendor"
         ],
         "body": [
             "required_db_vendor = \"$1\""
         ],
         "description": ""
     },
-    "select_on_save: META-OPT": {
+    "select_on_save: META": {
         "prefix": [
-            "mmo-select_on_save"
+            "meta-select_on_save"
         ],
         "body": [
-            "select_on_save = ${1|True,False|}"
+            "select_on_save = ${0|True,False|}"
         ],
         "description": ""
     },
-    "indexes: META-OPT": {
+    "indexes: META": {
         "prefix": [
-            "mmo-indexes"
+            "meta-indexes"
         ],
         "body": [
             "indexes = [",
-            "\tmodels.Index(fields=[\"$1\", $2], ), ",
+            "\tmodels.Index(fields=[\"$1\", ], ), ",
             "]"
         ],
         "description": ""
     },
-    "unique_together: META-OPT": {
+    "unique_together: META": {
         "prefix": [
-            "mmo-unique_together"
+            "meta-unique_together"
         ],
         "body": [
             "unique_together = [\"$1\", ]"
         ],
         "description": ""
     },
-    "index_together: META-OPT": {
+    "index_together: META": {
         "prefix": [
-            "mmo-index_together"
+            "meta-index_together"
         ],
         "body": [
             "index_together = [\"$1\", ]"
         ],
         "description": ""
     },
-    "constraints: META-OPT": {
+    "constraints: META": {
         "prefix": [
-            "mmo-constraints"
+            "meta-constraints"
         ],
         "body": [
             "constraints = [",
-            "\tmodels.${1|BaseConstraint,CheckConstraint,UniqueConstraint|($2)}",
+            "\tmodels.${1|BaseConstraint,CheckConstraint,UniqueConstraint|}($0)",
             "]"
         ],
         "description": ""
     },
-    "verbose_name: META-OPT": {
+    "verbose_name: META": {
         "prefix": [
-            "mmo-verbose_name"
+            "meta-verbose_name"
         ],
         "body": [
             "verbose_name = \"${1/(^\\w+)/${1:/capitalize}/}\""
         ],
         "description": "If this isn't given, Django will use a munged version of the class name: CamelCase becomes camel case."
     },
-    "verbose_name_plural: META-OPT": {
+    "verbose_name_plural: META": {
         "prefix": [
-            "mmo-verbose_name_plural"
+            "meta-verbose_name_plural"
         ],
         "body": [
             "verbose_name_plural = \"${1/(^\\w+)/${1:/capitalize}s/}\""
@@ -342,7 +336,7 @@
         "body": [
             "blank=${1|False,True|}"
         ],
-        "description": "If True, the field is allowed to be blank. Default is False."
+        "description": ""
     },
     "null: FIELD-OPT": {
         "prefix": [
@@ -351,7 +345,7 @@
         "body": [
             "null=${1|False,True|}"
         ],
-        "description": "If True, Django will store empty values as NULL in the database. Default is False."
+        "description": ""
     },
     "choices: FIELD-OPT": {
         "prefix": [
@@ -371,7 +365,7 @@
             "\t\"${2:key}\": \"${3:value}\",$4",
             "}"
         ],
-        "description": "A mapping or iterable in the format described below to use as choices for this field."
+        "description": ""
     },
     "Choices - Dict Inline: var": {
         "prefix": [
@@ -391,7 +385,7 @@
             "\t(\"${2:key}\", \"${3:value}\"),$4",
             "]"
         ],
-        "description": "A mapping or iterable in the format described below to use as choices for this field."
+        "description": ""
     },
     "Choices - List Inline: var": {
         "prefix": [
@@ -479,7 +473,7 @@
         "body": [
             "editable=${1|False,True|}"
         ],
-        "description": "If False, the field will not be displayed in the admin or any other ModelForm. They are also skipped during model validation. Default is True."
+        "description": ""
     },
     "error_messages: FIELD-OPT": {
         "prefix": [
@@ -488,7 +482,7 @@
         "body": [
             "error_messages={\"${1|null,blank,invalid,invalid_choice,unique,unique_for_date|}\":\"$2\",}"
         ],
-        "description": "The error_messages argument lets you override the default messages that the field will raise. Pass in a dictionary with keys matching the error messages you want to override."
+        "description": ""
     },
     "help_text: FIELD-OPT": {
         "prefix": [
@@ -497,7 +491,7 @@
         "body": [
             "help_text=\"$1\""
         ],
-        "description": "Extra “help” text to be displayed with the form widget."
+        "description": ""
     },
     "primary_key: FIELD-OPT": {
         "prefix": [
@@ -506,7 +500,7 @@
         "body": [
             "primary_key=${1|True,False|}"
         ],
-        "description": "If True, this field is the primary key for the model."
+        "description": ""
     },
     "unique: FIELD-OPT": {
         "prefix": [
@@ -515,7 +509,7 @@
         "body": [
             "unique=${1|True,False|}"
         ],
-        "description": "If True, this field must be unique throughout the table."
+        "description": ""
     },
     "unique_for_date: FIELD-OPT": {
         "prefix": [
@@ -558,9 +552,9 @@
             "mfo-validators"
         ],
         "body": [
-            "validators=[$1]"
+            "validators=[$1, ]"
         ],
-        "description": "A list of validators to run for this field. See the validators documentation for more information."
+        "description": ""
     },
     "AutoField": {
         "prefix": [
@@ -612,7 +606,7 @@
             "mf-CharField"
         ],
         "body": [
-            "$1 = models.CharField(max_length=${2:None}, $3)"
+            "$1 = models.CharField(max_length=${2:255}, $3)"
         ],
         "description": ""
     },
