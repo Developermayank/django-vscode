@@ -1,7 +1,7 @@
 {
-  "name": "django-vscode",
-  "displayName": "Django",
-  "description": "Boost development of your Django project using collection of beautifully tailored django snippets.",
+  "name": "django-vscode-mayanksinghal",
+  "displayName": "Django 5.x",
+  "description": "Boost development of your Django project using collection of latest django snippets.",
   "version": "1.0.0",
   "publisher": "MayankSinghal",
   "engines": {
