@@ -1,9 +1,5 @@
-# Change Log
+### 0.0.1
 
-All notable changes to the "django-vscode" extension will be documented in this file.
+Initial release of Django Snippet & Intellisense Extension - Visual Studio Code
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
+---
