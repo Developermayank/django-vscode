@@ -1,71 +1,54 @@
-# django-vscode README
+# django-vscode
 
-This is the README for your extension "django-vscode". After writing up a brief description, we recommend including the following sections.
+Django VS Code extension easy your development with snippet suggestions.
 
 ## Features
+[x] Snippets Models - class, methods, meta-options, fields, field options
+[x] Snippets Admin - class, options, methods
+[x] Snippets View - method, class-based, generic, mixins
+[x] Snippets Template - variables, tags, filters
+[x] Snippets Form - class, fields, field options
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## How to use
 
-For example if there is an image subfolder under your extension project workspace:
+|---------------------------------------------------------------------------------|
+|MODELS	                        |PREFIX|	                    DESCRIPTION
+|---------------------------------------------------------------------------------|
+|Models.Model - Class,methods	|m-*                         |CLASS,METHOD
+|Models.Field	                |mf-*                        |FIELD
+|Models.Field.Option	        |mfo-*                       |FIELD-OPT
+|Models.Meta.Option	            |mmo-*                       |META-OPT
+|---------------------------------------------------------------------------------|
+|ADMIN
+|---------------------------------------------------------------------------------|
+|Admin - Class	                |a-*                         |CLASS
+|Admin Options	                |ao-*                        |OPT
+|Admin Methods	                |am-*                        |METHOD
+|---------------------------------------------------------------------------------|
+|VIEW
+|---------------------------------------------------------------------------------|
+|View Method	                    |v-view                      |METHOD
+|Base View	                    |v-base                      |CLASS
+|Template View	                |v-template                  |CLASS
+|Class-based Generic Views       |v-generic-*                 |CLASS
+|Class-based Generic Date Views  |v-generic-date-*            |CLASS
+|Class-based Views Mixins        |v-mixin                     |CLASS
+|---------------------------------------------------------------------------------|
+|TEMPLATE
+|---------------------------------------------------------------------------------|
+|Variables/Tags                  |t-*	                        |-
+|Filters	                        |t-filters                   |-
+|---------------------------------------------------------------------------------|
+|FORM
+|---------------------------------------------------------------------------------|
+|forms.Form - Class,methods	    |f-*                         |CLASS,METHOD
+|Form.Field	                    |ff-*                        |FIELD
+|Form.Field.Option	            |ffo-*                       |FIELD-OPT
 
-\!\[feature X\]\(images/feature-x.png\)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
-## Requirements
+### 0.0.1
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release of Django Snippet & Intellisense Extension - Visual Studio Code
 
 ---
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**

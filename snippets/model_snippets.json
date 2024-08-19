@@ -1,0 +1,907 @@
+{
+    "Simple Model: CLASS": {
+        "prefix": [
+            "m-simple"
+        ],
+        "body": [
+            "class ${1:ModelName}(models.Model):",
+            "\t\"\"\"",
+            "\tDocumentation for :model:'appname.$1'",
+            "\t\"\"\"",
+            "\t$5",
+            "\n\tclass Meta:",
+            "\t\tverbose_name = \"${3:${1/(?!^)([A-Z])/ $0/g}}\"",
+            "\t\tverbose_name_plural = \"${4:${1/(?!^)([A-Z])/ $0/g}s}\"\n",
+            "\tdef __str__(self):",
+            "\t\tpass",
+            ""
+        ],
+        "description": ""
+    },
+    "Abstract Model: CLASS": {
+        "prefix": [
+            "m-Abstract"
+        ],
+        "body": [
+            "class $1Abstract(models.Model):",
+            "\t\"\"\"",
+            "\tDocumentation for :model:'appname.$1Abstract'",
+            "\t\"\"\"",
+            "\t$3",
+            "\n\tclass Meta:",
+            "\t\tabstract = True\n",
+            ""
+        ],
+        "description": ""
+    },
+    "Custom Model Manager: CLASS": {
+        "prefix": [
+            "m-Manager"
+        ],
+        "body": [
+            "class $1Manager(models.Manager):",
+            "\t${2:pass}",
+            ""
+        ],
+        "description": ""
+    },
+    "get_queryset: METHOD": {
+        "prefix": [
+            "m-get_queryset"
+        ],
+        "body": [
+            "def get_queryset(self):",
+            "\treturn super().get_queryset()${1:.filter($0)}"
+        ],
+        "description": ""
+    },
+    "Custom QuerySet: CLASS": {
+        "prefix": [
+            "m-QuerySet"
+        ],
+        "body": [
+            "class $1QuerySet(models.QuerySet):",
+            "\t${2:pass}",
+            ""
+        ],
+        "description": ""
+    },
+    "save(): METHOD": {
+        "prefix": [
+            "m-save"
+        ],
+        "body": [
+            "def save(self, *args, **kwargs):",
+            "\t${1:# do_something before save}",
+            "\tsuper().save(*args, **kwargs)",
+            "\t${4:# do something after save}",
+            ""
+        ],
+        "description": "Custom sync 'save' method for django models.Model"
+    },
+    "asave(): METHOD": {
+        "prefix": [
+            "m-asave"
+        ],
+        "body": [
+            "def asave(self, *args, **kwargs):",
+            "\t${1:# do_something before save}",
+            "\tsuper().asave(*args, **kwargs)",
+            "\t${4:# do something after save}",
+            ""
+        ],
+        "description": "Custom async 'save' method for django.db.models.Model"
+    },
+    "__str__(): METHOD": {
+        "prefix": [
+            "m-__str__"
+        ],
+        "body": [
+            "def __str__(self):",
+            "\t${1:pass}",
+            ""
+        ],
+        "description": "django.db.models.Model.__str__()"
+    },
+    "get_absolute_url(): METHOD": {
+        "prefix": [
+            "m-get_absolute_url"
+        ],
+        "body": [
+            "def get_absolute_url(self):",
+            "\t${4:from django.urls import reverse}",
+            "\treturn ${1:reverse(\"$2\", kwargs={\"${3:pk}\": self.$3\\})}",
+            ""
+        ],
+        "description": "django.db.models.Model.get_absolute_url()"
+    },
+    "abstract: META-OPT": {
+        "prefix": [
+            "mmo-abstract"
+        ],
+        "body": [
+            "abstract = ${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "app_label: META-OPT": {
+        "prefix": [
+            "mmo-app_label"
+        ],
+        "body": [
+            "app_label = \"$1\""
+        ],
+        "description": ""
+    },
+    "base_manager_name: META-OPT": {
+        "prefix": [
+            "mmo-base_manager_name"
+        ],
+        "body": [
+            "base_manager_name = \"$1\""
+        ],
+        "description": ""
+    },
+    "db_table: META-OPT": {
+        "prefix": [
+            "mmo-db_table"
+        ],
+        "body": [
+            "db_table = \"$1\""
+        ],
+        "description": ""
+    },
+    "db_table_comment: META-OPT": {
+        "prefix": [
+            "mmo-db_table_comment"
+        ],
+        "body": [
+            "db_table_comment = \"$1\""
+        ],
+        "description": ""
+    },
+    "db_tablespace: META-OPT": {
+        "prefix": [
+            "mmo-db_tablespace"
+        ],
+        "body": [
+            "db_tablespace = \"$1\""
+        ],
+        "description": ""
+    },
+    "default_manager_name: META-OPT": {
+        "prefix": [
+            "mmo-default_manager_name"
+        ],
+        "body": [
+            "default_manager_name = \"$1\""
+        ],
+        "description": ""
+    },
+    "default_related_name: META-OPT": {
+        "prefix": [
+            "mmo-default_related_name"
+        ],
+        "body": [
+            "default_related_name = \"$1\""
+        ],
+        "description": ""
+    },
+    "get_latest_by: META-OPT": {
+        "prefix": [
+            "mmo-get_latest_by"
+        ],
+        "body": [
+            "get_latest_by = [\"$1\", $2]"
+        ],
+        "description": ""
+    },
+    "managed: META-OPT": {
+        "prefix": [
+            "mmo-managed"
+        ],
+        "body": [
+            "managed = ${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "order_with_respect_to: META-OPT": {
+        "prefix": [
+            "mmo-order_with_respect_to"
+        ],
+        "body": [
+            "order_with_respect_to = \"$1\""
+        ],
+        "description": ""
+    },
+    "ordering: META-OPT": {
+        "prefix": [
+            "mmo-ordering"
+        ],
+        "body": [
+            "ordering = [\"$1\", $2]"
+        ],
+        "description": ""
+    },
+    "permissions: META-OPT": {
+        "prefix": [
+            "mmo-permissions"
+        ],
+        "body": [
+            "permissions = [(\"$1\", \"${1/[\\_]/ /g}\"), $2]"
+        ],
+        "description": ""
+    },
+    "default_permissions: META-OPT": {
+        "prefix": [
+            "mmo-default_permissions"
+        ],
+        "body": [
+            "default_permissions = [${1:'add', }${2:'change', }${3:'view', }${4:'delete', }$5]"
+        ],
+        "description": ""
+    },
+    "proxy: META-OPT": {
+        "prefix": [
+            "mmo-proxy"
+        ],
+        "body": [
+            "proxy = ${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "required_db_features: META-OPT": {
+        "prefix": [
+            "mmo-required_db_features"
+        ],
+        "body": [
+            "required_db_features = [\"$1\", ]"
+        ],
+        "description": ""
+    },
+    "required_db_vendor: META-OPT": {
+        "prefix": [
+            "mmo-required_db_vendor"
+        ],
+        "body": [
+            "required_db_vendor = \"$1\""
+        ],
+        "description": ""
+    },
+    "select_on_save: META-OPT": {
+        "prefix": [
+            "mmo-select_on_save"
+        ],
+        "body": [
+            "select_on_save = ${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "indexes: META-OPT": {
+        "prefix": [
+            "mmo-indexes"
+        ],
+        "body": [
+            "indexes = [",
+            "\tmodels.Index(fields=[\"$1\", $2], ), ",
+            "]"
+        ],
+        "description": ""
+    },
+    "unique_together: META-OPT": {
+        "prefix": [
+            "mmo-unique_together"
+        ],
+        "body": [
+            "unique_together = [\"$1\", ]"
+        ],
+        "description": ""
+    },
+    "index_together: META-OPT": {
+        "prefix": [
+            "mmo-index_together"
+        ],
+        "body": [
+            "index_together = [\"$1\", ]"
+        ],
+        "description": ""
+    },
+    "constraints: META-OPT": {
+        "prefix": [
+            "mmo-constraints"
+        ],
+        "body": [
+            "constraints = [",
+            "\tmodels.${1|BaseConstraint,CheckConstraint,UniqueConstraint|($2)}",
+            "]"
+        ],
+        "description": ""
+    },
+    "verbose_name: META-OPT": {
+        "prefix": [
+            "mmo-verbose_name"
+        ],
+        "body": [
+            "verbose_name = \"${1/(^\\w+)/${1:/capitalize}/}\""
+        ],
+        "description": "If this isn't given, Django will use a munged version of the class name: CamelCase becomes camel case."
+    },
+    "verbose_name_plural: META-OPT": {
+        "prefix": [
+            "mmo-verbose_name_plural"
+        ],
+        "body": [
+            "verbose_name_plural = \"${1/(^\\w+)/${1:/capitalize}s/}\""
+        ],
+        "description": "If this isn't given, Django will use verbose_name + \"s\"."
+    },
+    "blank: FIELD-OPT": {
+        "prefix": [
+            "mfo-blank"
+        ],
+        "body": [
+            "blank=${1|False,True|}"
+        ],
+        "description": "If True, the field is allowed to be blank. Default is False."
+    },
+    "null: FIELD-OPT": {
+        "prefix": [
+            "mfo-null"
+        ],
+        "body": [
+            "null=${1|False,True|}"
+        ],
+        "description": "If True, Django will store empty values as NULL in the database. Default is False."
+    },
+    "choices: FIELD-OPT": {
+        "prefix": [
+            "mfo-choices"
+        ],
+        "body": [
+            "choices=${1:$2_CHOICES}"
+        ],
+        "description": ""
+    },
+    "Choices - Dict: var": {
+        "prefix": [
+            "mchoice-dict"
+        ],
+        "body": [
+            "${1/(.*)/${1:/upcase}/}_CHOICES = {",
+            "\t\"${2:key}\": \"${3:value}\",$4",
+            "}"
+        ],
+        "description": "A mapping or iterable in the format described below to use as choices for this field."
+    },
+    "Choices - Dict Inline: var": {
+        "prefix": [
+            "mchoice-dict-inline"
+        ],
+        "body": [
+            "${1/(.*)/${1:/upcase}/}_CHOICES = {\"${2:key}\": \"${3:value}\", $4}",
+        ],
+        "description": "Choices - Inline Dict"
+    },
+    "Choices - List: var": {
+        "prefix": [
+            "mchoice-list"
+        ],
+        "body": [
+            "${1/(.*)/${1:/upcase}/}_CHOICES = [",
+            "\t(\"${2:key}\", \"${3:value}\"),$4",
+            "]"
+        ],
+        "description": "A mapping or iterable in the format described below to use as choices for this field."
+    },
+    "Choices - List Inline: var": {
+        "prefix": [
+            "mchoice-list-inline"
+        ],
+        "body": [
+            "${1/(.*)/${1:/upcase}/}_CHOICES = [(\"${2:key}\", \"${3:value}\"), $4]",
+        ],
+        "description": ""
+    },
+    "Choices - Option Group: var": {
+        "prefix": [
+            "mchoice-option-group"
+        ],
+        "body": [
+            "${1/(.*)/${1:/upcase}/}_CHOICES = [",
+            "\t(",
+            "\t\t\"$2\", (",
+            "\t\t\t(\"${3:key}\", \"${4:value}\"),$5",
+            "\t\t)",
+            "\t)",
+            "\t(\"unknown\", \"unknown\")",
+            "]"
+        ],
+        "description": ""
+    },
+    "db_column: FIELD-OPT": {
+        "prefix": [
+            "mfo-db_column"
+        ],
+        "body": [
+            "db_column=\"$1\""
+        ],
+        "description": ""
+    },
+    "db_comment: FIELD-OPT": {
+        "prefix": [
+            "mfo-db_comment"
+        ],
+        "body": [
+            "db_comment=\"$1\""
+        ],
+        "description": ""
+    },
+    "db_default: FIELD-OPT": {
+        "prefix": [
+            "mfo-db_default"
+        ],
+        "body": [
+            "db_default=\"$1\""
+        ],
+        "description": "New in Django 5.0"
+    },
+    "db_index: FIELD-OPT": {
+        "prefix": [
+            "mfo-db_index"
+        ],
+        "body": [
+            "db_index=\"$1\""
+        ],
+        "description": "If True, a database index will be created for this field."
+    },
+    "db_tablespace: FIELD-OPT": {
+        "prefix": [
+            "mfo-db_tablespace"
+        ],
+        "body": [
+            "db_tablespace=\"$1\""
+        ],
+        "description": "The name of the database tablespace to use for this field's index, if this field is indexed."
+    },
+    "default: FIELD-OPT": {
+        "prefix": [
+            "mfo-default"
+        ],
+        "body": [
+            "default=$1"
+        ],
+        "description": ""
+    },
+    "editable: FIELD-OPT": {
+        "prefix": [
+            "mfo-editable"
+        ],
+        "body": [
+            "editable=${1|False,True|}"
+        ],
+        "description": "If False, the field will not be displayed in the admin or any other ModelForm. They are also skipped during model validation. Default is True."
+    },
+    "error_messages: FIELD-OPT": {
+        "prefix": [
+            "mfo-error_messages"
+        ],
+        "body": [
+            "error_messages={\"${1|null,blank,invalid,invalid_choice,unique,unique_for_date|}\":\"$2\",}"
+        ],
+        "description": "The error_messages argument lets you override the default messages that the field will raise. Pass in a dictionary with keys matching the error messages you want to override."
+    },
+    "help_text: FIELD-OPT": {
+        "prefix": [
+            "mfo-help_text"
+        ],
+        "body": [
+            "help_text=\"$1\""
+        ],
+        "description": "Extra “help” text to be displayed with the form widget."
+    },
+    "primary_key: FIELD-OPT": {
+        "prefix": [
+            "mfo-primary_key"
+        ],
+        "body": [
+            "primary_key=${1|True,False|}"
+        ],
+        "description": "If True, this field is the primary key for the model."
+    },
+    "unique: FIELD-OPT": {
+        "prefix": [
+            "mfo-unique"
+        ],
+        "body": [
+            "unique=${1|True,False|}"
+        ],
+        "description": "If True, this field must be unique throughout the table."
+    },
+    "unique_for_date: FIELD-OPT": {
+        "prefix": [
+            "mfo-unique_for_date"
+        ],
+        "body": [
+            "unique_for_date=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "unique_for_month: FIELD-OPT": {
+        "prefix": [
+            "mfo-unique_for_month"
+        ],
+        "body": [
+            "unique_for_month=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "unique_for_year: FIELD-OPT": {
+        "prefix": [
+            "mfo-unique_for_year"
+        ],
+        "body": [
+            "unique_for_year=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "verbose_name: FIELD-OPT": {
+        "prefix": [
+            "mfo-verbose_name"
+        ],
+        "body": [
+            "verbose_name = \"${1/(^\\w+)/${1:/capitalize}/}\""
+        ],
+        "description": ""
+    },
+    "validators: FIELD-OPT": {
+        "prefix": [
+            "mfo-validators"
+        ],
+        "body": [
+            "validators=[$1]"
+        ],
+        "description": "A list of validators to run for this field. See the validators documentation for more information."
+    },
+    "AutoField": {
+        "prefix": [
+            "mf-AutoField"
+        ],
+        "body": [
+            "$1 = models.AutoField($2)"
+        ],
+        "description": ""
+    },
+    "BigAutoField": {
+        "prefix": [
+            "mf-BigAutoField"
+        ],
+        "body": [
+            "$1 = models.BigAutoField($2)"
+        ],
+        "description": ""
+    },
+    "BigIntegerField": {
+        "prefix": [
+            "mf-BigIntegerField"
+        ],
+        "body": [
+            "$1 = models.BigIntegerField($2)"
+        ],
+        "description": ""
+    },
+    "BinaryField": {
+        "prefix": [
+            "mf-BinaryField"
+        ],
+        "body": [
+            "$1 = models.BinaryField(max_length=${2:None}, $3)"
+        ],
+        "description": ""
+    },
+    "BooleanField": {
+        "prefix": [
+            "mf-BooleanField"
+        ],
+        "body": [
+            "$1 = models.BooleanField($2)"
+        ],
+        "description": ""
+    },
+    "CharField": {
+        "prefix": [
+            "mf-CharField"
+        ],
+        "body": [
+            "$1 = models.CharField(max_length=${2:None}, $3)"
+        ],
+        "description": ""
+    },
+    "DateField": {
+        "prefix": [
+            "mf-DateField"
+        ],
+        "body": [
+            "$1 = models.DateField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|}, $4})"
+        ],
+        "description": ""
+    },
+    "DateTimeField": {
+        "prefix": [
+            "mf-DateTimeField"
+        ],
+        "body": [
+            "$1 = models.DateTimeField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|}, $4})"
+        ],
+        "description": ""
+    },
+    "DecimalField": {
+        "prefix": [
+            "mf-DecimalField"
+        ],
+        "body": [
+            "$1 = models.DecimalField(max_digits=${2:None}, decimal_places=${3:None}, $4})"
+        ],
+        "description": ""
+    },
+    "DurationField": {
+        "prefix": [
+            "mf-DurationField"
+        ],
+        "body": [
+            "$1 = models.DurationField($2})"
+        ],
+        "description": ""
+    },
+    "EmailField": {
+        "prefix": [
+            "mf-EmailField"
+        ],
+        "body": [
+            "$1 = models.EmailField(max_length=${2:255}, $3)"
+        ],
+        "description": ""
+    },
+    "FileField": {
+        "prefix": [
+            "mf-FileField"
+        ],
+        "body": [
+            "$1 = models.FileField(upload_to=\"$2\", storage=${3:None}, max_length=${4:100}, $5)"
+        ],
+        "description": ""
+    },
+    "FilePathField": {
+        "prefix": [
+            "mf-FilePathField"
+        ],
+        "body": [
+            "$1 = FilePathField(path=\"$2\", match=${3:None}, recursive=${4|False,True|}, allow_files=${5|False,True|}, allow_folders=${6|False,True|}, max_length=${7:100}, $8)"
+        ],
+        "description": ""
+    },
+    "FloatField": {
+        "prefix": [
+            "mf-FloatField"
+        ],
+        "body": [
+            "$1 = models.FloatField($2)"
+        ],
+        "description": ""
+    },
+    "GeneratedField": {
+        "prefix": [
+            "mf-GeneratedField"
+        ],
+        "body": [
+            "$1 = models.GeneratedField(${2:expression}, ${3:output_field}, ${4:db_persist}, $5)"
+        ],
+        "description": ""
+    },
+    "GenericIPAddressField": {
+        "prefix": [
+            "mf-GenericIPAddressField"
+        ],
+        "body": [
+            "$1 = models.GenericIPAddressField(protocol='${2|both,IPv4,IPv6|}', unpack_ipv4=${3|True,False|}, $4)"
+        ],
+        "description": ""
+    },
+    "ImageField": {
+        "prefix": [
+            "mf-ImageField"
+        ],
+        "body": [
+            "$1 = models.ImageField(upload_to=\"$2\", height_field=${3:None}, width_field=${4:None}, max_length=${5:100}, $6)"
+        ],
+        "description": ""
+    },
+    "IntegerField": {
+        "prefix": [
+            "mf-IntegerField"
+        ],
+        "body": [
+            "$1 = models.IntegerField($2)"
+        ],
+        "description": ""
+    },
+    "JSONField": {
+        "prefix": [
+            "mf-JSONField"
+        ],
+        "body": [
+            "$1 = models.JSONField(encoder=${2:None}, decoder=${3:None}, $4)"
+        ],
+        "description": ""
+    },
+    "PositiveBigIntegerField": {
+        "prefix": [
+            "mf-PositiveBigIntegerField"
+        ],
+        "body": [
+            "$1 = models.PositiveBigIntegerField($2)"
+        ],
+        "description": ""
+    },
+    "PositiveIntegerField": {
+        "prefix": [
+            "mf-PositiveIntegerField"
+        ],
+        "body": [
+            "$1 = models.PositiveIntegerField($2)"
+        ],
+        "description": ""
+    },
+    "PositiveSmallIntegerField": {
+        "prefix": [
+            "mf-PositiveSmallIntegerField"
+        ],
+        "body": [
+            "$1 = models.PositiveSmallIntegerField($2)"
+        ],
+        "description": ""
+    },
+    "SlugField": {
+        "prefix": [
+            "mf-SlugField"
+        ],
+        "body": [
+            "$1 = models.SlugField(max_length=${2:50}, $3)"
+        ],
+        "description": ""
+    },
+    "SmallAutoField": {
+        "prefix": [
+            "mf-SmallAutoField"
+        ],
+        "body": [
+            "$1 = models.SmallAutoField($2)"
+        ],
+        "description": ""
+    },
+    "SmallIntegerField": {
+        "prefix": [
+            "mf-SmallIntegerField"
+        ],
+        "body": [
+            "$1 = models.SmallIntegerField($2)"
+        ],
+        "description": ""
+    },
+    "TextField": {
+        "prefix": [
+            "mf-TextField"
+        ],
+        "body": [
+            "$1 = models.TextField($2)"
+        ],
+        "description": ""
+    },
+    "TimeField": {
+        "prefix": [
+            "mf-TimeField"
+        ],
+        "body": [
+            "$1 = models.TimeField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|}, $4})"
+        ],
+        "description": ""
+    },
+    "URLField": {
+        "prefix": [
+            "mf-URLField"
+        ],
+        "body": [
+            "$1 = models.URLField(max_length=${2:200}, $3)"
+        ],
+        "description": ""
+    },
+    "UUIDField": {
+        "prefix": [
+            "mf-UUIDField"
+        ],
+        "body": [
+            "${1:import uuid\n}$2 = models.UUIDField(${3:primary_key=True, }default=${4:uuid.uuid4}, editable=${5|False,True|})"
+        ],
+        "description": ""
+    },
+    "ForeignKey": {
+        "prefix": [
+            "mf-ForeignKey"
+        ],
+        "body": [
+            "$1 = models.ForeignKey(\"$2\", on_delete=models.${3|CASCADE,PROTECT,RESTRICT,SET_NULL,SET(),DO_NOTHING|})"
+        ],
+        "description": ""
+    },
+    "limit_choices_to: FK-OPT": {
+        "prefix": [
+            "mfo-limit_choices_to"
+        ],
+        "body": [
+            "limit_choices_to=$1"
+        ],
+        "description": ""
+    },
+    "related_name: FK-OPT": {
+        "prefix": [
+            "mfo-related_name"
+        ],
+        "body": [
+            "related_name=\"$1\""
+        ],
+        "description": ""
+    },
+    "related_query_name: FK-OPT": {
+        "prefix": [
+            "mfo-related_query_name"
+        ],
+        "body": [
+            "related_query_name=\"$1\""
+        ],
+        "description": ""
+    },
+    "to_field: FK-OPT": {
+        "prefix": [
+            "mfo-to_field"
+        ],
+        "body": [
+            "to_field=$1"
+        ],
+        "description": ""
+    },
+    "db_constraint: FK-OPT": {
+        "prefix": [
+            "mfo-db_constraint"
+        ],
+        "body": [
+            "db_constraint=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "swappable: FK-OPT": {
+        "prefix": [
+            "mfo-swappable"
+        ],
+        "body": [
+            "swappable=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "ManyToManyField": {
+        "prefix": [
+            "mf-ManyToManyField"
+        ],
+        "body": [
+            "$1 = models.ManyToManyField(\"$2\"${3:, related_name=\"$4\"}${5:, related_query_name=\"$6\"}${7:, limit_choices_to=$8}${9:, symmetrical=${10|True,False|}}${11:, through=\"$12\"}${13:, through_fields=(\"$14\",\"$15\"$16)})"
+        ],
+        "description": ""
+    },
+    "OneToOneField": {
+        "prefix": [
+            "mf-OneToOneField"
+        ],
+        "body": [
+            "$1 = models.OneToOneField(\"$2\", on_delete=models.${3|CASCADE,PROTECT,RESTRICT,SET_NULL,SET(),DO_NOTHING|}, parent_link=${3|True,False|}, $4)"
+        ],
+        "description": ""
+    }
+}

@@ -1,0 +1,438 @@
+{
+    "SimpleModelAdmin: CLASS": {
+        "prefix": [
+            "a-admin_view"
+        ],
+        "body": [
+            "@admin.register($1)",
+            "class $1Admin(admin.ModelAdmin):",
+            "\tlist_display = [\"$2\", ]",
+            "\t$0",
+            ""
+        ],
+        "description": ""
+    },
+    "TabularInlineAdmin: CLASS": {
+        "prefix": [
+            "a-tabular-inline"
+        ],
+        "body": [
+            "class $1InlineAdmin(admin.TabularInline):",
+            "\tmodel = $1",
+            "\textra = 0",
+            "\tmax_num = 3",
+            ""
+        ],
+        "description": ""
+    },
+    "StackedInlineAdmin: CLASS": {
+        "prefix": [
+            "a-stacked-inline"
+        ],
+        "body": [
+            "class $1InlineAdmin(admin.StackedInline):",
+            "\tmodel = $1",
+            "\textra = 0",
+            "\tmax_num = 3",
+            ""
+        ],
+        "description": ""
+    },
+    "@admin.action: METHOD": {
+        "prefix": [
+            "a-admin_action"
+        ],
+        "body": [
+            "@admin.action(description=\"$1\", permissions=None)",
+            "def $2_action(${3|self,modeladmin|}, request, queryset):",
+            "\t${4:pass}",
+            ""
+        ],
+        "description": ""
+    },
+    "actions: ADMIN-OPT": {
+        "prefix": [
+            "ao-actions"
+        ],
+        "body": [
+            "actions = [$1, ]",
+        ],
+        "description": ""
+    },
+    "actions_on_top/bottom: ADMIN-OPT": {
+        "prefix": [
+            "ao-actions_on_top",
+            "a-actions_on_bottom"
+        ],
+        "body": [
+            "actions_on_${1|top,bottom|} = ${2|True,False|}",
+        ],
+        "description": ""
+    },
+    "date_hierarchy: ADMIN-OPT": {
+        "prefix": [
+            "ao-date_hierarchy"
+        ],
+        "body": [
+            "date_hierarchy = \"$1\"",
+        ],
+        "description": ""
+    },
+    "empty_value_display: ADMIN-OPT": {
+        "prefix": [
+            "ao-empty_value_display"
+        ],
+        "body": [
+            "empty_value_display = \"$1\"",
+        ],
+        "description": ""
+    },
+    "exclude: ADMIN-OPT": {
+        "prefix": [
+            "ao-exclude"
+        ],
+        "body": [
+            "exclude = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "fields: ADMIN-OPT": {
+        "prefix": [
+            "ao-fields"
+        ],
+        "body": [
+            "fields = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "fieldsets: ADMIN-OPT": {
+        "prefix": [
+            "ao-fieldsets"
+        ],
+        "body": [
+            "fieldsets = [",
+            "\t(",
+            "\t\t${1:None}, {",
+            "\t\t\t\"fields\": [\"$2\", ]",
+            "\t\t},",
+            "\t)",
+            "]",
+        ],
+        "description": ""
+    },
+    "filter_horizontal: ADMIN-OPT": {
+        "prefix": [
+            "ao-filter_horizontal"
+        ],
+        "body": [
+            "filter_horizontal = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "filter_vertical: ADMIN-OPT": {
+        "prefix": [
+            "ao-filter_vertical"
+        ],
+        "body": [
+            "filter_vertical = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "form: ADMIN-OPT": {
+        "prefix": [
+            "ao-form"
+        ],
+        "body": [
+            "form = $1",
+        ],
+        "description": ""
+    },
+    "formfield_overrides: ADMIN-OPT": {
+        "prefix": [
+            "ao-formfield_overrides"
+        ],
+        "body": [
+            "formfield_overrides = {",
+            "\t$1",
+            "}",
+        ],
+        "description": ""
+    },
+    "inlines: ADMIN-OPT": {
+        "prefix": [
+            "ao-inlines"
+        ],
+        "body": [
+            "inlines = [",
+            "\t$1",
+            "]",
+        ],
+        "description": ""
+    },
+    "list_display: ADMIN-OPT": {
+        "prefix": [
+            "ao-list_display"
+        ],
+        "body": [
+            "list_display = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "list_display_links: ADMIN-OPT": {
+        "prefix": [
+            "ao-list_display_links"
+        ],
+        "body": [
+            "list_display_links = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "list_editable: ADMIN-OPT": {
+        "prefix": [
+            "ao-list_editable"
+        ],
+        "body": [
+            "list_editable = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "list_filter: ADMIN-OPT": {
+        "prefix": [
+            "ao-list_filter"
+        ],
+        "body": [
+            "list_filter = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "list_max_show_all: ADMIN-OPT": {
+        "prefix": [
+            "ao-list_max_show_all"
+        ],
+        "body": [
+            "list_max_show_all = $1",
+        ],
+        "description": ""
+    },
+    "list_per_page: ADMIN-OPT": {
+        "prefix": [
+            "ao-list_per_page"
+        ],
+        "body": [
+            "list_per_page = $1",
+        ],
+        "description": ""
+    },
+    "list_select_related: ADMIN-OPT": {
+        "prefix": [
+            "ao-list_select_related"
+        ],
+        "body": [
+            "list_select_related = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "ordering: ADMIN-OPT": {
+        "prefix": [
+            "ao-ordering"
+        ],
+        "body": [
+            "ordering = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "prepopulated_fields: ADMIN-OPT": {
+        "prefix": [
+            "ao-prepopulated_fields"
+        ],
+        "body": [
+            "prepopulated_fields = {\"$1\": [\"$2\", ]}",
+        ],
+        "description": ""
+    },
+    "preserve_filters: ADMIN-OPT": {
+        "prefix": [
+            "ao-preserve_filters"
+        ],
+        "body": [
+            "preserve_filters = ${1|True,False|}",
+        ],
+        "description": ""
+    },
+    "show_facets: ADMIN-OPT": {
+        "prefix": [
+            "ao-show_facets"
+        ],
+        "body": [
+            "show_facets = ${1|ALLOW,ALWAYS,NEVER|}",
+        ],
+        "description": ""
+    },
+    "radio_fields: ADMIN-OPT": {
+        "prefix": [
+            "ao-radio_fields"
+        ],
+        "body": [
+            "radio_fields = {\"$1\": $2}",
+        ],
+        "description": ""
+    },
+    "autocomplete_fields: ADMIN-OPT": {
+        "prefix": [
+            "ao-autocomplete_fields"
+        ],
+        "body": [
+            "autocomplete_fields = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "raw_id_fields: ADMIN-OPT": {
+        "prefix": [
+            "ao-raw_id_fields"
+        ],
+        "body": [
+            "raw_id_fields = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "readonly_fields: ADMIN-OPT": {
+        "prefix": [
+            "ao-readonly_fields"
+        ],
+        "body": [
+            "readonly_fields = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "save_as: ADMIN-OPT": {
+        "prefix": [
+            "ao-save_as"
+        ],
+        "body": [
+            "save_as = ${1|True,False|}",
+        ],
+        "description": ""
+    },
+    "save_as_continue: ADMIN-OPT": {
+        "prefix": [
+            "ao-save_as_continue"
+        ],
+        "body": [
+            "save_as_continue = ${1|True,False|}",
+        ],
+        "description": ""
+    },
+    "save_on_top: ADMIN-OPT": {
+        "prefix": [
+            "ao-save_on_top"
+        ],
+        "body": [
+            "save_on_top = ${1|True,False|}",
+        ],
+        "description": ""
+    },
+    "search_fields: ADMIN-OPT": {
+        "prefix": [
+            "ao-search_fields"
+        ],
+        "body": [
+            "search_fields = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "search_help_text: ADMIN-OPT": {
+        "prefix": [
+            "ao-search_help_text"
+        ],
+        "body": [
+            "search_help_text = \"$1\"",
+        ],
+        "description": ""
+    },
+    "show_full_result_count: ADMIN-OPT": {
+        "prefix": [
+            "ao-show_full_result_count"
+        ],
+        "body": [
+            "show_full_result_count = ${1|True,False|}",
+        ],
+        "description": ""
+    },
+    "sortable_by: ADMIN-OPT": {
+        "prefix": [
+            "ao-sortable_by"
+        ],
+        "body": [
+            "sortable_by = [\"$1\", ]",
+        ],
+        "description": ""
+    },
+    "view_on_site: ADMIN-OPT": {
+        "prefix": [
+            "ao-view_on_site"
+        ],
+        "body": [
+            "view_on_site = ${1|True,False|}",
+        ],
+        "description": ""
+    },
+    "save_model: METHOD": {
+        "prefix": [
+            "a-save_model"
+        ],
+        "body": [
+            "def save_model(self, request, obj, form, change):",
+            "\t${1:# Override Admin save_model method}",
+            "\tsuper().save_model(request, obj, form, change)",
+            ""
+        ],
+        "description": ""
+    },
+    "delete_model: METHOD": {
+        "prefix": [
+            "a-delete_model"
+        ],
+        "body": [
+            "def delete_model(self, request, obj):",
+            "\t${1:# Override Admin delete_model method}",
+            "\tsuper().delete_model(request, obj)",
+            ""
+        ],
+        "description": ""
+    },
+    "delete_queryset: METHOD": {
+        "prefix": [
+            "a-delete_queryset"
+        ],
+        "body": [
+            "def delete_queryset(self, request, queryset):",
+            "\t${1:# Override Admin delete_queryset method}",
+            "\tsuper().delete_queryset(request, queryset)",
+            ""
+        ],
+        "description": ""
+    },
+    "save_formset: METHOD": {
+        "prefix": [
+            "a-save_formset"
+        ],
+        "body": [
+            "def save_formset(self, request, form, formset, change):",
+            "\t${1:# Override Admin save_formset method}",
+            "\tsuper().save_formset(request, form, formset, change)",
+            ""
+        ],
+        "description": ""
+    },
+    "get_ordering: METHOD": {
+        "prefix": [
+            "a-get_ordering"
+        ],
+        "body": [
+            "def get_ordering(self, request):",
+            "\t${1:# return something}",
+            ""
+        ],
+        "description": ""
+    }
+}

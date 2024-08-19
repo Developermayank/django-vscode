@@ -1,34 +1,59 @@
 {
   "name": "django-vscode",
   "displayName": "Django",
-  "description": "Speed up the development of your Django Project using Django VS Code Extension.",
+  "description": "Boost development of your Django project using collection of beautifully tailored django snippets for model, admin & template.",
   "version": "0.0.1",
+  "publisher": "demo-publisher-slkdjflksdfjlk",
   "engines": {
-    "vscode": "^1.92.0"
+    "vscode": "^1.85.0"
   },
   "categories": [
     "Snippets",
-    "Formatters",
-    "Programming Languages"
+    "Other"
   ],
   "author": {
     "name": "Mayank Singhal",
+    "email": "mayanksalesforce@gmail.com",
     "url": "https://github.com/developermayank/"
   },
-  "keywords": ["django snippets","django","python"],
+  "keywords": [
+    "django snippets",
+    "django",
+    "python"
+  ],
   "activationEvents": [],
   "main": "./out/extension.js",
+  "icon": "assets/django_icon_192x192.png",
+  "bugs": {
+    "type": "git",
+    "url": "https://github.com/developermayank/django-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/developermayank/django-vscode.git"
+  },
+  "homepage": "https://github.com/developermayank/django-vscode/blob/master/README.md",
   "contributes": {
-    "commands": [
-      {
-        "command": "django-vscode.helloWorld",
-        "title": "Hello World"
-      }
-    ],
     "snippets": [
       {
         "language": "python",
-        "path": "./snippets/model/fields.json"
+        "path": "./snippets/model_snippets.json"
+      },
+      {
+        "language": "python",
+        "path": "./snippets/admin_snippets.json"
+      },
+      {
+        "language": "python",
+        "path": "./snippets/view_snippets.json"
+      },
+      {
+        "language": "python",
+        "path": "./snippets/form_snippets.json"
+      },
+      {
+        "language": "html",
+        "path": "./snippets/template_snippets.json"
       }
     ]
   },
@@ -41,7 +66,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.92.0",
+    "@types/vscode": "^1.70.0",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
     "@typescript-eslint/eslint-plugin": "^7.14.1",

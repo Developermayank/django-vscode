@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"editor.formatOnSave": true,
+		"files.autoSave": "onFocusChange",
+		"django.docs.version": "4.x"
+	}
+}
