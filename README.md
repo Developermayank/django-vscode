@@ -14,28 +14,27 @@ Django VS Code extension easy your django projects development with snippet sugg
 
 |INDENTIFIER|PREFIX|DESCRIPTION|
 |-|-|-|
-|Models.Model - Class,methods	|m-*        |CLASS,METHOD
-|Models.Field	                |mf-*       |FIELD
-|Models.Field.Option	        |mfo-*      |FIELD-OPT
-|Models.Meta.Option	            |mmo-*      |META-OPT
+|Models.Model	                    |m-*                |CLASS,METHOD
+|Models.Field	                    |mf-*               |FIELD
+|Models.Field.Option	            |mfo-*              |FIELD-OPT
+|Models.Meta.Option	                |meta-*             |META
 |**ADMIN**|
-|Admin - Class	                |a-*        |CLASS
-|Admin Options	                |ao-*       |OPT
-|Admin Methods	                |am-*       |METHOD
+|Admin      	                    |a-*                |CLASS,METHOD
+|Admin Options	                    |ao-*               |ADMIN-OPT
 |**VIEW**|
-|View Method	                  |v-view             |METHOD
-|Base View	                      |v-base             |CLASS
-|Template View	                  |v-template         |CLASS
-|Class-based Generic Views        |v-generic-*        |CLASS
-|Class-based Generic Date Views   |v-generic-date-*   |CLASS
-|Class-based Views Mixins         |v-mixin            |CLASS
+|View Method	                    |v-view             |METHOD
+|Base View	                        |v-base             |CLASS
+|Template View	                    |v-template         |CLASS
+|Class-based Generic Views          |v-generic-*        |CLASS
+|Class-based Generic Date Views     |v-generic-date-*   |CLASS
+|Class-based Views Mixins           |v-mixin            |CLASS
 |**TEMPLATE**|
-|Variables/Tags    |t-*	              |-|
-|Filters	       |t-filters         |-|
+|Variables/Tags                     |t-*	            |-|
+|Filters	                        |t-filters          |-|
 |**FORM**|
-|forms.Form - Class,methods	  |f-*       |CLASS,METHOD
-|Form.Field	                  |ff-*      |FIELD
-|Form.Field.Option	          |ffo-*     |FIELD-OPT
+|forms.Form - Class,methods	        |f-*                |CLASS,METHOD
+|Form.Field	                        |ff-*               |FIELD
+|Form.Field.Option	                |ffo-*              |FIELD-OPT
 ||
 
 
