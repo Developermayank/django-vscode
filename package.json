@@ -1,9 +1,9 @@
 {
   "name": "django-vscode",
   "displayName": "Django",
-  "description": "Boost development of your Django project using collection of beautifully tailored django snippets for model, admin & template.",
-  "version": "0.0.1",
-  "publisher": "demo-publisher-slkdjflksdfjlk",
+  "description": "Boost development of your Django project using collection of beautifully tailored django snippets.",
+  "version": "1.0.0",
+  "publisher": "MayankSinghal",
   "engines": {
     "vscode": "^1.85.0"
   },
