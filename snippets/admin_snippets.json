@@ -1,0 +1,290 @@
+{
+  "SimpleModelAdmin: CLASS": {
+    "prefix": ["a-admin_view", "admin_register", "modeladmin"],
+    "body": [
+      "@admin.register($1)",
+      "class $1Admin(admin.ModelAdmin):",
+      "\tlist_display = [\"$2\", ]",
+      "\t$0",
+      ""
+    ],
+    "description": "Registers the given model class with the given ModelAdmin."
+  },
+  "TabularInlineAdmin: CLASS": {
+    "prefix": ["a-tabular-inline", "tabularinline", "inlines"],
+    "body": [
+      "class $1TabularAdmin(admin.TabularInline):",
+      "\tmodel = $1",
+      "\textra = 0",
+      "\tmax_num = 3",
+      ""
+    ],
+    "description": "TabularInline layout for the forms representing the inline objects."
+  },
+  "StackedInlineAdmin: CLASS": {
+    "prefix": ["a-stacked-inline", "stackedinline", "inlines"],
+    "body": [
+      "class $1StackedAdmin(admin.StackedInline):",
+      "\tmodel = $1",
+      "\textra = 0",
+      "\tmax_num = 3",
+      ""
+    ],
+    "description": "StackedInline layout for the forms representing the inline objects."
+  },
+  "@admin.action: METHOD": {
+    "prefix": ["a-admin_action", "admin_action", "action"],
+    "body": [
+      "@admin.action(description=\"$1\", permissions=None)",
+      "def $2_action(${3|self,modeladmin|}, request, queryset):",
+      "\t${4:pass}",
+      ""
+    ],
+    "description": "Decorator for defining a custom admin action."
+  },
+  "actions: ADMIN-OPT": {
+    "prefix": ["ao-actions", "actions", "admin_actions"],
+    "body": ["actions = [$1, ]"],
+    "description": "A list of actions to make available on the change list page."
+  },
+  "actions_on_top/bottom: ADMIN-OPT": {
+    "prefix": [
+      "ao-actions_on_top",
+      "a-actions_on_bottom",
+      "actions_on_top",
+      "actions_on_bottom"
+    ],
+    "body": ["actions_on_${1|top,bottom|} = ${2|True,False|}"],
+    "description": "Controls where on the page the actions bar appears."
+  },
+  "date_hierarchy: ADMIN-OPT": {
+    "prefix": ["ao-date_hierarchy", "date_hierarchy", "admin_date_hierarchy"],
+    "body": ["date_hierarchy = \"$1\""],
+    "description": "Include a date-based drilldown navigation by that field on the change list page."
+  },
+  "empty_value_display: ADMIN-OPT": {
+    "prefix": ["ao-empty_value_display", "empty_value_display"],
+    "body": ["empty_value_display = \"$1\""],
+    "description": "Overrides the default display value for record's fields that are empty."
+  },
+  "exclude: ADMIN-OPT": {
+    "prefix": ["ao-exclude", "exclude", "admin_exclude"],
+    "body": ["exclude = [\"$1\", ]"],
+    "description": "A list of field names to exclude from the form."
+  },
+  "fields: ADMIN-OPT": {
+    "prefix": ["ao-fields", "fields", "admin_fields"],
+    "body": ["fields = [\"$1\", ]"],
+    "description": "Make simple layout changes in the forms on the add and change pages."
+  },
+  "fieldsets: ADMIN-OPT": {
+    "prefix": ["ao-fieldsets", "fieldsets", "admin_fieldsets"],
+    "body": [
+      "fieldsets = [",
+      "\t(",
+      "\t\t${1:None}, {",
+      "\t\t\t\"fields\": [\"$2\", ]",
+      "\t\t},",
+      "\t)",
+      "]"
+    ],
+    "description": "Control the layout of admin add and change pages (group sections)."
+  },
+  "filter_horizontal: ADMIN-OPT": {
+    "prefix": ["ao-filter_horizontal", "filter_horizontal"],
+    "body": ["filter_horizontal = [\"$1\", ]"],
+    "description": "Use a nifty unobtrusive JavaScript horizontal filter interface for ManyToManyField."
+  },
+  "filter_vertical: ADMIN-OPT": {
+    "prefix": ["ao-filter_vertical", "filter_vertical"],
+    "body": ["filter_vertical = [\"$1\", ]"],
+    "description": "Same as filter_horizontal, but uses a vertical display of the filter interface."
+  },
+  "form: ADMIN-OPT": {
+    "prefix": ["ao-form", "form", "admin_form"],
+    "body": ["form = $1"],
+    "description": "Provide your own ModelForm to override any default form behavior on the add/change pages."
+  },
+  "formfield_overrides: ADMIN-OPT": {
+    "prefix": ["ao-formfield_overrides", "formfield_overrides"],
+    "body": ["formfield_overrides = {", "\t$1", "}"],
+    "description": "Override some of the Field options for use in the admin (e.g., custom widgets)."
+  },
+  "inlines: ADMIN-OPT": {
+    "prefix": ["ao-inlines", "inlines", "admin_inlines"],
+    "body": ["inlines = [", "\t$1", "]"],
+    "description": "Specify inline models to be edited on the same page as a parent model."
+  },
+  "list_display: ADMIN-OPT": {
+    "prefix": ["ao-list_display", "list_display", "admin_list_display"],
+    "body": ["list_display = [\"$1\", ]"],
+    "description": "Control which fields are displayed on the change list page of the admin."
+  },
+  "list_display_links: ADMIN-OPT": {
+    "prefix": ["ao-list_display_links", "list_display_links"],
+    "body": ["list_display_links = [\"$1\", ]"],
+    "description": "Control if and which fields in list_display should be linked to the change page for an object."
+  },
+  "list_editable: ADMIN-OPT": {
+    "prefix": ["ao-list_editable", "list_editable", "admin_list_editable"],
+    "body": ["list_editable = [\"$1\", ]"],
+    "description": "A list of field names on the model which will allow editing on the change list page."
+  },
+  "list_filter: ADMIN-OPT": {
+    "prefix": ["ao-list_filter", "list_filter", "admin_list_filter"],
+    "body": ["list_filter = [\"$1\", ]"],
+    "description": "Activate filters in the right sidebar of the change list page of the admin."
+  },
+  "list_max_show_all: ADMIN-OPT": {
+    "prefix": ["ao-list_max_show_all", "list_max_show_all"],
+    "body": ["list_max_show_all = $1"],
+    "description": "Control how many items can appear on a 'Show all' admin change list page."
+  },
+  "list_per_page: ADMIN-OPT": {
+    "prefix": ["ao-list_per_page", "list_per_page", "admin_list_per_page"],
+    "body": ["list_per_page = $1"],
+    "description": "Control how many items appear on each paginated admin change list page."
+  },
+  "list_select_related: ADMIN-OPT": {
+    "prefix": ["ao-list_select_related", "list_select_related"],
+    "body": ["list_select_related = [\"$1\", ]"],
+    "description": "Tell Django to use select_related() in retrieving the list of objects on the admin change list page."
+  },
+  "ordering: ADMIN-OPT": {
+    "prefix": ["ao-ordering", "ordering", "admin_ordering"],
+    "body": ["ordering = [\"$1\", ]"],
+    "description": "Specify how lists of objects should be ordered in the Django admin views."
+  },
+  "prepopulated_fields: ADMIN-OPT": {
+    "prefix": ["ao-prepopulated_fields", "prepopulated_fields"],
+    "body": ["prepopulated_fields = {\"$1\": [\"$2\", ]}"],
+    "description": "Dictionary mapping field names to the fields it should prepopulate from (e.g., dynamically set a slug)."
+  },
+  "preserve_filters: ADMIN-OPT": {
+    "prefix": ["ao-preserve_filters", "preserve_filters"],
+    "body": ["preserve_filters = ${1|True,False|}"],
+    "description": "Control whether applied filters are preserved on the list view after creating, editing, or deleting an object."
+  },
+  "show_facets: ADMIN-OPT": {
+    "prefix": ["ao-show_facets", "show_facets", "admin_show_facets"],
+    "body": ["show_facets = ${1|ALLOW,ALWAYS,NEVER|}"],
+    "description": "Controls whether facet counts are displayed for filters in the admin changelist."
+  },
+  "radio_fields: ADMIN-OPT": {
+    "prefix": ["ao-radio_fields", "radio_fields", "admin_radio_fields"],
+    "body": ["radio_fields = {\"$1\": $2}"],
+    "description": "Django uses a radio-button interface instead of a select-box for fields that are ForeignKey or have choices set."
+  },
+  "autocomplete_fields: ADMIN-OPT": {
+    "prefix": [
+      "ao-autocomplete_fields",
+      "autocomplete_fields",
+      "admin_autocomplete_fields"
+    ],
+    "body": ["autocomplete_fields = [\"$1\", ]"],
+    "description": "Change ForeignKey and/or ManyToManyField fields to Select2 autocomplete inputs."
+  },
+  "raw_id_fields: ADMIN-OPT": {
+    "prefix": ["ao-raw_id_fields", "raw_id_fields", "admin_raw_id_fields"],
+    "body": ["raw_id_fields = [\"$1\", ]"],
+    "description": "Change into an Input widget for either a ForeignKey or ManyToManyField."
+  },
+  "readonly_fields: ADMIN-OPT": {
+    "prefix": [
+      "ao-readonly_fields",
+      "readonly_fields",
+      "admin_readonly_fields"
+    ],
+    "body": ["readonly_fields = [\"$1\", ]"],
+    "description": "Fields will display their data as-is and non-editable; excluded from the ModelForm."
+  },
+  "save_as: ADMIN-OPT": {
+    "prefix": ["ao-save_as", "save_as", "admin_save_as"],
+    "body": ["save_as = ${1|True,False|}"],
+    "description": "Enable a 'save as new' feature on admin change forms."
+  },
+  "save_as_continue: ADMIN-OPT": {
+    "prefix": ["ao-save_as_continue", "save_as_continue"],
+    "body": ["save_as_continue = ${1|True,False|}"],
+    "description": "Control whether the redirect after saving the new object is to the change view."
+  },
+  "save_on_top: ADMIN-OPT": {
+    "prefix": ["ao-save_on_top", "save_on_top", "admin_save_on_top"],
+    "body": ["save_on_top = ${1|True,False|}"],
+    "description": "Add save buttons across the top of your admin change forms."
+  },
+  "search_fields: ADMIN-OPT": {
+    "prefix": ["ao-search_fields", "search_fields", "admin_search_fields"],
+    "body": ["search_fields = [\"$1\", ]"],
+    "description": "Enable a search box on the admin change list page for specified text fields."
+  },
+  "search_help_text: ADMIN-OPT": {
+    "prefix": ["ao-search_help_text", "search_help_text"],
+    "body": ["search_help_text = \"$1\""],
+    "description": "Specify descriptive text for the search box which will be displayed below it."
+  },
+  "show_full_result_count: ADMIN-OPT": {
+    "prefix": ["ao-show_full_result_count", "show_full_result_count"],
+    "body": ["show_full_result_count = ${1|True,False|}"],
+    "description": "Control whether the full count of objects should be displayed on a filtered admin page."
+  },
+  "sortable_by: ADMIN-OPT": {
+    "prefix": ["ao-sortable_by", "sortable_by", "admin_sortable_by"],
+    "body": ["sortable_by = [\"$1\", ]"],
+    "description": "Disable sorting for some columns by setting sortable_by to a collection."
+  },
+  "view_on_site: ADMIN-OPT": {
+    "prefix": ["ao-view_on_site", "view_on_site", "admin_view_on_site"],
+    "body": ["view_on_site = ${1|True,False|}"],
+    "description": "Control whether or not to display the 'View on site' link."
+  },
+  "save_model: METHOD": {
+    "prefix": ["a-save_model", "save_model", "admin_save_model"],
+    "body": [
+      "def save_model(self, request, obj, form, change):",
+      "\t${1:# Override Admin save_model method}",
+      "\tsuper().save_model(request, obj, form, change)",
+      ""
+    ],
+    "description": "Allows doing pre- or post-save operations."
+  },
+  "delete_model: METHOD": {
+    "prefix": ["a-delete_model", "delete_model", "admin_delete_model"],
+    "body": [
+      "def delete_model(self, request, obj):",
+      "\t${1:# Override Admin delete_model method}",
+      "\tsuper().delete_model(request, obj)",
+      ""
+    ],
+    "description": "Allows doing pre- or post-delete operations."
+  },
+  "delete_queryset: METHOD": {
+    "prefix": ["a-delete_queryset", "delete_queryset", "admin_delete_queryset"],
+    "body": [
+      "def delete_queryset(self, request, queryset):",
+      "\t${1:# Override Admin delete_queryset method}",
+      "\tsuper().delete_queryset(request, queryset)",
+      ""
+    ],
+    "description": "Customize the deletion process for the 'delete selected objects' action."
+  },
+  "save_formset: METHOD": {
+    "prefix": ["a-save_formset", "save_formset", "admin_save_formset"],
+    "body": [
+      "def save_formset(self, request, form, formset, change):",
+      "\t${1:# Override Admin save_formset method}",
+      "\tsuper().save_formset(request, form, formset, change)",
+      ""
+    ],
+    "description": "Allows doing pre- or post-save operations for formsets."
+  },
+  "get_ordering: METHOD": {
+    "prefix": ["a-get_ordering", "get_ordering", "admin_get_ordering"],
+    "body": [
+      "def get_ordering(self, request):",
+      "\t${1:# return something}",
+      ""
+    ],
+    "description": "Returns a list or tuple for ordering similar to the ordering attribute."
+  }
+}

@@ -1,0 +1,563 @@
+{
+  "Simple Model: CLASS": {
+    "prefix": ["m-model", "model"],
+    "body": [
+      "class ${1:ModelName}(models.Model):",
+      "\t$0",
+      "\n\tclass Meta:",
+      "\t\tverbose_name = \"${1/([A-Z])/${1:/downcase}${2:+ }/g}\"",
+      "\t\tverbose_name_plural = \"${1/([A-Z])/${1:/downcase}${2:+ }/g}s\"\n",
+      "\tdef __str__(self):",
+      "\t\tpass",
+      ""
+    ],
+    "description": "Simple Model Class"
+  },
+  "Abstract Model: CLASS": {
+    "prefix": ["m-model-abstract", "model-abstract", "abstract-model"],
+    "body": [
+      "class $1Abstract(models.Model):",
+      "\t$0",
+      "\n\tclass Meta:",
+      "\t\tabstract = True\n",
+      ""
+    ],
+    "description": "Abstract Model Class"
+  },
+  "Custom Model Manager: CLASS": {
+    "prefix": ["m-manager", "model-manager", "manager-model"],
+    "body": ["class $1Manager(models.Manager):", "\t${0:pass}", ""],
+    "description": ""
+  },
+  "get_queryset: METHOD": {
+    "prefix": ["m-get_queryset", "get_queryset"],
+    "body": [
+      "def get_queryset(self):",
+      "\treturn super().get_queryset()${1:.filter($0)}"
+    ],
+    "description": ""
+  },
+  "Custom QuerySet: CLASS": {
+    "prefix": ["m-QuerySet", "queryset class"],
+    "body": ["class $1QuerySet(models.QuerySet):", "\t${0:pass}", ""],
+    "description": ""
+  },
+  "save(): METHOD": {
+    "prefix": ["m-save", "save"],
+    "body": [
+      "def save(self, *args, **kwargs):",
+      "\t${0:# do something before save}",
+      "\tsuper().save(*args, **kwargs)",
+      "\t# do something after save",
+      ""
+    ],
+    "description": "Custom sync 'save' method for django models.Model"
+  },
+  "asave(): METHOD": {
+    "prefix": ["m-asave", "asave"],
+    "body": [
+      "def asave(self, *args, **kwargs):",
+      "\t${0:# do something before save}",
+      "\tsuper().asave(*args, **kwargs)",
+      "\t# do something after save",
+      ""
+    ],
+    "description": "Custom async 'save' method for django.db.models.Model"
+  },
+  "__str__(): METHOD": {
+    "prefix": ["m-__str__", "str"],
+    "body": ["def __str__(self):", "\t${0:pass}", ""],
+    "description": "django.db.models.Model.__str__()"
+  },
+  "get_absolute_url(): METHOD": {
+    "prefix": ["m-get_absolute_url"],
+    "body": [
+      "def get_absolute_url(self):",
+      "\t${4:from django.urls import reverse}",
+      "\treturn ${1:reverse(\"$2\", kwargs={\"${3:pk}\": self.$3\\})}",
+      ""
+    ],
+    "description": "django.db.models.Model.get_absolute_url()"
+  },
+  "blank: FIELD-OPT": {
+    "prefix": ["mfo-blank", "blank"],
+    "body": ["blank=${1|True,False|}"],
+    "description": "If True, the field is allowed to be blank."
+  },
+  "null: FIELD-OPT (True)": {
+    "prefix": ["mfo-null", "null-true"],
+    "body": ["null=True"],
+    "description": "If True, Django will store empty values as NULL in the database."
+  },
+  "null: FIELD-OPT (False)": {
+    "prefix": ["mfo-null", "null-false"],
+    "body": ["null=False"],
+    "description": "If True, Django will store empty values as NULL in the database."
+  },
+  "choices: FIELD-OPT": {
+    "prefix": ["mfo-choices", "choices"],
+    "body": ["choices=${1:CHOICES}"],
+    "description": "A mapping or iterable to use as choices for this field."
+  },
+  "db_column: FIELD-OPT": {
+    "prefix": ["mfo-db_column", "db_column"],
+    "body": ["db_column=\"$1\""],
+    "description": "The name of the database column to use for this field."
+  },
+  "db_comment: FIELD-OPT": {
+    "prefix": ["mfo-db_comment", "db_comment"],
+    "body": ["db_comment=\"$1\""],
+    "description": "The comment on the database column to use for this field."
+  },
+  "db_default: FIELD-OPT": {
+    "prefix": ["mfo-db_default", "db_default"],
+    "body": ["db_default=\"$1\""],
+    "description": "The database-computed default value for this field."
+  },
+  "db_index: FIELD-OPT": {
+    "prefix": ["mfo-db_index", "db_index"],
+    "body": ["db_index=${1|True,False|}"],
+    "description": "If True, a database index will be created for this field."
+  },
+  "db_tablespace: FIELD-OPT": {
+    "prefix": ["mfo-db_tablespace", "db_tablespace"],
+    "body": ["db_tablespace=\"$1\""],
+    "description": "The name of the database tablespace to use for this field's index."
+  },
+  "default: FIELD-OPT": {
+    "prefix": ["mfo-default", "default"],
+    "body": ["default=$1"],
+    "description": "The default value for the field. This can be a value or a callable object."
+  },
+  "editable: FIELD-OPT": {
+    "prefix": ["mfo-editable", "editable"],
+    "body": ["editable=${1|True,False|}"],
+    "description": "If False, the field will not be displayed in the admin or any other ModelForm."
+  },
+  "error_messages: FIELD-OPT": {
+    "prefix": ["mfo-error_messages", "error_messages"],
+    "body": [
+      "error_messages={\n\t\"${1|null,blank,invalid,invalid_choice,unique,unique_for_date|}\": \"$2\",\n}"
+    ],
+    "description": "Override the default messages that the field will raise."
+  },
+  "help_text: FIELD-OPT": {
+    "prefix": ["mfo-help_text", "help_text"],
+    "body": ["help_text=\"$1\""],
+    "description": "Extra 'help' text to be displayed with the form widget."
+  },
+  "primary_key: FIELD-OPT": {
+    "prefix": ["mfo-primary_key", "primary_key"],
+    "body": ["primary_key=${1|True,False|}"],
+    "description": "If True, this field is the primary key for the model."
+  },
+  "unique: FIELD-OPT": {
+    "prefix": ["mfo-unique", "unique"],
+    "body": ["unique=${1|True,False|}"],
+    "description": "If True, this field must be unique throughout the table."
+  },
+  "unique_for_date: FIELD-OPT": {
+    "prefix": ["mfo-unique_for_date", "unique_for_date"],
+    "body": ["unique_for_date=\"$1\""],
+    "description": "Set to the name of a DateField or DateTimeField to require this field be unique for the value of the date field."
+  },
+  "unique_for_month: FIELD-OPT": {
+    "prefix": ["mfo-unique_for_month", "unique_for_month"],
+    "body": ["unique_for_month=\"$1\""],
+    "description": "Requires the field to be unique with respect to the month."
+  },
+  "unique_for_year: FIELD-OPT": {
+    "prefix": ["mfo-unique_for_year", "unique_for_year"],
+    "body": ["unique_for_year=\"$1\""],
+    "description": "Requires the field to be unique with respect to the year."
+  },
+  "verbose_name: FIELD-OPT": {
+    "prefix": ["mfo-verbose_name", "verbose_name"],
+    "body": ["verbose_name=\"$1\""],
+    "description": "A human-readable name for the field."
+  },
+  "validators: FIELD-OPT": {
+    "prefix": ["mfo-validators", "validators"],
+    "body": ["validators=[$1]"],
+    "description": "A list of validators to run for this field."
+  },
+
+  "AutoField": {
+    "prefix": ["mf-AutoField", "autofield"],
+    "body": ["$1 = models.AutoField($2)"],
+    "description": "An IntegerField that automatically increments."
+  },
+  "BigAutoField": {
+    "prefix": ["mf-BigAutoField", "bigautofield"],
+    "body": ["$1 = models.BigAutoField($2)"],
+    "description": "A 64-bit integer, much like an AutoField."
+  },
+  "BigIntegerField": {
+    "prefix": ["mf-BigIntegerField", "bigintegerfield"],
+    "body": ["$1 = models.BigIntegerField($2)"],
+    "description": "A 64-bit integer."
+  },
+  "BinaryField": {
+    "prefix": ["mf-BinaryField", "binaryfield"],
+    "body": ["$1 = models.BinaryField(max_length=${2:None}, $3)"],
+    "description": "A field to store raw binary data."
+  },
+  "BooleanField": {
+    "prefix": ["mf-BooleanField", "booleanfield"],
+    "body": ["$1 = models.BooleanField($2)"],
+    "description": "A true/false field."
+  },
+  "CompositePrimaryKey": {
+    "prefix": ["mf-CompositePrimaryKey", "compositeprimarykey"],
+    "body": ["$1 = models.CompositePrimaryKey(\"$2\", \"$3\")"],
+    "description": "A virtual field used for defining a composite primary key."
+  },
+  "CharField": {
+    "prefix": ["mf-CharField", "charfield"],
+    "body": ["$1 = models.CharField(max_length=${2:255}, $3)"],
+    "description": "A string field, for small- to large-sized strings."
+  },
+  "DateField": {
+    "prefix": ["mf-DateField", "datefield"],
+    "body": [
+      "$1 = models.DateField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|}, $4)"
+    ],
+    "description": "A date, represented in Python by a datetime.date instance."
+  },
+  "DateField (auto_now_add)": {
+    "prefix": ["mf-DateField-auto_now_add", "datefield-created", "created_at"],
+    "body": ["${1:created_at} = models.DateField(auto_now_add=True)"],
+    "description": "A DateField automatically set when the object is first created."
+  },
+  "DateField (auto_now)": {
+    "prefix": ["mf-DateField-auto_now", "datefield-updated", "updated_at"],
+    "body": ["${1:updated_at} = models.DateField(auto_now=True)"],
+    "description": "A DateField automatically set to now every time the object is saved."
+  },
+  "DateTimeField": {
+    "prefix": ["mf-DateTimeField", "datetimefield"],
+    "body": [
+      "$1 = models.DateTimeField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|}, $4)"
+    ],
+    "description": "A date and time, represented in Python by a datetime.datetime instance."
+  },
+  "DateTimeField (auto_now_add)": {
+    "prefix": [
+      "mf-DateTimeField-auto_now_add",
+      "datetimefield-created",
+      "created_at"
+    ],
+    "body": ["${1:created_at} = models.DateTimeField(auto_now_add=True)"],
+    "description": "A DateTimeField automatically set when the object is first created."
+  },
+  "DateTimeField (auto_now)": {
+    "prefix": [
+      "mf-DateTimeField-auto_now",
+      "datetimefield-updated",
+      "updated_at"
+    ],
+    "body": ["${1:updated_at} = models.DateTimeField(auto_now=True)"],
+    "description": "A DateTimeField automatically set to now every time the object is saved."
+  },
+  "DecimalField": {
+    "prefix": ["mf-DecimalField", "decimalfield"],
+    "body": [
+      "$1 = models.DecimalField(max_digits=${2:None}, decimal_places=${3:None}, $4)"
+    ],
+    "description": "A fixed-precision decimal number."
+  },
+  "DurationField": {
+    "prefix": ["mf-DurationField", "durationfield"],
+    "body": ["$1 = models.DurationField($2)"],
+    "description": "A field for storing periods of time."
+  },
+  "EmailField": {
+    "prefix": ["mf-EmailField", "emailfield"],
+    "body": ["$1 = models.EmailField(max_length=${2:254}, $3)"],
+    "description": "A CharField that checks that the value is a valid email address."
+  },
+  "FileField": {
+    "prefix": ["mf-FileField", "filefield"],
+    "body": [
+      "$1 = models.FileField(upload_to=\"$2\", max_length=${3:100}, $4)"
+    ],
+    "description": "A file-upload field."
+  },
+  "FilePathField": {
+    "prefix": ["mf-FilePathField", "filepathfield"],
+    "body": [
+      "$1 = models.FilePathField(path=\"$2\", match=${3:None}, recursive=${4|False,True|}, allow_files=${5|True,False|}, allow_folders=${6|False,True|}, max_length=${7:100}, $8)"
+    ],
+    "description": "A CharField whose choices are limited to the filenames in a certain directory on the filesystem."
+  },
+  "FloatField": {
+    "prefix": ["mf-FloatField", "floatfield"],
+    "body": ["$1 = models.FloatField($2)"],
+    "description": "A floating-point number represented in Python by a float instance."
+  },
+  "GeneratedField": {
+    "prefix": ["mf-GeneratedField", "generatedfield"],
+    "body": [
+      "$1 = models.GeneratedField(expression=${2:expression}, output_field=${3:output_field}, db_persist=${4|True,False|}, $5)"
+    ],
+    "description": "A field that is always computed based on other fields in the model."
+  },
+  "GenericIPAddressField": {
+    "prefix": ["mf-GenericIPAddressField", "genericipaddressfield"],
+    "body": [
+      "$1 = models.GenericIPAddressField(protocol='${2|both,IPv4,IPv6|}', unpack_ipv4=${3|False,True|}, $4)"
+    ],
+    "description": "An IPv4 or IPv6 address, in string format."
+  },
+  "ImageField": {
+    "prefix": ["mf-ImageField", "imagefield"],
+    "body": [
+      "$1 = models.ImageField(upload_to=\"$2\", height_field=${3:None}, width_field=${4:None}, max_length=${5:100}, $6)"
+    ],
+    "description": "Inherits all attributes and methods from FileField, but also validates that the uploaded object is a valid image."
+  },
+  "IntegerField": {
+    "prefix": ["mf-IntegerField", "integerfield"],
+    "body": ["$1 = models.IntegerField($2)"],
+    "description": "An integer."
+  },
+  "JSONField": {
+    "prefix": ["mf-JSONField", "jsonfield"],
+    "body": ["$1 = models.JSONField(encoder=${2:None}, decoder=${3:None}, $4)"],
+    "description": "A field for storing JSON encoded data."
+  },
+  "PositiveBigIntegerField": {
+    "prefix": ["mf-PositiveBigIntegerField", "positivebigintegerfield"],
+    "body": ["$1 = models.PositiveBigIntegerField($2)"],
+    "description": "Like a PositiveIntegerField, but only allows values under a certain (database-dependent) point."
+  },
+  "PositiveIntegerField": {
+    "prefix": ["mf-PositiveIntegerField", "positiveintegerfield"],
+    "body": ["$1 = models.PositiveIntegerField($2)"],
+    "description": "Like an IntegerField, but must be either positive or zero."
+  },
+  "PositiveSmallIntegerField": {
+    "prefix": ["mf-PositiveSmallIntegerField", "positivesmallintegerfield"],
+    "body": ["$1 = models.PositiveSmallIntegerField($2)"],
+    "description": "Like a PositiveIntegerField, but only allows values under a certain point."
+  },
+  "SlugField": {
+    "prefix": ["mf-SlugField", "slugfield"],
+    "body": ["$1 = models.SlugField(max_length=${2:50}, $3)"],
+    "description": "A slug is a short label for something, containing only letters, numbers, underscores or hyphens."
+  },
+  "SmallAutoField": {
+    "prefix": ["mf-SmallAutoField", "smallautofield"],
+    "body": ["$1 = models.SmallAutoField($2)"],
+    "description": "Like an AutoField, but only allows values under a certain limit."
+  },
+  "SmallIntegerField": {
+    "prefix": ["mf-SmallIntegerField", "smallintegerfield"],
+    "body": ["$1 = models.SmallIntegerField($2)"],
+    "description": "Like an IntegerField, but only allows values under a certain point."
+  },
+  "TextField": {
+    "prefix": ["mf-TextField", "textfield"],
+    "body": ["$1 = models.TextField($2)"],
+    "description": "A large text field."
+  },
+  "TimeField": {
+    "prefix": ["mf-TimeField", "timefield"],
+    "body": [
+      "$1 = models.TimeField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|}, $4)"
+    ],
+    "description": "A time, represented in Python by a datetime.time instance."
+  },
+  "URLField": {
+    "prefix": ["mf-URLField", "urlfield"],
+    "body": ["$1 = models.URLField(max_length=${2:200}, $3)"],
+    "description": "A CharField for a URL."
+  },
+  "UUIDField": {
+    "prefix": ["mf-UUIDField", "uuidfield"],
+    "body": ["$1 = models.UUIDField($2)"],
+    "description": "A field for storing universally unique identifiers."
+  },
+
+  "ForeignKey": {
+    "prefix": ["mf-ForeignKey", "foreignkey"],
+    "body": [
+      "$1 = models.ForeignKey(\"$2\", on_delete=models.${3|CASCADE,PROTECT,RESTRICT,SET_NULL,SET(),DO_NOTHING|}, $4)"
+    ],
+    "description": "A many-to-one relationship."
+  },
+  "ManyToManyField": {
+    "prefix": ["mf-ManyToManyField", "manytomanyfield"],
+    "body": ["$1 = models.ManyToManyField(\"$2\", $3)"],
+    "description": "A many-to-many relationship."
+  },
+  "ManyToManyField: SELF": {
+    "prefix": ["mf-ManyToManyField", "manytomanyfield-self"],
+    "body": ["$1 = models.ManyToManyField(\"self\")"],
+    "description": "A many-to-many self relationship."
+  },
+  "OneToOneField": {
+    "prefix": ["mf-OneToOneField", "onetoonefield"],
+    "body": [
+      "$1 = models.OneToOneField(\"$2\", on_delete=models.${3|CASCADE,PROTECT,RESTRICT,SET_NULL,SET(),DO_NOTHING|}, parent_link=${4|False,True|}, $5)"
+    ],
+    "description": "A one-to-one relationship."
+  },
+
+  "TextChoices": {
+    "prefix": ["mf-TextChoices", "textchoices"],
+    "body": [
+      "class ${1:MyChoice}(models.TextChoices):",
+      "    ${2:CHOICE_ONE} = '${3:1}', '${4:Label 1}'",
+      "    ${5:CHOICE_TWO} = '${6:2}', '${7:Label 2}'"
+    ],
+    "description": "Django TextChoices enumeration class."
+  },
+  "TextChoices (Oneline)": {
+    "prefix": ["mf-TextChoices", "textchoices-oneline"],
+    "body": ["models.TextChoices(\"$1\", \"$2 \"):"],
+    "description": "Django TextChoices oneliner. i.e. [('GOLD', 'Gold'), ('SILVER', 'Silver'),]"
+  },
+  "IntegerChoices (Oneline)": {
+    "prefix": ["mf-IntegerChoices", "integerchoices-oneline"],
+    "body": ["models.IntegerChoices(\"$1\", \"$2 \"):"],
+    "description": "Django IntegerChoices oneliner. i.e. [(1, 'First'), (2, 'Second')]"
+  },
+  "IntegerChoices": {
+    "prefix": ["mf-IntegerChoices", "integerchoices"],
+    "body": [
+      "class ${1:MyChoice}(models.IntegerChoices):",
+      "    ${2:CHOICE_ONE} = 1, '${3:Label 1}'",
+      "    ${4:CHOICE_TWO} = 2, '${5:Label 2}'"
+    ],
+    "description": "Django IntegerChoices enumeration class."
+  },
+  "Choices Tuple": {
+    "prefix": ["mfo-choices-tuple", "choices-tuple"],
+    "body": [
+      "${1:CHOICES} = [",
+      "    ('${2:1}', '${3:Label 1}'),",
+      "    ('${4:2}', '${5:Label 2}'),",
+      "]"
+    ],
+    "description": "A standard choices tuple list."
+  },
+
+  "abstract: META": {
+    "prefix": ["meta-abstract", "abstract-true"],
+    "body": ["abstract = True}"],
+    "description": "If abstract = True, this model will be an abstract base class."
+  },
+  "app_label: META": {
+    "prefix": ["meta-app_label", "app_label"],
+    "body": ["app_label = \"$1\""],
+    "description": "If a model is defined outside of an application in INSTALLED_APPS, it must declare which app it belongs to."
+  },
+  "base_manager_name: META": {
+    "prefix": ["meta-base_manager_name", "base_manager_name"],
+    "body": ["base_manager_name = \"$1\""],
+    "description": "The attribute name of the manager to use for the model's _base_manager."
+  },
+  "db_table: META": {
+    "prefix": ["meta-db_table", "db_table"],
+    "body": ["db_table = \"$1\""],
+    "description": "The name of the database table to use for the model."
+  },
+  "db_table_comment: META": {
+    "prefix": ["meta-db_table_comment", "db_table_comment"],
+    "body": ["db_table_comment = \"$1\""],
+    "description": "The comment on the database table to use for this model."
+  },
+  "db_tablespace: META": {
+    "prefix": ["meta-db_tablespace", "db_tablespace"],
+    "body": ["db_tablespace = \"$1\""],
+    "description": "The name of the database tablespace to use for this model."
+  },
+  "default_manager_name: META": {
+    "prefix": ["meta-default_manager_name", "default_manager_name"],
+    "body": ["default_manager_name = \"$1\""],
+    "description": "The name of the manager to use for the model's _default_manager."
+  },
+  "default_related_name: META": {
+    "prefix": ["meta-default_related_name", "default_related_name"],
+    "body": ["default_related_name = \"$1\""],
+    "description": "The name that will be used by default for the relation from a related object back to this one."
+  },
+  "get_latest_by: META": {
+    "prefix": ["meta-get_latest_by", "get_latest_by"],
+    "body": ["get_latest_by = ${1:[\"$2\"]} "],
+    "description": "The name of a field or a list of field names in the model, typically DateField, DateTimeField, or IntegerField."
+  },
+  "managed: META": {
+    "prefix": ["meta-managed", "managed"],
+    "body": ["managed = ${1|True,False|}"],
+    "description": "Defaults to True, meaning Django will create the appropriate database tables in migrate or as part of migrations and remove them as part of a flush management command."
+  },
+  "order_with_respect_to: META": {
+    "prefix": ["meta-order_with_respect_to", "order_with_respect_to"],
+    "body": ["order_with_respect_to = \"$1\""],
+    "description": "Makes this object orderable with respect to the given field, usually a ForeignKey."
+  },
+  "ordering: META": {
+    "prefix": ["meta-ordering", "ordering"],
+    "body": ["ordering = [\"$1\"]"],
+    "description": "The default ordering for the object, for use when obtaining lists of objects."
+  },
+  "permissions: META": {
+    "prefix": ["meta-permissions", "permissions"],
+    "body": ["permissions = [\n\t(\"$1\", \"$2\"),\n]"],
+    "description": "Extra permissions to enter into the permissions table when creating this object."
+  },
+  "default_permissions: META": {
+    "prefix": ["meta-default_permissions", "default_permissions"],
+    "body": ["default_permissions = (${1:'add', 'change', 'delete', 'view'})"],
+    "description": "Customize the default permissions list."
+  },
+  "proxy: META": {
+    "prefix": ["meta-proxy", "proxy"],
+    "body": ["proxy = ${1|True,False|}"],
+    "description": "If proxy = True, a model which subclasses another model will be treated as a proxy model."
+  },
+  "required_db_features: META": {
+    "prefix": ["meta-required_db_features", "required_db_features"],
+    "body": ["required_db_features = [\"$1\"]"],
+    "description": "List of database features that the current connection should have so that the model is considered during the migration phase."
+  },
+  "required_db_vendor: META": {
+    "prefix": ["meta-required_db_vendor", "required_db_vendor"],
+    "body": ["required_db_vendor = \"$1\""],
+    "description": "Name of a supported database vendor that this model is specific to."
+  },
+  "select_on_save: META": {
+    "prefix": ["meta-select_on_save", "select_on_save"],
+    "body": ["select_on_save = ${1|True,False|}"],
+    "description": "Determines if Django will use the pre-1.6 django.db.models.Model.save() algorithm."
+  },
+  "indexes: META": {
+    "prefix": ["meta-indexes", "indexes"],
+    "body": ["indexes = [\n\tmodels.Index(fields=[\"$1\"], name=\"$2\"),\n]"],
+    "description": "A list of indexes that you want to define on the model."
+  },
+  "unique_together: META": {
+    "prefix": ["meta-unique_together", "unique_together"],
+    "body": ["unique_together = [[\"$1\", \"$2\"]]"],
+    "description": "Sets of field names that, taken together, must be unique."
+  },
+  "constraints: META": {
+    "prefix": ["meta-constraints", "constraints"],
+    "body": [
+      "constraints = [\n\tmodels.${1|CheckConstraint,UniqueConstraint|}($2),\n]"
+    ],
+    "description": "A list of constraints that you want to define on the model."
+  },
+  "verbose_name: META": {
+    "prefix": ["meta-verbose_name", "verbose_name"],
+    "body": ["verbose_name = \"$1\""],
+    "description": "A human-readable name for the object, singular."
+  },
+  "verbose_name_plural: META": {
+    "prefix": ["meta-verbose_name_plural", "verbose_name_plural"],
+    "body": ["verbose_name_plural = \"$1\""],
+    "description": "The plural name for the object."
+  }
+}

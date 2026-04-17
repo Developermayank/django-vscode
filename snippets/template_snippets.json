@@ -1,0 +1,426 @@
+{
+    "var": {
+        "prefix": [
+            "t-var"
+        ],
+        "body": [
+            "{{ $1 }}"
+        ],
+        "description": ""
+    },
+    "extends:": {
+        "prefix": [
+            "t-extends"
+        ],
+        "body": [
+            "{% extends ${1:\"${2:template_name}\"} %}"
+        ],
+        "description": ""
+    },
+    "include:": {
+        "prefix": [
+            "t-include"
+        ],
+        "body": [
+            "{% include ${1:\"${2:template_name}\"} %}"
+        ],
+        "description": ""
+    },
+    "include-with:": {
+        "prefix": [
+            "t-include-with"
+        ],
+        "body": [
+            "{% include ${1:\"${2:template_name}\"} with $3 %}"
+        ],
+        "description": ""
+    },
+    "autoescape: TAG": {
+        "prefix": [
+            "t-autoescape"
+        ],
+        "body": [
+            "{% autoescape ${1|on,off|} %}",
+            "\t{{ $2 }}",
+            "{% endautoescape %}",
+        ],
+        "description": ""
+    },
+    "autoescape-inline: TAG": {
+        "prefix": [
+            "t-autoescape-inline"
+        ],
+        "body": [
+            "{% autoescape ${1|on,off|} %} {{ $2 }} {% endautoescape %}",
+        ],
+        "description": ""
+    },
+    "block: TAG": {
+        "prefix": [
+            "t-block"
+        ],
+        "body": [
+            "{% block $1 %}",
+            "\t$2",
+            "{% endblock %}",
+        ],
+        "description": ""
+    },
+    "block-inline: TAG": {
+        "prefix": [
+            "t-block-inline"
+        ],
+        "body": [
+            "{% block $1 %} $2 {% endblock %}",
+        ],
+        "description": ""
+    },
+    "comment: TAG": {
+        "prefix": [
+            "t-comment"
+        ],
+        "body": [
+            "{% comment $1 %}",
+            "\t$2",
+            "{% endcomment %}",
+        ],
+        "description": ""
+    },
+    "comment-inline: TAG": {
+        "prefix": [
+            "t-comment-inline"
+        ],
+        "body": [
+            "{% comment $1 %} $2 {% endcomment %}",
+        ],
+        "description": ""
+    },
+    "csrf_token: TAG": {
+        "prefix": [
+            "t-csrf_token"
+        ],
+        "body": [
+            "{% csrf_token %}"
+        ],
+        "description": ""
+    },
+    "cycle: TAG": {
+        "prefix": [
+            "t-cycle"
+        ],
+        "body": [
+            "{% cycle $1 $2 %}"
+        ],
+        "description": ""
+    },
+    "debug: TAG": {
+        "prefix": [
+            "t-debug"
+        ],
+        "body": [
+            "{% debug %}"
+        ],
+        "description": ""
+    },
+    "filter: TAG": {
+        "prefix": [
+            "t-filter"
+        ],
+        "body": [
+            "{% filter $1 %}",
+            "\t$2",
+            "{% endfilter %}",
+        ],
+        "description": ""
+    },
+    "firstof: TAG": {
+        "prefix": [
+            "t-firstof"
+        ],
+        "body": [
+            "{% firstof $1 $2 $3 %}"
+        ],
+        "description": ""
+    },
+    "For Loop: TAG": {
+        "prefix": [
+            "t-for"
+        ],
+        "body": [
+            "{% for ${1:item} in ${2:list} %}",
+            "\t$3",
+            "{% endfor %}",
+        ],
+        "description": ""
+    },
+    "For Loop-inline: TAG": {
+        "prefix": [
+            "t-for-inline"
+        ],
+        "body": [
+            "{% for ${1:item} in ${2:list} %} $3 {% endfor %}",
+        ],
+        "description": ""
+    },
+    "For Loop (key,value): TAG": {
+        "prefix": [
+            "t-for"
+        ],
+        "body": [
+            "{% for ${1:key}, ${2:value} in ${3:dict} %}",
+            "\t$4",
+            "{% endfor %}",
+        ],
+        "description": ""
+    },
+    "for...empty: TAG": {
+        "prefix": [
+            "t-for-empty"
+        ],
+        "body": [
+            "{% for ${1:item} in ${2:list} %}",
+            "\t$3",
+            "{% empty %}",
+            "\t$4",
+            "{% endfor %}",
+        ],
+        "description": ""
+    },
+    "forloop.counter: TAG": {
+        "prefix": [
+            "t-forloop-counter"
+        ],
+        "body": [
+            "{{ for forloop.${1|counter,counter0,revcounter,revcounter0,first,last,previous|} }}"
+        ],
+        "description": ""
+    },
+    "if: TAG": {
+        "prefix": [
+            "t-if"
+        ],
+        "body": [
+            "{% if $1 %}",
+            "$0",
+            "{% endif %}",
+        ],
+        "description": ""
+    },
+    "if-inline: TAG": {
+        "prefix": [
+            "t-if-inline"
+        ],
+        "body": [
+            "{% if $1 %} $0 {% endif %}",
+        ],
+        "description": ""
+    },
+    "if...else: TAG": {
+        "prefix": [
+            "t-if-else"
+        ],
+        "body": [
+            "{% if $1 %}",
+            "$2",
+            "{% else %}",
+            "$0",
+            "{% endif %}",
+        ],
+        "description": ""
+    },
+    "if...else-inline: TAG": {
+        "prefix": [
+            "t-if...else-inline"
+        ],
+        "body": [
+            "{% if $1 %} $2 {% else %} $3 {% endif %}",
+        ],
+        "description": ""
+    },
+    "if..elif..else: TAG": {
+        "prefix": [
+            "t-if..elif..else"
+        ],
+        "body": [
+            "{% if $1 %}",
+            "$2",
+            "{% elif $3 %}",
+            "$4",
+            "{% else %}",
+            "$0",
+            "{% endif %}",
+        ],
+        "description": ""
+    },
+    "elif: TAG": {
+        "prefix": [
+            "t-elif"
+        ],
+        "body": [
+            "{% elif $1 %}",
+            "$0",
+        ],
+        "description": ""
+    },
+    "else: TAG": {
+        "prefix": [
+            "t-else"
+        ],
+        "body": [
+            "{% else $1 %}",
+            "$0",
+        ],
+        "description": ""
+    },
+    "ifchanged: TAG": {
+        "prefix": [
+            "t-ifchanged"
+        ],
+        "body": [
+            "{% ifchanged $1 %} $2 {% endifchanged %}"
+        ],
+        "description": ""
+    },
+    "load: TAG": {
+        "prefix": [
+            "t-load"
+        ],
+        "body": [
+            "{% load $1 %}"
+        ],
+        "description": ""
+    },
+    "load-static: TAG": {
+        "prefix": [
+            "t-load-static"
+        ],
+        "body": [
+            "{% load static %}"
+        ],
+        "description": ""
+    },
+    "static: TAG": {
+        "prefix": [
+            "t-static"
+        ],
+        "body": [
+            "{% static $1 %}"
+        ],
+        "description": ""
+    },
+    "now: TAG": {
+        "prefix": [
+            "t-now"
+        ],
+        "body": [
+            "{% now \"$0\" %}"
+        ],
+        "description": ""
+    },
+    "regroup: TAG": {
+        "prefix": [
+            "t-regroup"
+        ],
+        "body": [
+            "{% regroup ${1:list} by ${2:attribute} as ${3:_list} %}"
+        ],
+        "description": ""
+    },
+    "resetcycle: TAG": {
+        "prefix": [
+            "t-resetcycle"
+        ],
+        "body": [
+            "{% resetcycle %}"
+        ],
+        "description": ""
+    },
+    "spaceless: TAG": {
+        "prefix": [
+            "t-spaceless"
+        ],
+        "body": [
+            "{% spaceless %}",
+            "$0",
+            "{% endspaceless %}"
+        ],
+        "description": ""
+    },
+    "templatetag: TAG": {
+        "prefix": [
+            "t-templatetag"
+        ],
+        "body": [
+            "{% templatetag ${1|openblock,closeblock,openvariable,closevariable,openbrace,closebrace,opencomment,closecomment|} %}"
+        ],
+        "description": ""
+    },
+    "url: TAG": {
+        "prefix": [
+            "t-url"
+        ],
+        "body": [
+            "{% url $0 %}"
+        ],
+        "description": ""
+    },
+    "verbatim: TAG": {
+        "prefix": [
+            "t-verbatim"
+        ],
+        "body": [
+            "{% verbatim %}",
+            "$0",
+            "{% endverbatim %}"
+        ],
+        "description": ""
+    },
+    "withratio: TAG": {
+        "prefix": [
+            "t-withratio"
+        ],
+        "body": [
+            "{% withratio $0 %}"
+        ],
+        "description": ""
+    },
+    "with: TAG": {
+        "prefix": [
+            "t-with"
+        ],
+        "body": [
+            "{% with $1 %}",
+            "$0",
+            "{% endwith %}",
+        ],
+        "description": ""
+    },
+    "get_static_prefix: TAG": {
+        "prefix": [
+            "t-get-static-prefix"
+        ],
+        "body": [
+            "{% get_static_prefix %}"
+        ],
+        "description": ""
+    },
+    "get_media_prefix: TAG": {
+        "prefix": [
+            "t-get-media-prefix"
+        ],
+        "body": [
+            "{% get_media_prefix %}"
+        ],
+        "description": ""
+    },
+    "filters-with-argument: FILTER": {
+        "prefix": [
+            "|",
+            "t-filters"
+        ],
+        "body": [
+            "${1|add,addslashes,capfirst,center,cut,date,default_if_none,default,dictsort,dictsortreversed,divisibleby,escape,escapejs,filesizeformat,first,floatformat,force_escape,get_digit,iriencode,join,json_script,last,length_is,length,linebreaks,linenumbers,ljust,lower,make_list,phone2numeric,pluralize,pprint,random,rjust,safeseq,slice,slugify,stringformat,striptags,time,timesince,timeuntil,title,truncatechars_html,truncatechars,truncatewords_html,truncatewords,unordered_list,upper,urlencode,urlize,urlizetrunc,wordcount,wordwrap,yesno|}${2::${3:\"$4\"}}"
+        ],
+        "description": ""
+    }
+}

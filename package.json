@@ -1,0 +1,88 @@
+{
+  "name": "django-snippets",
+  "displayName": "Django Snippets 4.x-6.x",
+  "description": "Developer friendly django snippets for boosting development speed.",
+  "version": "1.1.0",
+  "publisher": "mayanksinghal",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Snippets",
+    "Other"
+  ],
+  "author": {
+    "name": "Mayank Singhal",
+    "email": "engr.msinghal@gmail.com",
+    "url": "https://github.com/developermayank/"
+  },
+  "keywords": [
+    "django snippets",
+    "django framework",
+    "django",
+    "django 6.x snippets",
+    "django 5.x snippets",
+    "django 4.x snippets",
+    "python"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "icon": "assets/django-icon-256x256-new.png",
+  "bugs": {
+    "type": "git",
+    "url": "https://github.com/developermayank/django-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/developermayank/django-vscode.git"
+  },
+  "homepage": "https://github.com/developermayank/django-vscode/blob/master/README.md",
+  "contributes": {
+    "snippets": [
+      {
+        "language": "python",
+        "path": "./snippets/model_snippets.json"
+      },
+      {
+        "language": "python",
+        "path": "./snippets/admin_snippets.json"
+      },
+      {
+        "language": "python",
+        "path": "./snippets/view_snippets.json"
+      },
+      {
+        "language": "python",
+        "path": "./snippets/form_snippets.json"
+      },
+      {
+        "language": "python",
+        "path": "./snippets/utility_models.json"
+      },
+      {
+        "language": "html",
+        "path": "./snippets/template_snippets.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.70.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "@vscode/vsce": "^3.9.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5"
+  }
+}

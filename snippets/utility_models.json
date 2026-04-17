@@ -1,0 +1,34 @@
+{
+  "TimeStampedModel (Abstract): CLASS": {
+    "prefix": ["u-timestamp", "timestamped", "base-timestamp"],
+    "body": [
+      "class TimeStampedModel(models.Model):",
+      "\t\"\"\"Abstract model providing created_at and updated_at fields.\"\"\"",
+      "\tcreated_at = models.DateTimeField(auto_now_add=True)",
+      "\tupdated_at = models.DateTimeField(auto_now=True)",
+      "",
+      "\tclass Meta:",
+      "\t\tabstract = True",
+      ""
+    ],
+    "description": "Abstract base model with automatic timestamp tracking for created and updated dates."
+  },
+  "AuditedModel (Abstract): CLASS": {
+    "prefix": ["u-audit", "audited", "base-audit"],
+    "body": [
+      "from django.conf import settings",
+      "",
+      "class AuditedModel(models.Model):",
+      "\t\"\"\"Abstract model for tracking who created and modified records.\"\"\"",
+      "\tcreated_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='%(class)s_created')",
+      "\tcreated_at = models.DateTimeField(auto_now_add=True)",
+      "\tupdated_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='%(class)s_updated')",
+      "\tupdated_at = models.DateTimeField(auto_now=True)",
+      "",
+      "\tclass Meta:",
+      "\t\tabstract = True",
+      ""
+    ],
+    "description": "Abstract model tracking user creation and modification history using settings.AUTH_USER_MODEL."
+  }
+}

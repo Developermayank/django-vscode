@@ -1,0 +1,81 @@
+{
+    "View: Method": {
+        "prefix": [
+            "v-view"
+        ],
+        "body": [
+            "def ${1/(.*)/${1:/downcase}/}_view(request):",
+            "\t${0:pass}",
+            ""
+        ],
+        "description": "Simple View Function"
+    },
+    "Base View: Class": {
+        "prefix": [
+            "v-base"
+        ],
+        "body": [
+            "class $1View(View):",
+            "\t${2:pass}",
+            ""
+        ],
+        "description": "Class-based Base Views"
+    },
+    "TemplateView: Class": {
+        "prefix": [
+            "v-template-view"
+        ],
+        "body": [
+            "class $1View(TemplateView):",
+            "\ttemplate_name = \"$2.html\""
+        ],
+        "description": "Class-based Base Views"
+    },
+    "Generic Display & Editing Views: Class": {
+        "prefix": [
+            "v-generic",
+            "v-generic-editing",
+            "v-generic-display",
+            "v-class-based",
+            "v-detail-view",
+            "v-list-view",
+            "v-form-view",
+            "v-create-view",
+            "v-update-view",
+            "v-delete-view"
+        ],
+        "body": [
+            "class $2${1|DetailView,ListView,FormView,CreateView,UpdateView,DeleteView|}($1):",
+            "\tmodel = $2",
+            ""
+        ],
+        "description": "Class-based Generic Display & Editing Views"
+    },
+    "Generic Date Views: Class": {
+        "prefix": [
+            "v-generic-date-views",
+            "v-archive-index-view",
+            "v-year-archive-view",
+            "v-month-archive-view",
+            "v-week-archive-view",
+            "v-day-archive-view",
+            "v-today-archive-view",
+            "v-date-detail-view"
+        ],
+        "body": [
+            "class $1${2|ArchiveIndexView,YearArchiveView,MonthArchiveView,WeekArchiveView,DayArchiveView,TodayArchiveView,DateDetailView|}($2):",
+            "\tmodel = $1",
+            ""
+        ],
+        "description": "Generic Date Views: ArchiveIndexView, YearArchiveView, MonthArchiveView, WeekArchiveView, DayArchiveView, TodayArchiveView, DateDetailView"
+    },
+    "Class-based Views Mixin: Inherit": {
+        "prefix": [
+            "v-mixin"
+        ],
+        "body": [
+            "${1|ContextMixin,TemplateResponseMixin,SingleObjectMixin,SingleObjectTemplateResponseMixin,MultipleObjectMixin,MultipleObjectTemplateResponseMixin,FormMixin,ModelFormMixin,ProcessFormMixin,DeletionMixin,YearMixin,MonthMixin,DayMixin,WeekMixin,DateMixin,BaseDateListView|}"
+        ],
+        "description": "Generic Date Views: ArchiveIndexView, YearArchiveView, MonthArchiveView, WeekArchiveView, DayArchiveView, TodayArchiveView, DateDetailView"
+    }
+}

@@ -1,0 +1,355 @@
+{
+    "Simple Form: CLASS": {
+        "prefix": [
+            "f-form"
+        ],
+        "body": [
+            "class ${1:FormName}Form(forms.Form):",
+            "\t$2",
+            ""
+        ],
+        "description": ""
+    },
+    "label: FIELD-OPT": {
+        "prefix": [
+            "ffo-label"
+        ],
+        "body": [
+            "label=\"$1\""
+        ],
+        "description": ""
+    },
+    "label_suffix: FIELD-OPT": {
+        "prefix": [
+            "ffo-label_suffix"
+        ],
+        "body": [
+            "label_suffix=\"$1\""
+        ],
+        "description": ""
+    },
+    "initial: FIELD-OPT": {
+        "prefix": [
+            "ffo-initial"
+        ],
+        "body": [
+            "initial=\"$1\""
+        ],
+        "description": ""
+    },
+    "widget: FIELD-OPT": {
+        "prefix": [
+            "ffo-widget"
+        ],
+        "body": [
+            "widget=$1"
+        ],
+        "description": ""
+    },
+    "help_text: FIELD-OPT": {
+        "prefix": [
+            "ffo-help_text"
+        ],
+        "body": [
+            "help_text=\"$1\""
+        ],
+        "description": ""
+    },
+    "error_messages: FIELD-OPT": {
+        "prefix": [
+            "ffo-error_messages"
+        ],
+        "body": [
+            "error_messages={\"$1\": \"$2\"}"
+        ],
+        "description": ""
+    },
+    "validators: FIELD-OPT": {
+        "prefix": [
+            "ffo-validators"
+        ],
+        "body": [
+            "validators=[$1, ]"
+        ],
+        "description": ""
+    },
+    "disabled: FIELD-OPT": {
+        "prefix": [
+            "ffo-disabled"
+        ],
+        "body": [
+            "disabled=${1|True,False|}"
+        ],
+        "description": ""
+    },
+    "template_name: FIELD-OPT": {
+        "prefix": [
+            "ffo-template_name"
+        ],
+        "body": [
+            "template_name=\"$1\""
+        ],
+        "description": ""
+    },
+    "BooleanField: FORM-FIELD": {
+        "prefix": [
+            "ff-BooleanField"
+        ],
+        "body": [
+            "$1 = forms.BooleanField($2)"
+        ],
+        "description": ""
+    },
+    "CharField: FORM-FIELD": {
+        "prefix": [
+            "ff-CharField"
+        ],
+        "body": [
+            "$1 = forms.CharField(${2:max_length=$3, }${4:min_length=$5, }${6:strip=${7|True,False|}, }${8:empty_value=\"$9\"})"
+        ],
+        "description": ""
+    },
+    "ChoiceField: FORM-FIELD": {
+        "prefix": [
+            "ff-ChoiceField"
+        ],
+        "body": [
+            "$1 = forms.ChoiceField(choices=$2)"
+        ],
+        "description": ""
+    },
+    "DateField: FORM-FIELD": {
+        "prefix": [
+            "ff-DateField"
+        ],
+        "body": [
+            "$1 = forms.DateField(${2:input_formats=[$3]})"
+        ],
+        "description": ""
+    },
+    "DateTimeField: FORM-FIELD": {
+        "prefix": [
+            "ff-DateTimeField"
+        ],
+        "body": [
+            "$1 = forms.DateTimeField(${2:input_formats=[$3]})"
+        ],
+        "description": ""
+    },
+    "DecimalField: FORM-FIELD": {
+        "prefix": [
+            "ff-DecimalField"
+        ],
+        "body": [
+            "$1 = forms.DecimalField(${2:max_value=$3, }${4:min_value=$5, }${6:max_digits=$7, }${8:decimal_places=$9, }${10:step_size=$11})"
+        ],
+        "description": ""
+    },
+    "DurationField: FORM-FIELD": {
+        "prefix": [
+            "ff-DurationField"
+        ],
+        "body": [
+            "$1 = forms.DurationField()"
+        ],
+        "description": ""
+    },
+    "EmailField: FORM-FIELD": {
+        "prefix": [
+            "ff-EmailField"
+        ],
+        "body": [
+            "$1 = forms.EmailField()"
+        ],
+        "description": ""
+    },
+    "FileField: FORM-FIELD": {
+        "prefix": [
+            "ff-FileField"
+        ],
+        "body": [
+            "$1 = forms.FileField()"
+        ],
+        "description": ""
+    },
+    "FilePathField: FORM-FIELD": {
+        "prefix": [
+            "ff-FilePathField"
+        ],
+        "body": [
+            "$1 = forms.FilePathField(path=$2${3:recursive=${4|True,False|}, }${5:match=\"$6\", }${7:allow_files=${8|True,False|}, }${9:allow_folders=${10|True,False|}, })"
+        ],
+        "description": ""
+    },
+    "FloatField: FORM-FIELD": {
+        "prefix": [
+            "ff-FloatField"
+        ],
+        "body": [
+            "$1 = forms.FloatField(${2:max_value=$3, }${4:min_value=$5, }${10:step_size=$11})"
+        ],
+        "description": ""
+    },
+    "GenericIPAddressField: FORM-FIELD": {
+        "prefix": [
+            "ff-GenericIPAddressField"
+        ],
+        "body": [
+            "$1 = forms.GenericIPAddressField(${2:protocol=\"${3|IPv4,IPv6,Both|}\")"
+        ],
+        "description": ""
+    },
+    "ImageField: FORM-FIELD": {
+        "prefix": [
+            "ff-ImageField"
+        ],
+        "body": [
+            "$1 = forms.ImageField()"
+        ],
+        "description": ""
+    },
+    "IntegerField: FORM-FIELD": {
+        "prefix": [
+            "ff-IntegerField"
+        ],
+        "body": [
+            "$1 = forms.IntegerField(${2:max_value=$3, }${4:min_value=$5, }${10:step_size=$11})"
+        ],
+        "description": ""
+    },
+    "JSONField: FORM-FIELD": {
+        "prefix": [
+            "ff-JSONField"
+        ],
+        "body": [
+            "$1 = forms.JSONField()"
+        ],
+        "description": ""
+    },
+    "MultipleChoiceField: FORM-FIELD": {
+        "prefix": [
+            "ff-MultipleChoiceField"
+        ],
+        "body": [
+            "$1 = forms.MultipleChoiceField()"
+        ],
+        "description": ""
+    },
+    "NullBooleanField: FORM-FIELD": {
+        "prefix": [
+            "ff-NullBooleanField"
+        ],
+        "body": [
+            "$1 = forms.NullBooleanField()"
+        ],
+        "description": ""
+    },
+    "RegexField: FORM-FIELD": {
+        "prefix": [
+            "ff-RegexField"
+        ],
+        "body": [
+            "$1 = forms.RegexField(regex=$2)"
+        ],
+        "description": ""
+    },
+    "SlugField: FORM-FIELD": {
+        "prefix": [
+            "ff-SlugField"
+        ],
+        "body": [
+            "$1 = forms.SlugField($2)"
+        ],
+        "description": ""
+    },
+    "TimeField: FORM-FIELD": {
+        "prefix": [
+            "ff-TimeField"
+        ],
+        "body": [
+            "$1 = forms.TimeField(${2:input_formats=[$3]})"
+        ],
+        "description": ""
+    },
+    "TypedChoiceField: FORM-FIELD": {
+        "prefix": [
+            "ff-TypedChoiceField"
+        ],
+        "body": [
+            "$1 = forms.TypedChoiceField($2)"
+        ],
+        "description": ""
+    },
+    "TypedMultipleChoiceField: FORM-FIELD": {
+        "prefix": [
+            "ff-TypedMultipleChoiceField"
+        ],
+        "body": [
+            "$1 = forms.TypedMultipleChoiceField($2)"
+        ],
+        "description": ""
+    },
+    "URLField: FORM-FIELD": {
+        "prefix": [
+            "ff-URLField"
+        ],
+        "body": [
+            "$1 = forms.URLField($2)"
+        ],
+        "description": ""
+    },
+    "UUIDField: FORM-FIELD": {
+        "prefix": [
+            "ff-UUIDField"
+        ],
+        "body": [
+            "$1 = forms.UUIDField($2)"
+        ],
+        "description": ""
+    },
+    "ComboField: FORM-FIELD": {
+        "prefix": [
+            "ff-ComboField"
+        ],
+        "body": [
+            "$1 = forms.ComboField(fields=[$2, ])"
+        ],
+        "description": ""
+    },
+    "MultiValueField: FORM-FIELD": {
+        "prefix": [
+            "ff-MultiValueField"
+        ],
+        "body": [
+            "$1 = forms.MultiValueField($2)"
+        ],
+        "description": ""
+    },
+    "SpliteDateTimeField: FORM-FIELD": {
+        "prefix": [
+            "ff-SpliteDateTimeField"
+        ],
+        "body": [
+            "$1 = forms.SpliteDateTimeField($2)"
+        ],
+        "description": ""
+    },
+    "ModelChoiceField: FORM-FIELD": {
+        "prefix": [
+            "ff-ModelChoiceField"
+        ],
+        "body": [
+            "$1 = forms.ModelChoiceField(queryset=$2)"
+        ],
+        "description": ""
+    },
+    "ModelMultipleChoiceField: FORM-FIELD": {
+        "prefix": [
+            "ff-ModelMultipleChoiceField"
+        ],
+        "body": [
+            "$1 = forms.ModelMultipleChoiceField(queryset=$2)"
+        ],
+        "description": ""
+    }
+}
