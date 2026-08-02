@@ -220,7 +220,7 @@
   "DateField": {
     "prefix": ["mf-DateField", "datefield"],
     "body": [
-      "$1 = models.DateField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|}, $4)"
+      "$1 = models.DateField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|})"
     ],
     "description": "A date, represented in Python by a datetime.date instance."
   },
@@ -237,7 +237,7 @@
   "DateTimeField": {
     "prefix": ["mf-DateTimeField", "datetimefield"],
     "body": [
-      "$1 = models.DateTimeField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|}, $4)"
+      "$1 = models.DateTimeField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|})"
     ],
     "description": "A date and time, represented in Python by a datetime.datetime instance."
   },
