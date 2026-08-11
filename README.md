@@ -9,6 +9,7 @@ Django VS Code extension easy your django projects development with snippet sugg
 - [x] Snippets View - method, class-based, generic, mixins
 - [x] Snippets Template - variables, tags, filters
 - [x] Snippets Form - class, fields, field options
+- [x] Django Documentation in your editor.
 
 ## HOW TO USE
 

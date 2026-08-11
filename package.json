@@ -23,9 +23,12 @@
     "django 6.x snippets",
     "django 5.x snippets",
     "django 4.x snippets",
+    "django documentation",
     "python"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:myExtension.djangodocs"
+  ],
   "main": "./out/extension.js",
   "icon": "assets/django-icon-256x256-new.png",
   "bugs": {
@@ -81,7 +84,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
-    "@types/node": "20.x",
+    "@types/node": "^20.19.43",
     "@types/vscode": "^1.70.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.11.0",
@@ -90,5 +93,8 @@
     "@vscode/vsce": "^3.9.0",
     "eslint": "^8.57.0",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "extract-zip": "^2.0.1"
   }
 }
