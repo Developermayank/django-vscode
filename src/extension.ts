@@ -6,6 +6,13 @@ import * as vscode from 'vscode';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+    const command = 'myExtension.djangodocs';
+
+    const commandHandler = () => {
+        console.log("This is django docs")
+    }
+
+    context.subscriptions.push(vscode.commands.registerCommand(command, commandHandler));
 }
 
 // This method is called when your extension is deactivated

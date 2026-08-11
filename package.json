@@ -63,6 +63,12 @@
         "language": "html",
         "path": "./snippets/template_snippets.json"
       }
+    ],
+    "commands": [
+      {
+        "command": "myExtension.djangodocs",
+        "title": "Open Django Documentation"
+      }
     ]
   },
   "scripts": {
