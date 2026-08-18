@@ -26,9 +26,6 @@
     "django documentation",
     "python"
   ],
-  "activationEvents": [
-    "onCommand:myExtension.djangodocs"
-  ],
   "main": "./out/extension.js",
   "icon": "assets/django-icon-256x256-new.png",
   "bugs": {
@@ -69,7 +66,7 @@
     ],
     "commands": [
       {
-        "command": "myExtension.djangodocs",
+        "command": "djangoExtension.searchDocs",
         "title": "Open Django Documentation"
       }
     ]
@@ -83,6 +80,8 @@
     "test": "vscode-test"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.5.8",
+    "@types/express": "^5.0.6",
     "@types/mocha": "^10.0.7",
     "@types/node": "^20.19.43",
     "@types/vscode": "^1.70.0",
@@ -95,6 +94,9 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "adm-zip": "^0.6.0",
+    "axios": "^1.19.0",
+    "express": "^5.2.1",
     "extract-zip": "^2.0.1"
   }
 }
