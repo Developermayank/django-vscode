@@ -2,7 +2,7 @@
   "name": "django-vscode-mayanksinghal",
   "displayName": "Django Snippets 4.x-6.x",
   "description": "Developer friendly django snippets for boosting development speed.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "publisher": "mayanksinghal",
   "engines": {
     "vscode": "^1.85.0"
