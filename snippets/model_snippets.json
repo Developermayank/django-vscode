@@ -163,7 +163,7 @@
     "description": "If False, the field will not be displayed in the admin or any other ModelForm."
   },
   "error_messages: FIELD-OPT": {
-    "prefix": ["mfo-error_messages", "error_messages"],
+    "prefix": ["mfo-errormessages", "errormessages"],
     "body": [
       "error_messages={\n\t\"${1|null,blank,invalid,invalid_choice,unique,unique_for_date|}\": \"$2\",\n}"
     ],
@@ -172,14 +172,14 @@
     "description": "Override the default messages that the field will raise."
   },
   "help_text: FIELD-OPT": {
-    "prefix": ["mfo-help_text", "help_text"],
+    "prefix": ["mfo-helptext", "helptext"],
     "body": ["help_text=\"$1\""],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
     "description": "Extra 'help' text to be displayed with the form widget."
   },
   "primary_key: FIELD-OPT": {
-    "prefix": ["mfo-primary_key", "primary_key"],
+    "prefix": ["mfo-pk", "pk", "primarykey"],
     "body": ["primary_key=${1|True,False|}"],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
@@ -193,28 +193,28 @@
     "description": "If True, this field must be unique throughout the table."
   },
   "unique_for_date: FIELD-OPT": {
-    "prefix": ["mfo-unique_for_date", "unique_for_date"],
+    "prefix": ["mfo-unique-for-date", "unique-for-date"],
     "body": ["unique_for_date=\"$1\""],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
     "description": "Set to the name of a DateField or DateTimeField to require this field be unique for the value of the date field."
   },
   "unique_for_month: FIELD-OPT": {
-    "prefix": ["mfo-unique_for_month", "unique_for_month"],
+    "prefix": ["mfo-unique-for-month", "unique-for-month"],
     "body": ["unique_for_month=\"$1\""],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
     "description": "Requires the field to be unique with respect to the month."
   },
   "unique_for_year: FIELD-OPT": {
-    "prefix": ["mfo-unique_for_year", "unique_for_year"],
+    "prefix": ["mfo-unique-for-year", "unique-for-year"],
     "body": ["unique_for_year=\"$1\""],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
     "description": "Requires the field to be unique with respect to the year."
   },
   "verbose_name: FIELD-OPT": {
-    "prefix": ["mfo-verbose_name", "verbose_name"],
+    "prefix": ["mfo-verbose-name", "verbose-name"],
     "body": ["verbose_name=\"$1\""],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
