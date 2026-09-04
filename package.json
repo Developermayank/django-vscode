@@ -17,13 +17,10 @@
     "url": "https://github.com/developermayank/"
   },
   "keywords": [
-    "django snippets",
-    "django framework",
     "django",
-    "django 6.x snippets",
-    "django 5.x snippets",
-    "django 4.x snippets",
+    "django snippets",
     "django documentation",
+    "django framework",
     "python"
   ],
   "main": "./out/extension.js",
@@ -41,6 +38,14 @@
     "snippets": [
       {
         "language": "python",
+        "path": "./snippets/utility_models.json"
+      },
+      {
+        "language": "python",
+        "path": "./snippets/form_snippets.json"
+      },
+      {
+        "language": "python",
         "path": "./snippets/model_snippets.json"
       },
       {
@@ -50,14 +55,6 @@
       {
         "language": "python",
         "path": "./snippets/view_snippets.json"
-      },
-      {
-        "language": "python",
-        "path": "./snippets/form_snippets.json"
-      },
-      {
-        "language": "python",
-        "path": "./snippets/utility_models.json"
       },
       {
         "language": "html",

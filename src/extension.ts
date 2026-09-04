@@ -33,16 +33,53 @@ export function activate(context: vscode.ExtensionContext) {
 
     // 2. Register the Search Django Docs Command
     let disposable = vscode.commands.registerCommand('djangoExtension.searchDocs', async () => {
-        // Prompt user for version selector (dynamically generated choices)
-        const versions = ['dev', '6.1', '6.0', '5.2', '5.1','5.0', '4.2', '4.1', '4.0'];
-        const selectedVersion = await vscode.window.showQuickPick(versions, {
+
+        let selectedVersion: QuickPickItem | undefined;
+        type QuickPickItem = vscode.QuickPickItem;
+
+        // Modify the version options as array of dict with version value and label for display
+        // use the quickpickitem type
+        const versionOptions = [
+            { label: 'dev', description: 'dev' },
+            { label: '6.1', description: '6.1' },
+            { label: '6.0', description: '6.0' },
+            { label: '5.2', description: '5.2' },
+            { label: '5.1', description: '5.1' },
+            { label: '5.0', description: '5.0' },
+            { label: '4.2', description: '4.2' },
+            { label: '4.1', description: '4.1' },
+            { label: '4.0', description: '4.0' },
+            { label: 'Enter custom version', description: 'Enter custom version' }
+        ] as QuickPickItem[];
+
+        for (const version of versionOptions) {
+            if (version.label !== 'Enter custom version' && fs.existsSync(path.join(docsDir, `django-docs-${version.label}-en`))) {
+                version.description += ' (Installed)';
+            }
+        }
+
+        selectedVersion = await vscode.window.showQuickPick(versionOptions, {
             placeHolder: 'Select the Django documentation version you want to look up',
             canPickMany: false
         });
 
-        if (!selectedVersion) { return; } // User cancelled
+        if (!selectedVersion) {
+            return; // User cancelled
+        }
 
-        const versionDirName = `django-docs-${selectedVersion}-en`;
+        if (selectedVersion.label === 'Enter custom version') {
+            const customVersion = await vscode.window.showInputBox({
+                placeHolder: 'Enter a custom Django version',
+                prompt: 'If you want to use a version not listed, enter it here'
+            });
+            if (customVersion) {
+                selectedVersion.label = customVersion;
+            } else {
+                return; // User cancelled
+            }
+        }
+
+        const versionDirName = `django-docs-${selectedVersion.label}-en`;
         const localDocsPath = path.join(docsDir, versionDirName);
         const indexHtmlPath = path.join(localDocsPath, 'index.html');
 
@@ -50,7 +87,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (!fs.existsSync(indexHtmlPath)) {
             await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: `Downloading Django ${selectedVersion} Documentation...`,
+                title: `Downloading Django ${selectedVersion.label} Documentation...`,
                 cancellable: false
             }, async (progress) => {
                 try {
@@ -59,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
                     // https://media.djangoproject.com/docs/django-docs-6.1-en.zip
                     const downloadUrl = `https://media.djangoproject.com/docs/${versionDirName}.zip`;
                     console.log(`Downloading from: ${downloadUrl}`);
-                    const zipPath = path.join(docsDir, `${selectedVersion}.zip`);
+                    const zipPath = path.join(docsDir, `${selectedVersion.label}.zip`);
 
                     // Fetch Zip File Stream
                     const response = await axios({
@@ -81,11 +118,13 @@ export function activate(context: vscode.ExtensionContext) {
                     progress.report({ message: "Extracting documentation..." });
                     const zip = new AdmZip(zipPath);
                     zip.extractAllTo(localDocsPath, true);
-                    progress.report({ message: `Extracted to ${localDocsPath}...`});
-                    console.log(`Extracted Django ${selectedVersion} docs to ${localDocsPath}`);
-
+                    progress.report({ message: `Extracted to ${localDocsPath}...` });
+                    console.log(`Extracted Django ${selectedVersion.label} docs to ${localDocsPath}`);
+                    // After installation, notify the user
+                    vscode.window.showInformationMessage(`Django ${selectedVersion.label} documentation downloaded and ready!`);
                     // Delete raw zip to optimize storage allocation
                     fs.unlinkSync(zipPath);
+
                 } catch (error: any) {
                     vscode.window.showErrorMessage(`Failed to fetch Django docs: ${error.message}`);
                     throw error;
