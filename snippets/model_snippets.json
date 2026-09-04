@@ -214,7 +214,7 @@
     "description": "Requires the field to be unique with respect to the year."
   },
   "verbose_name: FIELD-OPT": {
-    "prefix": ["mfo-verbose-name", "verbose-name"],
+    "prefix": ["mfo-verbose-name"],
     "body": ["verbose_name=\"$1\""],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
@@ -279,7 +279,7 @@
   "DateField: MODEL-FIELD": {
     "prefix": ["mf-date", "date"],
     "body": [
-      "${1:field_name} = models.DateField(auto_now=${2|False,True|}, auto_now_add=${0|False,True|})"
+      "${1:field_name} = models.DateField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|})"
     ],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
@@ -302,7 +302,7 @@
   "DateTimeField: MODEL-FIELD": {
     "prefix": ["mf-datetime", "datetime"],
     "body": [
-      "${1:field_name} = models.DateTimeField(auto_now=${2|False,True|}, auto_now_add=${0|False,True|})"
+      "${1:field_name} = models.DateTimeField(auto_now=${2|False,True|}, auto_now_add=${3|False,True|})"
     ],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
@@ -485,7 +485,7 @@
   },
 
   "ForeignKey: MODEL-FIELD": {
-    "prefix": ["mf-fk", "fk"],
+    "prefix": ["mf-fk", "foreignkey"],
     "body": [
       "$1 = models.ForeignKey(\"$2\", on_delete=models.${3|CASCADE,PROTECT,RESTRICT,SET_NULL,SET(),DO_NOTHING|}, $4)"
     ],
@@ -494,21 +494,21 @@
     "description": "A many-to-one relationship."
   },
   "ManyToManyField: MODEL-FIELD": {
-    "prefix": ["mf-manytomany", "mf-m2m", "many-to-many", "m2m"],
+    "prefix": ["mf-manytomany", "mf-m2m"],
     "body": ["$1 = models.ManyToManyField(\"$2\", $3)"],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
     "description": "A many-to-many relationship."
   },
   "ManyToManyField (SELF): MODEL-FIELD": {
-    "prefix": ["mf-manytomany", "mf-m2m-self", "many-to-many", "m2m-self"],
+    "prefix": ["mf-manytomany", "mf-m2m-self"],
     "body": ["$1 = models.ManyToManyField(\"self\")"],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
     "description": "A many-to-many self relationship."
   },
   "OneToOneField: MODEL-FIELD": {
-    "prefix": ["mf-onetoone", "mf-o2o", "one-to-one", "o2o"],
+    "prefix": ["mf-onetoone", "mf-o2o"],
     "body": [
       "$1 = models.OneToOneField(\"$2\", on_delete=models.${3|CASCADE,PROTECT,RESTRICT,SET_NULL,SET(),DO_NOTHING|}, parent_link=${4|False,True|}, $5)"
     ],
@@ -518,7 +518,7 @@
   },
 
   "TextChoices (CLASS): MODEL-CHOICE": {
-    "prefix": ["mf-textchoices", "choices", "mcls-textchoices"],
+    "prefix": ["mf-text-choices", "mcls-textchoices", "choices"],
     "body": [
       "class ${1:MyChoice}(models.TextChoices):",
       "    ${2:CHOICE_ONE} = '${3:1}', '${4:Label 1}'",
@@ -529,14 +529,14 @@
     "description": "Django TextChoices enumeration class."
   },
   "TextChoices (ONELINE): MODEL-CHOICE": {
-    "prefix": ["mf-textchoicesoneline", "choices", "text-choices"],
+    "prefix": ["mf-text-choices", "choices"],
     "body": ["models.TextChoices(\"$1\", \"$2 \"):"],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
     "description": "Django TextChoices oneliner. i.e. [('GOLD', 'Gold'), ('SILVER', 'Silver'),]"
   },
   "IntegerChoices (CLASS): MODEL-CHOICE": {
-    "prefix": ["mf-intchoices", "mcls-intchoices", "choices"],
+    "prefix": ["mf-int-choices", "mcls-intchoices", "choices"],
     "body": [
       "class ${1:MyChoice}(models.IntegerChoices):",
       "    ${2:CHOICE_ONE} = 1, '${3:Label 1}'",
@@ -547,7 +547,7 @@
     "description": "Django IntegerChoices enumeration class."
   },
   "IntegerChoices (ONELINE): MODEL-CHOICE": {
-    "prefix": ["mf-intchoicesoneline", "int-choices", "choices"],
+    "prefix": ["mf-int-choices", "choices"],
     "body": ["models.IntegerChoices(\"$1\", \"$2 \"):"],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
@@ -704,14 +704,14 @@
     "description": "A list of constraints that you want to define on the model."
   },
   "verbose_name: MODEL-META": {
-    "prefix": ["mmeta-verbose", "verbose_name"],
+    "prefix": ["mmeta-verbose-name"],
     "body": ["verbose_name = \"$0\""],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
     "description": "A human-readable name for the object, singular."
   },
   "verbose_name_plural: MODEL-META": {
-    "prefix": ["mmeta-verboseplural", "verbose_name_plural"],
+    "prefix": ["mmeta-verbose-name-plural"],
     "body": ["verbose_name_plural = \"$0\""],
     "scope": "python",
     "include": ["models.py", "models/*.py", "models/**/*.py"],
